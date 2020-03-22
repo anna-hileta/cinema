@@ -4,9 +4,4 @@
     <TargetFramework>netcoreapp3.0</TargetFramework>
   </PropertyGroup>
 
-  <ItemGroup>
-    <Folder Include="Abstractions\Services\" />
-    <Folder Include="Abstractions\Repositories\" />
-  </ItemGroup>
-
 </Project>

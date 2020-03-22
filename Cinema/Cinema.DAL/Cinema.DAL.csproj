@@ -16,8 +16,4 @@
     <ProjectReference Include="..\Cinema.Core\Cinema.Core.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Repositories\" />
-  </ItemGroup>
-
 </Project>
