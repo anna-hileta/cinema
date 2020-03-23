@@ -11,9 +11,9 @@ namespace Cinema.Core.Entities
         public DateTime Length { get; set; }
         public DateTime PremiereDate { get; set; }
         public DateTime EndDate { get; set; }
-        public int DirectorId { get; set; }
+        public int? DirectorId { get; set; }
         public Director Director { get; set; }
-        public int CountryOfOriginId { get; set; }
+        public int? CountryOfOriginId { get; set; }
         public CountryOfOrigin CountryOfOrigin { get; set; }
         public string Poster { get; set; }
         public List<MovieGenre> MovieGenres { get; set; }

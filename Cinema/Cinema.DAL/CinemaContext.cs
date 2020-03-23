@@ -1,15 +1,11 @@
 ﻿using Cinema.Core.Entities;
+using Cinema.DAL.Configuration;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Cinema.DAL
 {
     public class CinemaContext : DbContext
     {
-
-
         public DbSet<Check> Checks { get; set; }
         public DbSet<CinemaHall> CinemaHalls { get; set; }
         public DbSet<CinemaLocation> CinemaLocations { get; set; }
@@ -31,6 +27,25 @@ namespace Cinema.DAL
         public DbSet<Worker> Workers { get; set; }
 
         public CinemaContext(DbContextOptions<CinemaContext> options) : base(options) { }
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            builder.ApplyConfiguration(new MovieConfiguration());
+            builder.ApplyConfiguration(new CheckConfiguration());
+            builder.ApplyConfiguration(new CinemaHallConfiguration());
+            builder.ApplyConfiguration(new CinemaLocationConfiguration());
+            builder.ApplyConfiguration(new CityConfiguration());
+            builder.ApplyConfiguration(new CountryOfOriginConfiguration());
+            builder.ApplyConfiguration(new DirectorConfiguration());
+            builder.ApplyConfiguration(new FoodAmountConfiguration());
+            builder.ApplyConfiguration(new FoodcourtCheckConfiguration());
+            builder.ApplyConfiguration(new FoodcourtCheckProductConfiguration());
+            builder.ApplyConfiguration(new FoodProductsConfiguration());
+            builder.ApplyConfiguration(new GenreConfiguration());
+            builder.ApplyConfiguration(new PositionConfiguration());
+            builder.ApplyConfiguration(new TechnologyConfiguration());
+            builder.ApplyConfiguration(new TicketConfiguration());
+            builder.ApplyConfiguration(new WorkerConfiguration());
+        }
     }
 
 }

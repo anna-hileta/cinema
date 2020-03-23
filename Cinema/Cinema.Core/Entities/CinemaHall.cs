@@ -10,7 +10,7 @@ namespace Cinema.Core.Entities
         public int RowsCount { get; set; }
         public int SeatsCount { get; set; }
         public List<Showing> Showings { get; set; }
-        public int TechnologyId { get; set; }
+        public int? TechnologyId { get; set; }
         public Technology Technology { get; set; }
     }
 }
