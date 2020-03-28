@@ -2,8 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Cinema.Core.Abstractions;
+using Cinema.Core.Abstractions.Services;
+using Cinema.Core.Mapping;
 using Cinema.DAL;
+using Cinema.Services.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -31,6 +35,35 @@ namespace Cinema
             services.AddDbContext<CinemaContext>(options => options.UseSqlServer(connectionString));
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
+
+            services.AddScoped<ICheckService, CheckService>();
+            services.AddScoped<ICinemaHallService, CinemaHallService>();
+            services.AddScoped<ICinemaLocationService, CinemaLocationService>();
+            services.AddScoped<ICityService, CityService>();
+            services.AddScoped<ICountryOfOriginService, CountryOfOriginService>();
+            services.AddScoped<IDirectorService, DirectorService>();
+            services.AddScoped<IFoodAmountService, FoodAmountService>();
+            services.AddScoped<IFoodcourtCheckService, FoodcourtCheckService>();
+            services.AddScoped<IFoodcourtCheckProductService, FoodcourtCheckProductService>();
+            services.AddScoped<IFoodProductsService, FoodProductsService>();
+            services.AddScoped<IGenreService, GenreService>();
+            services.AddScoped<IMovieGenreService, MovieGenreService>();
+            services.AddScoped<IMovieService, MovieService>();
+            services.AddScoped<IPositionService, PositionService>();
+            services.AddScoped<IShowingService, ShowingService>();
+            services.AddScoped<ITechnologyService, TechnologyService>();
+            services.AddScoped<ITicketCheckService, TicketCheckService>();
+            services.AddScoped<ITicketService, TicketService>();
+            services.AddScoped<IWorkerService, WorkerService>();
+
+            var mapperConfiguration = new MapperConfiguration(configuration =>
+            {
+                configuration.AddProfile(new SelfMapping());
+            });
+
+            IMapper mapper = mapperConfiguration.CreateMapper();
+            services.AddSingleton<IMapper>(mapper);
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
