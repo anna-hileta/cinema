@@ -8,6 +8,20 @@ namespace Cinema.DAL.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
+                name: "AspNetRoles",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(nullable: false),
+                    Name = table.Column<string>(maxLength: 256, nullable: true),
+                    NormalizedName = table.Column<string>(maxLength: 256, nullable: true),
+                    ConcurrencyStamp = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AspNetRoles", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Cities",
                 columns: table => new
                 {
@@ -53,7 +67,7 @@ namespace Cinema.DAL.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     ProductName = table.Column<string>(maxLength: 50, nullable: false),
-                    ProductPrice = table.Column<decimal>(nullable: false)
+                    ProductPrice = table.Column<decimal>(type: "decimal(32,2)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -97,6 +111,27 @@ namespace Cinema.DAL.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Technologies", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AspNetRoleClaims",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    RoleId = table.Column<Guid>(nullable: false),
+                    ClaimType = table.Column<string>(nullable: true),
+                    ClaimValue = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AspNetRoleClaims", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_AspNetRoleClaims_AspNetRoles_RoleId",
+                        column: x => x.RoleId,
+                        principalTable: "AspNetRoles",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -153,24 +188,35 @@ namespace Cinema.DAL.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Workers",
+                name: "AspNetUsers",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<Guid>(nullable: false),
+                    UserName = table.Column<string>(maxLength: 64, nullable: true),
+                    NormalizedUserName = table.Column<string>(maxLength: 64, nullable: true),
+                    Email = table.Column<string>(maxLength: 256, nullable: true),
+                    NormalizedEmail = table.Column<string>(maxLength: 256, nullable: true),
+                    EmailConfirmed = table.Column<bool>(nullable: false),
+                    PasswordHash = table.Column<string>(nullable: true),
+                    SecurityStamp = table.Column<string>(nullable: true),
+                    ConcurrencyStamp = table.Column<string>(nullable: true),
+                    PhoneNumber = table.Column<string>(nullable: true),
+                    PhoneNumberConfirmed = table.Column<bool>(nullable: false),
+                    TwoFactorEnabled = table.Column<bool>(nullable: false),
+                    LockoutEnd = table.Column<DateTimeOffset>(nullable: true),
+                    LockoutEnabled = table.Column<bool>(nullable: false),
+                    AccessFailedCount = table.Column<int>(nullable: false),
                     Name = table.Column<string>(maxLength: 50, nullable: false),
                     Surname = table.Column<string>(maxLength: 50, nullable: false),
                     FatherName = table.Column<string>(maxLength: 50, nullable: false),
                     PassportData = table.Column<string>(nullable: true),
-                    Login = table.Column<string>(maxLength: 50, nullable: false),
-                    Password = table.Column<string>(maxLength: 50, nullable: false),
                     PositionId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Workers", x => x.Id);
+                    table.PrimaryKey("PK_AspNetUsers", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Workers_Positions_PositionId",
+                        name: "FK_AspNetUsers_Positions_PositionId",
                         column: x => x.PositionId,
                         principalTable: "Positions",
                         principalColumn: "Id",
@@ -260,6 +306,91 @@ namespace Cinema.DAL.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "AspNetUserClaims",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    UserId = table.Column<Guid>(nullable: false),
+                    ClaimType = table.Column<string>(nullable: true),
+                    ClaimValue = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AspNetUserClaims", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_AspNetUserClaims_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AspNetUserLogins",
+                columns: table => new
+                {
+                    LoginProvider = table.Column<string>(nullable: false),
+                    ProviderKey = table.Column<string>(nullable: false),
+                    ProviderDisplayName = table.Column<string>(nullable: true),
+                    UserId = table.Column<Guid>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AspNetUserLogins", x => new { x.LoginProvider, x.ProviderKey });
+                    table.ForeignKey(
+                        name: "FK_AspNetUserLogins_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AspNetUserRoles",
+                columns: table => new
+                {
+                    UserId = table.Column<Guid>(nullable: false),
+                    RoleId = table.Column<Guid>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AspNetUserRoles", x => new { x.UserId, x.RoleId });
+                    table.ForeignKey(
+                        name: "FK_AspNetUserRoles_AspNetRoles_RoleId",
+                        column: x => x.RoleId,
+                        principalTable: "AspNetRoles",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_AspNetUserRoles_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AspNetUserTokens",
+                columns: table => new
+                {
+                    UserId = table.Column<Guid>(nullable: false),
+                    LoginProvider = table.Column<string>(nullable: false),
+                    Name = table.Column<string>(nullable: false),
+                    Value = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AspNetUserTokens", x => new { x.UserId, x.LoginProvider, x.Name });
+                    table.ForeignKey(
+                        name: "FK_AspNetUserTokens_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Checks",
                 columns: table => new
                 {
@@ -267,17 +398,18 @@ namespace Cinema.DAL.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     TransactionDateAndTime = table.Column<DateTime>(nullable: false),
                     WorkerId = table.Column<int>(nullable: false),
-                    PaidPrice = table.Column<decimal>(nullable: false)
+                    WorkerId1 = table.Column<Guid>(nullable: true),
+                    PaidPrice = table.Column<decimal>(type: "decimal(32,2)", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Checks", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Checks_Workers_WorkerId",
-                        column: x => x.WorkerId,
-                        principalTable: "Workers",
+                        name: "FK_Checks_AspNetUsers_WorkerId1",
+                        column: x => x.WorkerId1,
+                        principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -288,17 +420,18 @@ namespace Cinema.DAL.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     TransactionDateAndTime = table.Column<DateTime>(nullable: false),
                     WorkerId = table.Column<int>(nullable: false),
-                    PaidPrice = table.Column<decimal>(nullable: false)
+                    WorkerId1 = table.Column<Guid>(nullable: true),
+                    PaidPrice = table.Column<decimal>(type: "decimal(32,2)", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_FoodcourtChecks", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_FoodcourtChecks_Workers_WorkerId",
-                        column: x => x.WorkerId,
-                        principalTable: "Workers",
+                        name: "FK_FoodcourtChecks_AspNetUsers_WorkerId1",
+                        column: x => x.WorkerId1,
+                        principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -364,7 +497,7 @@ namespace Cinema.DAL.Migrations
                     ShowingId = table.Column<int>(nullable: false),
                     RowNumber = table.Column<int>(nullable: false),
                     SeatNumber = table.Column<int>(nullable: false),
-                    Price = table.Column<decimal>(nullable: false),
+                    Price = table.Column<decimal>(type: "decimal(32,2)", nullable: false),
                     Status = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
@@ -405,9 +538,53 @@ namespace Cinema.DAL.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Checks_WorkerId",
+                name: "IX_AspNetRoleClaims_RoleId",
+                table: "AspNetRoleClaims",
+                column: "RoleId");
+
+            migrationBuilder.CreateIndex(
+                name: "RoleNameIndex",
+                table: "AspNetRoles",
+                column: "NormalizedName",
+                unique: true,
+                filter: "[NormalizedName] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AspNetUserClaims_UserId",
+                table: "AspNetUserClaims",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AspNetUserLogins_UserId",
+                table: "AspNetUserLogins",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AspNetUserRoles_RoleId",
+                table: "AspNetUserRoles",
+                column: "RoleId");
+
+            migrationBuilder.CreateIndex(
+                name: "EmailIndex",
+                table: "AspNetUsers",
+                column: "NormalizedEmail");
+
+            migrationBuilder.CreateIndex(
+                name: "UserNameIndex",
+                table: "AspNetUsers",
+                column: "NormalizedUserName",
+                unique: true,
+                filter: "[NormalizedUserName] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AspNetUsers_PositionId",
+                table: "AspNetUsers",
+                column: "PositionId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Checks_WorkerId1",
                 table: "Checks",
-                column: "WorkerId");
+                column: "WorkerId1");
 
             migrationBuilder.CreateIndex(
                 name: "IX_CinemaHalls_CinemaLocationId",
@@ -445,9 +622,9 @@ namespace Cinema.DAL.Migrations
                 column: "FoodcourtCheckId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_FoodcourtChecks_WorkerId",
+                name: "IX_FoodcourtChecks_WorkerId1",
                 table: "FoodcourtChecks",
-                column: "WorkerId");
+                column: "WorkerId1");
 
             migrationBuilder.CreateIndex(
                 name: "IX_MovieGenres_GenreId",
@@ -493,15 +670,25 @@ namespace Cinema.DAL.Migrations
                 name: "IX_Tickets_ShowingId",
                 table: "Tickets",
                 column: "ShowingId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Workers_PositionId",
-                table: "Workers",
-                column: "PositionId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "AspNetRoleClaims");
+
+            migrationBuilder.DropTable(
+                name: "AspNetUserClaims");
+
+            migrationBuilder.DropTable(
+                name: "AspNetUserLogins");
+
+            migrationBuilder.DropTable(
+                name: "AspNetUserRoles");
+
+            migrationBuilder.DropTable(
+                name: "AspNetUserTokens");
+
             migrationBuilder.DropTable(
                 name: "FoodcourtCheckProducts");
 
@@ -510,6 +697,9 @@ namespace Cinema.DAL.Migrations
 
             migrationBuilder.DropTable(
                 name: "TicketChecks");
+
+            migrationBuilder.DropTable(
+                name: "AspNetRoles");
 
             migrationBuilder.DropTable(
                 name: "FoodAmounts");
@@ -530,7 +720,7 @@ namespace Cinema.DAL.Migrations
                 name: "FoodProducts");
 
             migrationBuilder.DropTable(
-                name: "Workers");
+                name: "AspNetUsers");
 
             migrationBuilder.DropTable(
                 name: "Showings");

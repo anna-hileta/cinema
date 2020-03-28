@@ -17,12 +17,10 @@ namespace Cinema.DAL.Configuration
             builder.Property(w => w.FatherName)
                 .HasMaxLength(50)
                 .IsRequired();
-            builder.Property(w => w.Login)
-                .HasMaxLength(50)
-                .IsRequired();
-            builder.Property(w => w.Password)
-                .HasMaxLength(50)
-                .IsRequired();
+            builder.Property(w => w.UserName)
+                .HasMaxLength(64);
+            builder.Property(w => w.NormalizedUserName)
+                .HasMaxLength(64);
         }
     }
 }

@@ -5,12 +5,14 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Cinema.Core.Abstractions;
 using Cinema.Core.Abstractions.Services;
+using Cinema.Core.Entities;
 using Cinema.Core.Mapping;
 using Cinema.DAL;
 using Cinema.Services.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -33,6 +35,24 @@ namespace Cinema
             services.AddControllersWithViews();
             var connectionString = Configuration.GetConnectionString("DefaultConnection");
             services.AddDbContext<CinemaContext>(options => options.UseSqlServer(connectionString));
+
+            services.AddIdentity<Worker, IdentityRole<Guid>>(configuration =>
+            {
+                configuration.Password.RequiredLength = 6;
+                configuration.Password.RequireDigit = false;
+                configuration.Password.RequireUppercase = false;
+                configuration.Password.RequireLowercase = false;
+                configuration.Password.RequireNonAlphanumeric = false;
+            })
+                .AddEntityFrameworkStores<CinemaContext>()
+                .AddDefaultTokenProviders();
+
+            services.ConfigureApplicationCookie(configuration =>
+            {
+                configuration.Cookie.Name = "Identity.Cookie";
+                configuration.LoginPath = "/Account/Login";
+            });
+
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 
@@ -84,6 +104,7 @@ namespace Cinema
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

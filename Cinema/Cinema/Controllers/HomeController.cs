@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 
 
 namespace Cinema.Controllers
@@ -7,6 +8,11 @@ namespace Cinema.Controllers
     {
 
         public IActionResult Index()
+        {
+            return View();
+        }
+        [Authorize]
+        public IActionResult Secret()
         {
             return View();
         }

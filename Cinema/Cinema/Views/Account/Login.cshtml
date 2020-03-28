@@ -1,0 +1,16 @@
+﻿@{
+    ViewData["Title"] = "Login";
+    var returnUrl = Context.Request.Query["returnurl"];
+}
+
+<h1>Login here</h1>
+
+<form asp-controller="Account" asp-action="Login" method="post" asp-route-returnurl="@returnUrl">
+    <input type="text" name="username" value="" />
+
+    <input type="password" name="password" value="" />
+
+    <button type="submit">Login</button>
+</form>
+    
+<a href="/Account/Register">Register</a>

@@ -1,10 +1,13 @@
 ﻿using Cinema.Core.Entities;
 using Cinema.DAL.Configuration;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using System;
 
 namespace Cinema.DAL
 {
-    public class CinemaContext : DbContext
+    public class CinemaContext : IdentityDbContext<Worker, IdentityRole<Guid>, Guid>
     {
         public DbSet<Check> Checks { get; set; }
         public DbSet<CinemaHall> CinemaHalls { get; set; }
@@ -24,11 +27,12 @@ namespace Cinema.DAL
         public DbSet<Technology> Technologies { get; set; }
         public DbSet<Ticket> Tickets { get; set; }
         public DbSet<TicketCheck> TicketChecks { get; set; }
-        public DbSet<Worker> Workers { get; set; }
 
         public CinemaContext(DbContextOptions<CinemaContext> options) : base(options) { }
         protected override void OnModelCreating(ModelBuilder builder)
         {
+            base.OnModelCreating(builder);
+
             builder.ApplyConfiguration(new MovieConfiguration());
             builder.ApplyConfiguration(new CheckConfiguration());
             builder.ApplyConfiguration(new CinemaHallConfiguration());

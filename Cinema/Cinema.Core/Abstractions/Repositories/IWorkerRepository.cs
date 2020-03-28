@@ -1,6 +1,7 @@
 ﻿using Cinema.Core.Entities;
+using System;
 
 namespace Cinema.Core.Abstractions.Repositories
 {
-    public interface IWorkerRepository: IRepository<Worker, int>{}
+    public interface IWorkerRepository: IRepository<Worker, Guid>{}
 }

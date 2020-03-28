@@ -1,0 +1,16 @@
+﻿@{
+    ViewData["Title"] = "Register";
+    var returnUrl = Context.Request.Query["returnurl"];
+}
+
+<h1>Register here</h1>
+
+<form asp-controller="Account" asp-action="Register" method="post" asp-route-returnurl="@returnUrl">
+    <input type="text" name="username" value="" />
+
+    <input type="password" name="password" value="" />
+
+    <button type="submit">Register</button>
+</form>
+    
+<a href="/Account/Login">Login</a>
