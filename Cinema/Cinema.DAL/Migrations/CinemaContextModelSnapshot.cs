@@ -32,15 +32,12 @@ namespace Cinema.DAL.Migrations
                     b.Property<DateTime>("TransactionDateAndTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("WorkerId")
-                        .HasColumnType("int");
-
-                    b.Property<Guid?>("WorkerId1")
+                    b.Property<Guid>("WorkerId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("WorkerId1");
+                    b.HasIndex("WorkerId");
 
                     b.ToTable("Checks");
                 });
@@ -214,15 +211,12 @@ namespace Cinema.DAL.Migrations
                     b.Property<DateTime>("TransactionDateAndTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("WorkerId")
-                        .HasColumnType("int");
-
-                    b.Property<Guid?>("WorkerId1")
+                    b.Property<Guid>("WorkerId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("WorkerId1");
+                    b.HasIndex("WorkerId");
 
                     b.ToTable("FoodcourtChecks");
                 });
@@ -667,7 +661,9 @@ namespace Cinema.DAL.Migrations
                 {
                     b.HasOne("Cinema.Core.Entities.Worker", "Worker")
                         .WithMany("Checks")
-                        .HasForeignKey("WorkerId1");
+                        .HasForeignKey("WorkerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Cinema.Core.Entities.CinemaHall", b =>
@@ -709,7 +705,9 @@ namespace Cinema.DAL.Migrations
                 {
                     b.HasOne("Cinema.Core.Entities.Worker", "Worker")
                         .WithMany("FoodcourtChecks")
-                        .HasForeignKey("WorkerId1");
+                        .HasForeignKey("WorkerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Cinema.Core.Entities.FoodcourtCheckProduct", b =>

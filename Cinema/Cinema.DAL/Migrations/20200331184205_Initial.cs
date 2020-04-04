@@ -210,7 +210,7 @@ namespace Cinema.DAL.Migrations
                     Surname = table.Column<string>(maxLength: 50, nullable: false),
                     FatherName = table.Column<string>(maxLength: 50, nullable: false),
                     PassportData = table.Column<string>(nullable: true),
-                    PositionId = table.Column<int>(nullable: false)
+                    PositionId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -220,7 +220,7 @@ namespace Cinema.DAL.Migrations
                         column: x => x.PositionId,
                         principalTable: "Positions",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -397,19 +397,18 @@ namespace Cinema.DAL.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     TransactionDateAndTime = table.Column<DateTime>(nullable: false),
-                    WorkerId = table.Column<int>(nullable: false),
-                    WorkerId1 = table.Column<Guid>(nullable: true),
+                    WorkerId = table.Column<Guid>(nullable: false),
                     PaidPrice = table.Column<decimal>(type: "decimal(32,2)", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Checks", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Checks_AspNetUsers_WorkerId1",
-                        column: x => x.WorkerId1,
+                        name: "FK_Checks_AspNetUsers_WorkerId",
+                        column: x => x.WorkerId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -419,19 +418,18 @@ namespace Cinema.DAL.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     TransactionDateAndTime = table.Column<DateTime>(nullable: false),
-                    WorkerId = table.Column<int>(nullable: false),
-                    WorkerId1 = table.Column<Guid>(nullable: true),
+                    WorkerId = table.Column<Guid>(nullable: false),
                     PaidPrice = table.Column<decimal>(type: "decimal(32,2)", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_FoodcourtChecks", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_FoodcourtChecks_AspNetUsers_WorkerId1",
-                        column: x => x.WorkerId1,
+                        name: "FK_FoodcourtChecks_AspNetUsers_WorkerId",
+                        column: x => x.WorkerId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -582,9 +580,9 @@ namespace Cinema.DAL.Migrations
                 column: "PositionId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Checks_WorkerId1",
+                name: "IX_Checks_WorkerId",
                 table: "Checks",
-                column: "WorkerId1");
+                column: "WorkerId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_CinemaHalls_CinemaLocationId",
@@ -622,9 +620,9 @@ namespace Cinema.DAL.Migrations
                 column: "FoodcourtCheckId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_FoodcourtChecks_WorkerId1",
+                name: "IX_FoodcourtChecks_WorkerId",
                 table: "FoodcourtChecks",
-                column: "WorkerId1");
+                column: "WorkerId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_MovieGenres_GenreId",

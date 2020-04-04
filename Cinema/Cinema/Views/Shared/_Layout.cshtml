@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@inject CityViewModel Model
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -10,42 +11,87 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 </head>
 <body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Cinema</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
-                    </ul>
-                </div>
+    <style>
+        .demo-layout-transparent {
+            background: url('https://cdn.pixabay.com/photo/2017/11/24/10/43/admission-2974645_960_720.jpg') center;
+            background-size: cover;
+        }
+
+            .demo-layout-transparent .mdl-layout__header,
+            .demo-layout-transparent .mdl-layout__drawer-button {
+                color: white;
+            }
+
+        .right-drawer.is-visible {
+            transform: translateX(0);
+        }
+
+        .right-drawer {
+            right: 0;
+            left: unset;
+            transform: translateX(250px);
+        }
+    </style>
+
+    <div class="demo-layout-transparent mdl-layout mdl-js-layout">
+        <header class="mdl-layout__header mdl-layout__header--transparent">
+            <div class="mdl-layout__header-row">
+                <span class="mdl-layout-title">Title</span>
+                <div class="mdl-layout-spacer"></div>
+                <nav class="mdl-navigation">
+                    <a class="mdl-navigation__link" onclick="OpenRight()">Choose a cinema</a>
+                </nav>
             </div>
-        </nav>
-    </header>
-    <div class="container">
-        <main role="main" class="pb-3">
+        </header>
+        <div class="mdl-layout__drawer right-drawer">
+            <span class="mdl-layout-title">Cinemas</span>
+            <nav class="mdl-navigation">
+                @foreach (var city in Model.cinemaLocations)
+                {
+                    <a class="mdl-navigation__link font-weight-bold">@city.CityName</a>
+                    @foreach (var location in city.CinemaLocations)
+                    {
+                        <a class="mdl-navigation__link">@location.CinemaName</a>
+                    }
+                }
+
+            </nav>
+        </div>
+        <div class="mdl-layout__drawer">
+            <span class="mdl-layout-title">Title</span>
+            <nav class="mdl-navigation">
+                <a class="mdl-navigation__link" href="">Link</a>
+                <a class="mdl-navigation__link" href="">Link</a>
+                <a class="mdl-navigation__link" href="">Link</a>
+                <a class="mdl-navigation__link" href="">Link</a>
+            </nav>
+        </div>
+
+        <main class="mdl-layout__content">
             @RenderBody()
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2020 - Cinema - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-        </div>
-    </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/lib/mdl/material.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script>
+        function OpenRight() {
+            $('.right-drawer').addClass('is-visible');
+            const backdrop = $('.mdl-layout__obfuscator');
+            backdrop.addClass('is-visible');
+        }
+        function CloseDrawers() {
+            $('.mdl-layout__drawer').removeClass('is-visible');
+        }
+        $(document).ready(() => {
+            setTimeout(() => {
+                const backdrop = $('.mdl-layout__obfuscator');
+                backdrop.click(() => CloseDrawers());
+            }, 0);
+        });
+    </script>
     @RenderSection("Scripts", required: false)
 </body>
 </html>

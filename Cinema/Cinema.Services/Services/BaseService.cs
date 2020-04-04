@@ -11,9 +11,9 @@ namespace Cinema.Services.Services
 {
     public class BaseService<TEntity, TId> : IBasicService<TEntity, TId> where TEntity : class, IEntity<TId>
     {
-        private readonly IUnitOfWork unitOfWork;
-        private readonly IRepository<TEntity, TId> repository;
-        private readonly IMapper mapper;
+        protected readonly IUnitOfWork unitOfWork;
+        protected readonly IRepository<TEntity, TId> repository;
+        protected readonly IMapper mapper;
 
         public BaseService(IUnitOfWork unitOfWork, IRepository<TEntity, TId> repository,  IMapper mapper)
         {
