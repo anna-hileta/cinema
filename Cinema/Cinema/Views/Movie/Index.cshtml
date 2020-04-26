@@ -1,0 +1,32 @@
+﻿@using Cinema.ViewModels
+@model MovieViewModel
+@{
+    ViewData["Title"] = "AllMovies";
+}
+<div class="content-wrapper">
+    <div class="all-clubs-view">
+        <div class="club-list">
+            @foreach (var item in Model.movies)
+            {
+                <form method="post" class="club-block-wrapper" action='~/Movie/Movie'>
+                    <span class="club-block club-wrappers-radius">
+                        <button type="submit" class="club-block-submit rounded">
+                            <div class="club-img-wrapper">
+                                @if (item.Poster != null)
+                                {
+                                    <div class="club-img" style="background-image:url('@item.Poster')"></div>
+                                }
+                                else
+                                {
+                                    <div class="club-img" style="background-image:url('')"></div>
+                                }
+                            </div>
+                            <p class="club-name" style="color: white;">@item.Title</p>
+                            <input value="@item.Id" type="hidden" name="index" id="clubId" />
+                        </button>
+                    </span>
+                </form>
+            }
+        </div>
+    </div>
+</div>

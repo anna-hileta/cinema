@@ -1,0 +1,34 @@
+﻿@using Cinema.ViewModels
+@using System.Globalization
+@model ShowingViewModel
+@{
+    ViewData["Title"] = "MovieShowing";
+}
+<style>
+    .seatdiv {
+        flex-basis: @Html.Raw((100.0 / Model.showings.CinemaHall.SeatsCount).ToString(CultureInfo.InvariantCulture))%;
+    }
+</style>
+    <div class="showings">
+
+        <div class="movie-info">
+            <div class="flex-showing">
+                <h1 class="movie-title-showing">@Model.showings.Movie.Title</h1>
+                <h1 class="showing-text">Сеанс в кінотеатрі "r5yy6" на @Model.showings.DateAndTime</h1>
+                <div class="cinemaHall">
+                    @foreach (var i in  Model.showings.Tickets)
+                    {
+                        <div class="seatdiv">
+                            <button class="seat" onclick="selectSeat(this, @i.Id, @i.RowNumber, @i.SeatNumber)">
+                                <a href=""></a>
+                            </button>
+                        </div>
+                    }
+
+                </div>
+            </div>
+        </div>
+        <div class="checkout" style="display: none;">
+            <h1 class="showing-text">Ваша покупка</h1>
+        </div>
+    </div>

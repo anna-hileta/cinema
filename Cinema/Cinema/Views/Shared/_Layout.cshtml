@@ -1,4 +1,5 @@
-﻿@inject CityViewModel Model
+﻿
+@inject CityViewModel cityViewModel
 <!DOCTYPE html>
 <html>
 <head>
@@ -6,8 +7,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - Cinema</title>
     <link rel="stylesheet" href="~/lib/mdl/material.min.css" />
+    <link rel="stylesheet" href="~/css/movie.css" />
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 </head>
 <body>
@@ -21,6 +22,11 @@
             .demo-layout-transparent .mdl-layout__drawer-button {
                 color: white;
             }
+
+        .mdl-layout__content {
+            top: 25%;
+            bottom: 50%;
+        }
 
         .right-drawer.is-visible {
             transform: translateX(0);
@@ -36,7 +42,7 @@
     <div class="demo-layout-transparent mdl-layout mdl-js-layout">
         <header class="mdl-layout__header mdl-layout__header--transparent">
             <div class="mdl-layout__header-row">
-                <span class="mdl-layout-title">Title</span>
+                <span class="mdl-layout-title">Cinema</span>
                 <div class="mdl-layout-spacer"></div>
                 <nav class="mdl-navigation">
                     <a class="mdl-navigation__link" onclick="OpenRight()">Choose a cinema</a>
@@ -46,7 +52,7 @@
         <div class="mdl-layout__drawer right-drawer">
             <span class="mdl-layout-title">Cinemas</span>
             <nav class="mdl-navigation">
-                @foreach (var city in Model.cinemaLocations)
+                @foreach (var city in cityViewModel.cinemaLocations)
                 {
                     <a class="mdl-navigation__link font-weight-bold">@city.CityName</a>
                     @foreach (var location in city.CinemaLocations)
@@ -60,14 +66,13 @@
         <div class="mdl-layout__drawer">
             <span class="mdl-layout-title">Title</span>
             <nav class="mdl-navigation">
-                <a class="mdl-navigation__link" href="">Link</a>
-                <a class="mdl-navigation__link" href="">Link</a>
-                <a class="mdl-navigation__link" href="">Link</a>
-                <a class="mdl-navigation__link" href="">Link</a>
+                <a class="mdl-navigation__link" asp-controller="Movie" asp-action="Index">Movies</a>
+                <a class="mdl-navigation__link" href="">Foodcourt</a>
+                <a class="mdl-navigation__link" href="">Admin</a>
             </nav>
         </div>
 
-        <main class="mdl-layout__content">
+        <main>
             @RenderBody()
         </main>
     </div>

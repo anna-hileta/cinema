@@ -9,6 +9,7 @@ using Cinema.Core.Entities;
 using Cinema.Core.Mapping;
 using Cinema.DAL;
 using Cinema.Services.Services;
+using Cinema.ViewModels;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -76,6 +77,7 @@ namespace Cinema
             services.AddScoped<ITicketCheckService, TicketCheckService>();
             services.AddScoped<ITicketService, TicketService>();
             services.AddScoped<IWorkerService, WorkerService>();
+            services.AddTransient<CityViewModel>();
 
             var mapperConfiguration = new MapperConfiguration(configuration =>
             {

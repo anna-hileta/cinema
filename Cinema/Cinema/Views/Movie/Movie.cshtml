@@ -1,0 +1,73 @@
+﻿@using Cinema.ViewModels
+@model MovieViewModel
+@{
+    ViewData["Title"] = "Movies";
+}
+
+<div class="movie-info">
+    <div class="poster-div">
+        <div class=".movie-poster-container">
+            <div class="placeholder">
+                <img src="@Model.movie.Poster" class="poster-image">
+            </div>
+        </div>
+    </div>
+    <div class="movie-info-div">
+        <h1 class="movie-title">@Model.movie.Title</h1>
+        <ul class="movie-info-b">
+            <li class="movie-li">
+                <p class="li-key">Режисер:</p>
+                <p class="li-value">@Model.movie.Director.DirectorName</p>
+            </li>
+            <li class="movie-li">
+                <p class="li-key">Дата виходу в прокат:</p>
+                <p class="li-value">@Model.movie.PremiereDate.ToShortDateString()</p>
+            </li>
+            <br>
+            <li class="movie-li">
+                <p class="li-key">Дата виходу з прокату:</p>
+                <p class="li-value">@Model.movie.EndDate.ToShortDateString()</p>
+            </li>
+            <br>
+            <li class="movie-li">
+                <p class="li-key">Виробництво:</p>
+                <p class="li-value">@Model.movie.CountryOfOrigin.Name</p>
+            </li>
+            <br>
+            <li class="movie-li">
+                <p class="li-key">Тривалість:</p>
+                <p class="li-value">@Model.movie.Length.Hour : @Model.movie.Length.Minute</p>
+            </li>
+            <br>
+            <li class="movie-li">
+                <p class="li-key">Жанр:</p>
+                <p class="li-value">
+                    @foreach (var m in @Model.movie.MovieGenres)
+                    {
+                        @m.Genre.GenreName <br>
+                    }
+                </p>
+            </li>
+        </ul>
+        <div class="movie-description">
+            <p>
+                @Model.movie.Description
+            </p>
+        </div>
+    </div>
+</div>
+<div class="showings">
+    <h1 class="movie-title">Сеанси</h1>
+    <table class="allShowings">
+        @foreach(var m in @Model.movie.Showings){
+            <tr class="showing-table-padding">
+                <td class="li-key">@m.DateAndTime.ToShortDateString()</td>
+                <td class="li-value">
+                    <a asp-controller="Movie" asp-action="MovieShowing" asp-route-showingId="@m.Id">
+                        @m.DateAndTime.Hour : @m.DateAndTime.Minute
+                    </a>
+                </td>
+            </tr>
+        }
+    </table>
+</div>
