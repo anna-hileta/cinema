@@ -16,31 +16,31 @@
         <h1 class="movie-title">@Model.movie.Title</h1>
         <ul class="movie-info-b">
             <li class="movie-li">
-                <p class="li-key">Режисер:</p>
+                <p class="li-key">Director:</p>
                 <p class="li-value">@Model.movie.Director.DirectorName</p>
             </li>
             <li class="movie-li">
-                <p class="li-key">Дата виходу в прокат:</p>
+                <p class="li-key">Premiere date:</p>
                 <p class="li-value">@Model.movie.PremiereDate.ToShortDateString()</p>
             </li>
             <br>
             <li class="movie-li">
-                <p class="li-key">Дата виходу з прокату:</p>
+                <p class="li-key">End date:</p>
                 <p class="li-value">@Model.movie.EndDate.ToShortDateString()</p>
             </li>
             <br>
             <li class="movie-li">
-                <p class="li-key">Виробництво:</p>
+                <p class="li-key">Country of origin:</p>
                 <p class="li-value">@Model.movie.CountryOfOrigin.Name</p>
             </li>
             <br>
             <li class="movie-li">
-                <p class="li-key">Тривалість:</p>
+                <p class="li-key">Length:</p>
                 <p class="li-value">@Model.movie.Length.Hour : @Model.movie.Length.Minute</p>
             </li>
             <br>
             <li class="movie-li">
-                <p class="li-key">Жанр:</p>
+                <p class="li-key">Genre:</p>
                 <p class="li-value">
                     @foreach (var m in @Model.movie.MovieGenres)
                     {

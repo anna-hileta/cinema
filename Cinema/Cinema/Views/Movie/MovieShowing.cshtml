@@ -19,7 +19,9 @@
                     @foreach (var i in  Model.showings.Tickets)
                     {
                         <div class="seatdiv">
-                            <button class="seat" onclick="selectSeat(this, @i.Id, @i.RowNumber, @i.SeatNumber)">
+                            <button class="seat  "
+                                    /*if(i.Status == true){ selectedSeat  }*/
+                                onclick="selectSeat(this, @i.Id, @i.RowNumber, @i.SeatNumber)">
                                 <a href=""></a>
                             </button>
                         </div>
@@ -29,6 +31,12 @@
             </div>
         </div>
         <div class="checkout" style="display: none;">
-            <h1 class="showing-text">Ваша покупка</h1>
+            <div style="display: flex; justify-content: center; flex-direction: column;">
+            <h1 class="showing-text">Checkout</h1>
+            <p class="buyingTickets"  style="color: white;"></p>
+            <a class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">
+                Buy selected items
+            </a>
+                </div>
         </div>
     </div>

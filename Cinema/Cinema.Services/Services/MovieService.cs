@@ -16,7 +16,7 @@ namespace Cinema.Services.Services
 
         public List<Movie> GetWithAllInfo()
         {
-            return repository.GetAll()
+            var u = repository.GetAll()
                 .Include(l => l.MovieGenres)
                 .ThenInclude(g => g.Genre)
                 .Include(d => d.Director)
@@ -27,6 +27,7 @@ namespace Cinema.Services.Services
                 .Include(s => s.Showings)
                 .ThenInclude(ch => ch.Tickets)
                 .ToList();
+            return u;
         }
         
     }
