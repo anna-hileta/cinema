@@ -6,9 +6,18 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - Cinema</title>
+    @*<environment include="Development">*@
     <link rel="stylesheet" href="~/lib/mdl/material.min.css" />
     <link rel="stylesheet" href="~/css/movie.css" />
+    <link href="~/lib/mdbootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/lib/mdbootstrap/css/mdb.min.css" />
+    <link href="~/lib/mdbootstrap/css/addons/datatables.min.css" rel="stylesheet" />
+    <link href="~/lib/mdbootstrap/css/style.css" rel="stylesheet" />
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    @*</environment>*@
+    <!-- Material Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+          rel="stylesheet">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 </head>
 <body>
@@ -68,7 +77,7 @@
             <nav class="mdl-navigation">
                 <a class="mdl-navigation__link" asp-controller="Movie" asp-action="Index">Movies</a>
                 <a class="mdl-navigation__link" href="">Foodcourt</a>
-                <a class="mdl-navigation__link" href="">Admin</a>
+                <a class="mdl-navigation__link" asp-controller="AdminTables" asp-action="MovieTable">Admin</a>
             </nav>
         </div>
 

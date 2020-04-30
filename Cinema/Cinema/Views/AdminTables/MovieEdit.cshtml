@@ -1,0 +1,80 @@
+﻿@using Cinema.ViewModels
+@model MovieViewModel
+@{
+    ViewData["Title"] = "MovieEdit";
+}
+    <form class="container bg-dark m-5 pt-2 pb-5 pr-5 pl-5 club-wrappers-radius" style="background-color:white" asp-action="EditConfirmed" enctype="multipart/form-data">
+        <div class="row">
+            <div class="col-7">
+                <h1>Редагування куреня</h1>
+                @Html.HiddenFor(model => model.movie.Id)
+                <div asp-validation-summary="All" class="text-danger"></div>
+                <div class="form-group">
+                    <label class="control-label">Movie title</label>
+                    <input asp-for="movie.Title" id="clubName-clubAdmins" class="form-control">
+                    <span asp-validation-for="movie.Title" id="clubName-clubAdmins-mistake" class="text-danger" style="display: none;">Please insert some text in the input</span>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label">Country of origin name</label>
+                    <input asp-for="movie.CountryOfOrigin.Name" id="clubName-clubAdmins" class="form-control">
+                    <span asp-validation-for="movie.CountryOfOrigin.Name" id="clubName-clubAdmins-mistake" class="text-danger" style="display: none;">Please insert some text in the input</span>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label">Director name</label>
+                    <input asp-for="movie.Director.DirectorName" id="clubName-clubAdmins" class="form-control">
+                    <span asp-validation-for="movie.Director.DirectorName" id="clubName-clubAdmins-mistake" class="text-danger" style="display: none;">Please insert some text in the input</span>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label">Premiere date</label>
+                    @if (Model.movie.PremiereDate != null)
+                    {
+                        <input type="hidden" id="dtOfBrthd" value=@Model.movie.PremiereDate.ToString("dd-MM-yyyy") />
+                    }
+                    @Html.TextBoxFor(x => x.movie.PremiereDate,
+                        new { @autocomplete = "off", @type = "date", @placeholder = "Choose a date...", @id = "datepickerBirthday", @class = "form-control" })
+                    <span asp-validation-for="movie.PremiereDate" id="clubName-clubAdmins-mistake" class="text-danger" style="display: none;">Please insert some text in the input</span>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label">End date</label>
+                    @if (Model.movie.EndDate != null)
+                    {
+                        <input type="hidden" id="dtOfBrthd" value=@Model.movie.EndDate.ToString("dd-MM-yyyy") />
+                    }
+                    @Html.TextBoxFor(x => x.movie.EndDate,
+                        new { @autocomplete = "off", @type = "date", @placeholder = "Choose a date...", @id = "datepickerBirthday", @class = "form-control" })
+                    <span asp-validation-for="movie.EndDate" id="clubName-clubAdmins-mistake" class="text-danger" style="display: none;">Please insert some text in the input</span>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label">Movie length</label>
+                    @if (Model.movie.Length != null)
+                    {
+                        <input type="hidden" id="dtOfBrthd" value=@Model.movie.Length.ToString("hh:mm") />
+                    }
+                    @Html.TextBoxFor(x => x.movie.Length,
+                        new { @autocomplete = "off", @type = "time", @placeholder = "Choose a date...", @id = "datepickerBirthday", @class = "form-control" })
+                    <span asp-validation-for="movie.EndDate" id="clubName-clubAdmins-mistake" class="text-danger" style="display: none;">Please insert some text in the input</span>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label">Poster link</label>
+                    <input asp-for="movie.Poster" id="clubName-clubAdmins" class="form-control">
+                    <span asp-validation-for="movie.Poster" id="clubName-clubAdmins-mistake" class="text-danger" style="display: none;">Please insert some text in the input</span>
+                </div>
+                <button type="submit" value="Save" id="save-editedClub" class="btn ">Submit</button>
+            </div>
+    </form>
+<script>
+    $(document).ready(function () {
+    $('#Movies').DataTable({
+        "language": {
+            "url": "https://cdn.datatables.net/plug-ins/1.10.20/i18n/English.json"
+        }
+    });
+});
+</script>
+

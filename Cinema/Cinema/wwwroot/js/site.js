@@ -10,4 +10,5 @@ function selectSeat(seatbutton, id, rownumber, seatnumber) {
     document.getElementsByClassName('buyingTickets')[0].innerHTML = prevText + '<br>' + 'Ticket with row number '
         + rownumber + ' and seat number ' + seatnumber;
     ids.push(id)
+
 }

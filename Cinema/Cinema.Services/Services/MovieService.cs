@@ -21,7 +21,7 @@ namespace Cinema.Services.Services
                 .ThenInclude(g => g.Genre)
                 .Include(d => d.Director)
                 .Include(c => c.CountryOfOrigin)
-                .Include(s => s.Showings)
+                .Include(s => s.Showings)  
                 .ThenInclude(ch => ch.CinemaHall)
                 .ThenInclude(ch => ch.Technology)
                 .Include(s => s.Showings)
