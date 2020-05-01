@@ -12,3 +12,6 @@ function selectSeat(seatbutton, id, rownumber, seatnumber) {
     ids.push(id)
 
 }
+$(document).ready(function () {
+    $('#Movies').DataTable();
+});

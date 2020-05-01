@@ -34,7 +34,7 @@ namespace Cinema.Controllers
             movieService.Delete(index);
             return RedirectToAction("MovieTable");
         }
-        public IActionResult EditMovie(int index)
+        public IActionResult MovieEdit(int index)
         {
             var movie = movieService.GetById(index);
             return View(new MovieViewModel() { movie = movie });
