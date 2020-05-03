@@ -20,7 +20,7 @@ namespace Cinema.Services.PDF
             Author = "Cinema";
             FontName = "Times New Roman";
             StyleName = "Normal";
-            ImagePath = "https://cdn.pixabay.com/photo/2017/11/24/10/43/admission-2974645_960_720.jpg";
+            ImagePath = "wwwroot/images/cinema.jpg";
         }
     }
 }

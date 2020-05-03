@@ -92,8 +92,8 @@ namespace Cinema.Controllers
                 {
                     throw new ArgumentException("Cannot crated pdf id is not valid");
                 }
-
-                byte[] arr = await pdfService.DecesionCreatePDFAsync(checkService.GetById(objId));
+                var check = checkService.GetWithAllInfo(objId);
+                byte[] arr = await pdfService.DecesionCreatePDFAsync(check);
                 return File(arr, "application/pdf");
         }
     }

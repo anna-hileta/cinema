@@ -2,6 +2,9 @@
 using Cinema.Core.Abstractions;
 using Cinema.Core.Abstractions.Services;
 using Cinema.Core.Entities;
+using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Cinema.Services.Services
 {
@@ -10,5 +13,18 @@ namespace Cinema.Services.Services
         public CheckService(IUnitOfWork unitOfWork, IMapper mapper) :
             base(unitOfWork, unitOfWork.Checks, mapper)
         { }
+        public Check GetWithAllInfo(int id)
+        {
+            var u = repository.GetAll()
+                .Where(m => m.Id == id)
+                .Include(m => m.Worker)
+                .ThenInclude(m => m.Position)
+                .Include(m => m.TicketChecks)
+                .ThenInclude(c => c.Ticket)
+                .ThenInclude(s => s.Showing)
+                .First();
+
+            return u;
+        }
     }
 }
