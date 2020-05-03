@@ -29,6 +29,12 @@ namespace Cinema.Services.Services
                 .ToList();
             return u;
         }
-        
+
+        public Movie GetWithAllInfoForOne(int id)
+        {
+            var u = GetWithAllInfo();
+            var theOne = u.Find(m => m.Id == id);
+            return theOne;
+        }
     }
 }

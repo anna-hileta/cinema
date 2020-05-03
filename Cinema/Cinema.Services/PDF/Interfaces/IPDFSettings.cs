@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Cinema.Services.PDF.Interfaces
 {
-    interface IPDFSettings
+    public interface IPDFSettings
     {
         string Title { get; set; }
         string Subject { get; set; }

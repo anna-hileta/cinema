@@ -1,0 +1,110 @@
+﻿@using Cinema.ViewModels
+@using System.Globalization
+@model FoodViewModel
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="foodcourt" onload="FoodcourtDefault()">
+    <div class="allfood">
+        <h1 style="color: white;">Choose a cinema</h1>
+        <select onchange="DisplayFood()" id="allfoods">
+            @for (int a = 0; a < Model.allCinemas.Count; ++a)
+            {
+                <option value="@a">@Model.allCinemas[a]</option>
+            }
+        </select>
+        @foreach (var a in Model.locations)
+        {
+            <div class="content-wrapper allfoodswrapper" style="display: none;">
+                <div class="all-clubs-view">
+                    <div class="club-list">
+                        @foreach (var item in a.FoodAmounts)
+                        {
+                            <div method="post" class="club-block-wrapper">
+                                <span class="club-block club-wrappers-radius" style="opacity: 90%;">    
+                                    <button class="club-block-submit rounded" onclick="ChooseOneFood('@item.FoodProducts.ProductName', @item.ProductAmount, @item.Id, @Html.Raw((item.FoodProducts.ProductPrice).ToString(CultureInfo.InvariantCulture)))">
+                                        <div class="club-img-wrapper">
+                                            <div class="club-img" style="background-image:url('https://i2-prod.birminghammail.co.uk/incoming/article15865030.ece/ALTERNATES/s1200b/0_Cinema1.jpg')"></div>
+                                        </div>
+                                        <p class="club-name" style="color: white; font-size: 16px;">@item.FoodProducts.ProductName</p>
+                                        <p class="club-name" style="color: white; font-size: 14px;">Amount - @item.ProductAmount</p>
+                                    </button>
+                                </span>
+                            </div>
+                        }
+                        @if (a.FoodAmounts.Count == 0)
+                        {
+                            <h1 style="color: white;">This cinema has no food supply yet.</h1>
+                        }
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+    <div class="onefood background" style="display: none;">
+        <div class="club-block-wrapper" style="padding: 0;">
+            <span class="club-block club-wrappers-radius" style="opacity: 90%;">
+                <button class="club-block-submit rounded">
+                    <div class="club-img-wrapper">
+                        <div class="club-img" style="background-image:url('https://i2-prod.birminghammail.co.uk/incoming/article15865030.ece/ALTERNATES/s1200b/0_Cinema1.jpg')"></div>
+                    </div>
+                    <p class="club-name foodname" style="color: white; font-size: 16px;">rtgygt</p>
+                    <p class="club-name" style="color: white; font-size: 14px;">Price per one - <span class="foodprice"></span></p>
+                    <p class="club-name foodamount" style="color: white; font-size: 14px; display: none;"></p>
+                    <p class="club-name foodId" style="color: white; font-size: 14px; display: none;"></p>
+                    <div style="display: flex; flex-direction: row;">
+                        <a onclick="RemoveProducts()" style="justify-content: center; margin-right: 10px; align-items:center; color: white; display: flex;" role="button">
+                            <i class="material-icons">remove</i>
+                        </a>
+                        <label id="amount" style="color: white; font-size: 20px;  margin-bottom: 0;"> 1 </label>
+                        <a onclick="AddProducts()" style="justify-content: center; margin-left: 10px; align-items:center; color: white;  display: flex;" role="button">
+                            <i class="material-icons">add</i>
+                        </a>
+                    </div>
+                </button>
+            </span>
+        </div>
+        <a onclick="AddToCheckout()" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" style="width: 100%;">
+            Add to checkout
+        </a>
+    </div>
+    <div class="checkout background checkoutFood" style="display: none;">
+        <div style="display: flex; justify-content: center; flex-direction: column;">
+            <h1 class="showing-text">Checkout</h1>
+            <div id="shopcart">
+
+            </div>
+            <p id="totalFoodCost" style="color: white;"></p>
+            <a class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" onclick="BuyFood()">
+                Buy selected items
+            </a>
+        </div>
+    </div>
+</div>
+<style>
+    .allfood {
+        max-width: 700px;
+        opacity: 90%;
+        margin: 0 20px 0 20px;
+        justify-content: center;
+        display: flex;
+        flex-direction: column;
+    }
+    .foodcourt{
+        display: flex;
+        flex-direction: row;
+    }
+    .background {
+        flex-basis: 33%;
+        opacity: 90%;
+        margin: 0 20px 0 20px;
+        justify-content:flex-start;
+        display: flex;
+        flex-direction: column;
+    }
+    .allcartFood{
+        color: white;
+    }
+</style>
+

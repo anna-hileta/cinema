@@ -5,5 +5,6 @@ namespace Cinema.Core.Abstractions.Services
 {
     public interface IMovieService : IBasicService<Movie, int> {
         public List<Movie> GetWithAllInfo();
+        public Movie GetWithAllInfoForOne(int id);
     }
 }

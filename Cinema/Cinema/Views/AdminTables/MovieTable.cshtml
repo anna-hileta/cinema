@@ -3,7 +3,7 @@
 @{
     ViewData["Title"] = "Movies";
 }
-<div class="container-fluid bg-dark" style="color:white;">
+<div class="container-fluid bg-dark" style="color:white;" style="opacity: 90%;">
     <div class="data-table-wrapper-club club-wrappers-radius data-table-wrapper">
         <h1 class="grid-header">Movies in the system</h1>
        
@@ -60,7 +60,11 @@
                     <td>@item.PremiereDate </td>
                     <td>@item.EndDate </td>
                     <td>@item.Length </td>
-                    <td style="text-overflow: ellipsis; max-height: 4.5em; overflow: hidden;">@item.Poster </td>
+                    <td style="width: 150px;">
+                        <div style="text-overflow: ellipsis; max-width: 4.5em; overflow: hidden;">
+                            @item.Poster
+                        </div>
+                    </td>
                     <td>
                         @foreach (var g in item.MovieGenres)
                         {
@@ -68,13 +72,13 @@
                         }
                     </td>
                     <td>
-                        <a asp-controller="AdminTables" asp-action="MovieEdit" asp-route-index="@item.Id" style="color: #3c5438; justify-content: center;    display: flex;" role="button">
+                        <a asp-controller="AdminTables" asp-action="MovieEdit" asp-route-index="@item.Id" style="justify-content: center;    display: flex;" role="button">
                             <i class="material-icons">settings</i>
                         </a>
                     </td>
 
                     <td>
-                        <a asp-controller="AdminTables" asp-action="DeleteMovie" asp-route-index="@item.Id" style="color: #3c5438;">
+                        <a asp-controller="AdminTables" asp-action="DeleteMovie" asp-route-index="@item.Id"  style="justify-content: center;    display: flex;" >
                             <i class="material-icons">delete</i>
                         </a>
                     </td>

@@ -3,7 +3,7 @@
 @{
     ViewData["Title"] = "MovieEdit";
 }
-    <form class="container bg-dark m-5 pt-2 pb-5 pr-5 pl-5 club-wrappers-radius" style="background-color:white" asp-action="EditConfirmed" enctype="multipart/form-data">
+    <form class="container bg-dark m-5 pt-2 pb-5 pr-5 pl-5 club-wrappers-radius" style="opacity: 90%;" asp-action="EditConfirmed" enctype="multipart/form-data">
         <div class="row">
             <div class="col-7">
                 <h1>Редагування куреня</h1>
@@ -65,16 +65,24 @@
                     <input asp-for="movie.Poster" id="clubName-clubAdmins" class="form-control">
                     <span asp-validation-for="movie.Poster" id="clubName-clubAdmins-mistake" class="text-danger" style="display: none;">Please insert some text in the input</span>
                 </div>
-                <button type="submit" value="Save" id="save-editedClub" class="btn ">Submit</button>
+
+                <div class="form-group">
+                    <label class="control-label">Genres</label>
+                    <div  class="form-control">
+                        @foreach(var a in Model.genres)
+                        {
+                            <input type="checkbox" name="genre"
+                               value="@a.Id"
+                               /> @a.GenreName 
+                        }
+                    </div>
+                    <span asp-validation-for="movie.MovieGenres" id="clubName-clubAdmins-mistake" class="text-danger" style="display: none;">Please insert some text in the input</span>
+                </div>
+                <a class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" style="width: 100%;">
+                    <button type="submit">
+                        Save
+                    </button>
+                </a>
             </div>
     </form>
-<script>
-    $(document).ready(function () {
-    $('#Movies').DataTable({
-        "language": {
-            "url": "https://cdn.datatables.net/plug-ins/1.10.20/i18n/English.json"
-        }
-    });
-});
-</script>
 

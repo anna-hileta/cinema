@@ -18,5 +18,13 @@ namespace Cinema.Services.Services
         {
             return repository.GetAll().Include(l => l.City).ToList();
         }
+        public List<CinemaLocation> GetWithCitiesAndFood()
+        {
+            return repository.GetAll()
+                .Include(l => l.City)
+                .Include(m => m.FoodAmounts)
+                .ThenInclude(a => a.FoodProducts)
+                .ToList();
+        }
     }
 }

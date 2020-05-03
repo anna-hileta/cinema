@@ -7,11 +7,9 @@ using System.Threading.Tasks;
 
 namespace Cinema.ViewModels
 {
-    public class MovieViewModel
+    public class FoodViewModel
     {
-        public List<Movie> movies { get; set; }
-        public List<Genre> genres { get; set; }
-        public Movie movie { get; set; }
-        public List<int> genre { get; set; }
+        public List<CinemaLocation> locations { get; set; }
+        public List<string> allCinemas { get; set; }
     }
 }

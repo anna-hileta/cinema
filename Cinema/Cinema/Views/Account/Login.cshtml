@@ -3,14 +3,18 @@
     var returnUrl = Context.Request.Query["returnurl"];
 }
 
-<h1>Login here</h1>
+    <form class="container bg-dark m-5 pt-2 pb-5 pr-5 pl-5 club-wrappers-radius" style="opacity: 90%;" asp-controller="Account" asp-action="Login" method="post" asp-route-returnurl="@returnUrl">
+        <div class="row">
+            <div class="col-7">
+                <h1>Login</h1>
+                <label class="control-label">Login</label>
+                <input type="text" name="username" value="" />
+                <label class="control-label">Password</label>
+                <input type="password" name="password" value="" />
 
-<form asp-controller="Account" asp-action="Login" method="post" asp-route-returnurl="@returnUrl">
-    <input type="text" name="username" value="" />
+                <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" style="width: 100%;" type="submit">
+                    Login
+                </button>
+            </div>
+    </form>
 
-    <input type="password" name="password" value="" />
-
-    <button type="submit">Login</button>
-</form>
-    
-<a href="/Account/Register">Register</a>

@@ -1,0 +1,83 @@
+﻿@using Cinema.ViewModels
+@{
+    ViewData["Title"] = "Movies";
+}
+<div class="content-wrapper">
+    <div class="all-clubs-view">
+        <div class="club-list">
+            <div class="club-block-wrapper">
+                <span class="club-block club-wrappers-radius" style="justify-content: space-between; opacity: 90%;">
+                    <div class="club-block-submit rounded">
+                        <h1 style="color:white;">Administrate the workers</h1>
+                        <a class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" style="width: 100%;">
+                            Add a worker
+                        </a>
+                        <br>
+                        <a class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" style="width: 100%;">
+                            Edit/delete current workers
+                        </a>
+                    </div>
+                </span>
+            </div>
+
+            <div class="club-block-wrapper">
+                <span class="club-block club-wrappers-radius" style="justify-content: space-between; opacity: 90%;">
+                    <div class="club-block-submit rounded">
+                        <h1 style="color:white;">Administrate the cinemas</h1>
+                        <a class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" style="width: 100%;">
+                            Add a cinema
+                        </a>
+                        <br>
+                        <a class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" style="width: 100%;">
+                            Edit/delete current cinemas
+                        </a>
+                        <br>
+                        <a class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" style="width: 100%;">
+                            Add a cinema hall
+                        </a>
+                        <br>
+                        <a class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" style="width: 100%;">
+                            Edit/delete current cinema halls
+                        </a>
+                    </div>
+                </span>
+            </div>
+
+            <div class="club-block-wrapper">
+                <span class="club-block club-wrappers-radius" style="justify-content: space-between; opacity: 90%;">
+                    <div class="club-block-submit rounded">
+                        <h1 style="color:white;">Add new things</h1>
+                        <a class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" style="width: 100%;">
+                            Add a movie
+                        </a>
+                        <a class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" style="width: 100%;">
+                            Add a showing
+                        </a>
+                        <a class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" style="width: 100%;">
+                            Add a food amount
+                        </a>
+                    </div>
+                </span>
+            </div>
+
+            <div class="club-block-wrapper">
+                <span class="club-block club-wrappers-radius" style="justify-content: space-between; opacity: 90%;">
+                    <div class="club-block-submit rounded">
+                        <h1 style="color:white;">Edit and delete things</h1>
+                        <a asp-controller="AdminTables" asp-action="MovieTable" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" style="width: 100%;">
+                            Edit/delete a movie
+                        </a>
+                        <br>
+                        <a class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" style="width: 100%;">
+                            Edit/delete a showing
+                        </a>
+                        <br>
+                        <a class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" style="width: 100%;">
+                            Edit/delete a food amounts
+                        </a>
+                    </div>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -77,6 +78,7 @@ namespace Cinema
             services.AddScoped<ITicketCheckService, TicketCheckService>();
             services.AddScoped<ITicketService, TicketService>();
             services.AddScoped<IWorkerService, WorkerService>();
+            services.AddScoped<IPDFService, PDFService>();
             services.AddTransient<CityViewModel>();
 
             var mapperConfiguration = new MapperConfiguration(configuration =>
@@ -86,6 +88,10 @@ namespace Cinema
 
             IMapper mapper = mapperConfiguration.CreateMapper();
             services.AddSingleton<IMapper>(mapper);
+            System.Globalization.CultureInfo customCulture = (System.Globalization.CultureInfo)System.Threading.Thread.CurrentThread.CurrentCulture.Clone();
+            customCulture.NumberFormat.NumberDecimalSeparator = ".";
+
+            System.Threading.Thread.CurrentThread.CurrentCulture = customCulture;
 
         }
 

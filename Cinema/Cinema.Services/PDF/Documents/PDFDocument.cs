@@ -8,17 +8,14 @@ namespace Cinema.Services.PDF.Documents
     {
         private readonly IPDFSettings settings;
         protected readonly Document document;
-        /*
         public PDFDocument() : this(new PDFSettings())
         {
-        }*/
-        /*
+        }
         public PDFDocument(IPDFSettings settings)
         {
             this.settings = settings ?? throw new System.ArgumentNullException(nameof(settings));
             this.document = new Document();
         }
-        */
         public abstract void SetDocumentBody(Section section);
 
         public virtual Document GetDocument()

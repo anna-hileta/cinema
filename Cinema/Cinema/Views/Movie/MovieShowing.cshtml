@@ -20,8 +20,8 @@
                     {
                         <div class="seatdiv">
                             <button class="seat  "
-                                    /*if(i.Status == true){ selectedSeat  }*/
-                                onclick="selectSeat(this, @i.Id, @i.RowNumber, @i.SeatNumber)">
+                                    @if(i.Status == true){ <text>selectedSeat</text>  }
+                                onclick="selectSeat(this, @i.Id, @i.RowNumber, @i.SeatNumber, @i.Price)">
                                 <a href=""></a>
                             </button>
                         </div>
@@ -34,7 +34,7 @@
             <div style="display: flex; justify-content: center; flex-direction: column;">
             <h1 class="showing-text">Checkout</h1>
             <p class="buyingTickets"  style="color: white;"></p>
-            <a class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">
+            <a class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" onclick="BuyMovie()">
                 Buy selected items
             </a>
                 </div>

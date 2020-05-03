@@ -1,13 +1,10 @@
-﻿
-@inject CityViewModel cityViewModel
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - Cinema</title>
     @*<environment include="Development">*@
-    @*<script src="~/lib/DataTables-1.10.20/js/dataTables.jqueryui.min.js"></script>*@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <link rel="stylesheet" href="~/lib/mdl/material.min.css" />
     <link rel="stylesheet" href="~/css/movie.css" />
@@ -15,11 +12,6 @@
     <link href="~/lib/mdbootstrap/css/mdb.min.css" />
     <link href="~/lib/mdbootstrap/css/addons/datatables.min.css" rel="stylesheet" />
     <link href="~/lib/mdbootstrap/css/style.css" rel="stylesheet" />
-    @*<link rel="stylesheet" type="text/css" href="~/lib/datatables.min.css" />
-        <link rel="stylesheet" type="text/css" href="~/lib/DataTables-1.10.20/css/dataTables.jqueryui.min.css">
-
-        <script type="text/javascript" src="~/lib/datatables.min.js"></script>
-    *@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     @*</environment>*@
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
@@ -58,30 +50,18 @@
                 <span class="mdl-layout-title">Cinema</span>
                 <div class="mdl-layout-spacer"></div>
                 <nav class="mdl-navigation">
-                    <a class="mdl-navigation__link" onclick="OpenRight()">Choose a cinema</a>
+                    <a class="mdl-navigation__link"></a>
+                    <a class="mdl-navigation__link" asp-controller="Account" asp-action="Login">Login</a>
+                    <a class="mdl-navigation__link" asp-controller="Account" asp-action="LogOut">Leave</a>
                 </nav>
             </div>
         </header>
-        <div class="mdl-layout__drawer right-drawer">
-            <span class="mdl-layout-title">Cinemas</span>
-            <nav class="mdl-navigation">
-                @foreach (var city in cityViewModel.cinemaLocations)
-                {
-                    <a class="mdl-navigation__link font-weight-bold">@city.CityName</a>
-                    @foreach (var location in city.CinemaLocations)
-                    {
-                        <a class="mdl-navigation__link">@location.CinemaName</a>
-                    }
-                }
-
-            </nav>
-        </div>
         <div class="mdl-layout__drawer">
             <span class="mdl-layout-title">Title</span>
             <nav class="mdl-navigation">
                 <a class="mdl-navigation__link" asp-controller="Movie" asp-action="Index">Movies</a>
-                <a class="mdl-navigation__link" href="">Foodcourt</a>
-                <a class="mdl-navigation__link" asp-controller="AdminTables" asp-action="MovieTable">Admin</a>
+                <a class="mdl-navigation__link" asp-controller="Foodcourt" asp-action="Index">Foodcourt</a>
+                <a class="mdl-navigation__link" asp-controller="AdminTables" asp-action="Index">Admin</a>
             </nav>
         </div>
 

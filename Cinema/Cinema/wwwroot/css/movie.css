@@ -2,7 +2,6 @@
 .showings {
     display: flex;
     flex-direction: row;
-    flex-wrap: wrap;
     justify-content: center;
 }
 
@@ -10,6 +9,7 @@
     flex-basis: 500px;
     flex-grow: 1;
     background-color: #221f1f;
+    align-self: flex-start;
 }
 
 .seat {
@@ -25,6 +25,10 @@
     background-color: red;
 }
 
+.pickedSeat {
+    background-color: yellow;
+}
+
 .cinemaHall {
     border: 0px solid white;
     display: flex;
@@ -32,6 +36,7 @@
 }
 
 .flex-showing {
+    max-width: 700px;
     display: flex;
     justify-content: center;
     align-content: center;
@@ -64,6 +69,10 @@
     display: flex;
     margin: 40px;
 }
+.allShowings {
+    font-size: 20px;
+    color: white;
+}
 
 @media (max-width: 767px),(orientation: portrait) {
     .movie-info-div {
@@ -77,7 +86,13 @@
         box-sizing: border-box;
         -ms-flex-order: unset;
     }
-
+    .showings {
+        align-items: center;
+        flex-direction: column;
+    }
+    .checkout {
+        align-self: unset;
+    }
     .poster-div {
         -ms-flex-order: unset;
         position: relative;
@@ -166,7 +181,9 @@
 
 .movie-info-div {
     width: 100%;
-    padding: 0 40px;
+    margin: 0 40px;
+    padding: 10px 10px 10px 10px;
+    opacity: 90%;
     position: relative;
     -webkit-order: 2;
     -ms-flex-order: 2;
