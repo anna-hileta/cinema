@@ -27,6 +27,11 @@ namespace Cinema.Services.Services
             var entities = repository.GetAll();
             return entities.ToList();
         }
+        public virtual IQueryable<TEntity> GetByIdQueryable(TId id)
+        {
+            return repository.GetByIdQuaryable(id);
+        }
+
 
         public TEntity GetById(TId id)
         {
@@ -55,13 +60,7 @@ namespace Cinema.Services.Services
 
         public TEntity Update(TEntity entity)
         {
-            var existingEntity = repository.GetById(entity.Id);
-            if (existingEntity == null)
-                throw new ArgumentException($"Couldnt find entity with Id - {entity.Id}");
-
-            UpdateProperties(entity, existingEntity);
-
-            repository.Update(existingEntity);
+            repository.Update(entity);
             unitOfWork.SaveChanges();
 
             return repository.GetById(entity.Id);

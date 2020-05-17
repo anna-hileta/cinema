@@ -477,17 +477,9 @@ input[type=file] {
     visibility: hidden;
 }
 
-    .dtClubAdmins_wrapper: after, dtClubAdmins_wrapper:before
-
-{
-    right: 14px !important;
-    visibility: hidden;
-}
-
 @media (max-width: 767px) {
     .Create-decesion-form {
         padding: 20px 0;
-
 }
 
     .data-table-wrapper {

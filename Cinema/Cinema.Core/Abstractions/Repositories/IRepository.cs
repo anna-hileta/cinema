@@ -17,6 +17,7 @@ namespace Cinema.Core.Abstractions.Repositories
 
         void Delete(TEntity entity);
         void DeleteById(TId id);
+        IQueryable<TEntity> GetByIdQuaryable(TId id);
         void DeleteMany(IEnumerable<TEntity> entities);
 
         void Update(TEntity entity);

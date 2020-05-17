@@ -1,0 +1,97 @@
+﻿@using Cinema.ViewModels
+@model WorkerViewModel
+@{
+    ViewData["Title"] = "Movies";
+}
+<div class="container-fluid bg-dark" style="color:white;" style="opacity: 0.9;">
+    <div class="data-table-wrapper-club club-wrappers-radius data-table-wrapper">
+        <h1 class="grid-header">Workers in the system</h1>
+        <table id="Workers"  class="dtClubAdmins table table-striped table-bordered table-lg table-responsive-lg" cellspacing="0" width="100%" style="background-color:white;">
+            <thead>
+                <tr>
+                    <th class="th-sm">
+                        Name
+                    </th>
+                    <th class="th-sm">
+                        Father name
+                    </th>
+                    <th class="th-sm">
+                        Surname
+                    </th>
+                    <th>
+                        Passport data
+                    </th>
+                    <th>
+                        Position
+                    </th>
+                    <th>
+                        Edit
+                    </th>
+                    <th>
+                        Delete
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.workers)
+                {
+                <tr class="raport-click-row">
+                    <td>@item.Name</td>
+                    <td>
+                        @if (item.FatherName != null)
+                        {
+                            @item.FatherName
+                        }
+                        else
+                        {
+                            <text>-</text>
+                        }
+                    </td>
+                    <td>
+                        @if (item.Surname != null)
+                        {
+                            @item.Surname
+                        }
+                        else
+                        {
+                            <text>-</text>
+                        }
+                    </td>
+                    <td>
+                        @if (item.PassportData != null)
+                        {
+                            @item.PassportData
+                        }
+                        else
+                        {
+                            <text>-</text>
+                        }
+                    </td>
+                    <td>
+                        @if (item.Position != null)
+                        {
+                            @item.Position.PositionName
+                         }
+                        else
+                        {
+                            <text>-</text>
+                        }
+                    </td>
+                    <td>
+                        <a asp-controller="AdminTables" asp-action="WorkerEdit" asp-route-index="@item.Id" style="justify-content: center; display: flex; color: black;" role="button">
+                            <i class="material-icons">settings</i>
+                        </a>
+                    </td>
+
+                    <td>
+                        <a asp-controller="AdminTables" asp-action="DeleteWorker" asp-route-index="@item.Id" style="justify-content: center;  color: black; display: flex;">
+                            <i class="material-icons">delete</i>
+                        </a>
+                    </td>
+                </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+

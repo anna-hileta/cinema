@@ -6,5 +6,6 @@ namespace Cinema.Core.Abstractions.Services
     public interface ICinemaLocationService : IBasicService<CinemaLocation, int> {
         List<CinemaLocation> GetWithCities();
         List<CinemaLocation> GetWithCitiesAndFood();
+        List<CinemaLocation> GetWithHalls();
     }
 }

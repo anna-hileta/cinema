@@ -12,5 +12,7 @@ namespace Cinema.Core.Entities
         public List<Showing> Showings { get; set; }
         public int? TechnologyId { get; set; }
         public Technology Technology { get; set; }
+        public int? CinemaLocationId { get; set; }
+        public CinemaLocation CinemaLocation { get; set; }
     }
 }

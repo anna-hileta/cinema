@@ -21,5 +21,14 @@ namespace Cinema.Services.Services
             IPDFCreator creator = new PDFCreator(new MovieCheck(pdfData, pdfSettings));
             return await Task.Run(() => creator.GetPDFBytes());
         }
+        public async Task<byte[]> DecesionCreatePDFAsyncForFood(FoodcourtCheck pdfData)
+        {
+            IPDFSettings pdfSettings = new PDFSettings()
+            {
+                Title = string.Format("Check")
+            };
+            IPDFCreator creator = new PDFCreator(new FoodCheck(pdfData, pdfSettings));
+            return await Task.Run(() => creator.GetPDFBytes());
+        }
     }
 }

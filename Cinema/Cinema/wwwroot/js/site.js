@@ -1,4 +1,16 @@
-﻿let cartOpen = false;
+﻿$(document).ready(function () {
+    $('#Workers').DataTable();
+    $('#Movies').DataTable();
+    $('#CinemaLocation').DataTable();
+    $('#FoodAmountsTable').DataTable();
+    $('#CinemaHalll').DataTable();
+    $('#ShowingsTable').DataTable();
+    if ($('#allfoods').length > 0) {
+        FoodcourtDefault();
+    }
+});
+
+let cartOpen = false;
 let ids = [];
 let movieMoney = 0;
 function selectSeat(seatbutton, id, rownumber, seatnumber, money) {
@@ -43,13 +55,6 @@ function BuyMovie() {
         }
     });
 }
-$(document).ready(function () {
-    $('#Movies').DataTable();
-    if ($('#allfoods').length > 0) {
-        FoodcourtDefault();
-    }
-});
-
 
 function FoodcourtDefault() {
     var sel = document.getElementById('allfoods');
@@ -213,6 +218,9 @@ function BuyFood() {
         url: '/Foodcourt/BuyFood',
         contentType: 'application/json; charset=utf-8'
     }).done(m => {
-        alert('Success');
+        if (m > 0) {
+            alert("sed");
+            window.open(`/Foodcourt/CreatePDFCheck/${m}`, "_blank");
+        }
     });
 }

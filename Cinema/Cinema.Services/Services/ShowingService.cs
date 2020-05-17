@@ -22,5 +22,13 @@ namespace Cinema.Services.Services
                 .Include(c => c.Tickets)
                 .First();
         }
+        public List<Showing> GetShowingsInfo()
+        {
+            return repository.GetAll()
+                .Include(m => m.Movie)
+                .Include(c => c.CinemaHall)
+                .ThenInclude(d => d.CinemaLocation)
+                .ToList();
+        }
     }
 }

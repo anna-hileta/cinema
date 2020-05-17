@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace Cinema.ViewModels
 {
-    public class ShowingViewModel
+    public class WorkerViewModel
     {
-        public Showing showings { get; set; }
+        public List<Worker> workers { get; set; }
     }
 }

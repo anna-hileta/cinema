@@ -1,0 +1,80 @@
+﻿@using Cinema.ViewModels
+@model CinemaLocationViewModel
+@{
+    ViewData["Title"] = "Movies";
+}
+<div class="container-fluid bg-dark" style="color:white;" style="opacity: 0.9;">
+    <div class="data-table-wrapper-club club-wrappers-radius data-table-wrapper">
+        <h1 class="grid-header">Cinemas in the system</h1>
+        <table id="CinemaHall"  class="dtClubAdmins table table-striped table-bordered table-lg table-responsive-lg" cellspacing="0" width="100%" style="background-color:white;">
+            <thead>
+                <tr>
+                    <th class="th-sm">
+                        Cinema
+                    </th>
+                    <th class="th-sm">
+                        Cinema hall name
+                    </th>
+                    <th class="th-sm">
+                        Row count
+                    </th>
+                    <th class="th-sm">
+                        Seat count
+                    </th>
+                    <th class="th-sm">
+                        Technology
+                    </th>
+                    <th>
+                        Edit
+                    </th>
+                    <th>
+                        Delete
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.cinemaLocations)
+                {
+                    @foreach (var hall in item.CinemaHalls)
+                    {
+                <tr class="raport-click-row">
+                    <td>@item.CinemaName</td>
+                    <td>
+                        @hall.Name
+                    </td>
+                    <td>
+                        @hall.RowsCount
+                    </td>
+                    <td>
+                        @hall.SeatsCount
+                    </td>
+                    <td>
+                        @if (hall.Technology != null)
+                        {
+                            @hall.Technology.TechnologyName
+                        }
+                        else
+                        {
+                            <text>-</text>
+                        }
+                    </td>
+
+                    <td>
+                        <a asp-controller="AdminTables" asp-action="CinemaLocationEdit" asp-route-index="@item.Id" style="justify-content: center; display: flex; color: black;" role="button">
+                            <i class="material-icons">settings</i>
+                        </a>
+                    </td>
+
+                    <td>
+                        <a asp-controller="AdminTables" asp-action="DeleteCinemaHall" asp-route-index="@hall.Id" style="justify-content: center;  color: black; display: flex;">
+                            <i class="material-icons">delete</i>
+                        </a>
+                    </td>
+                </tr>
+                        }
+                    }
+            </tbody>
+        </table>
+    </div>
+</div>
+

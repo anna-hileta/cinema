@@ -19,8 +19,7 @@
                     @foreach (var i in  Model.showings.Tickets)
                     {
                         <div class="seatdiv">
-                            <button class="seat  "
-                                    @if(i.Status == true){ <text>selectedSeat</text>  }
+                            <button class="seat @if(i.Status == true){<text>selectedSeat</text>}"
                                 onclick="selectSeat(this, @i.Id, @i.RowNumber, @i.SeatNumber, @i.Price)">
                                 <a href=""></a>
                             </button>

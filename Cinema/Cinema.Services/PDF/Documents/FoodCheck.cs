@@ -8,14 +8,14 @@ using Cinema.Core.Entities;
 
 namespace Cinema.Services.PDF.Documents
 {
-    public class MovieCheck : PDFDocument
+    public class FoodCheck : PDFDocument
     {
-        private readonly Check ticket;
+        private readonly FoodcourtCheck ticket;
         private readonly IPDFSettings settings;
-        public MovieCheck(Check ticket) : this(ticket, new PDFSettings())
+        public FoodCheck(FoodcourtCheck ticket) : this(ticket, new PDFSettings())
         {
         }
-        public MovieCheck(Check ticket, IPDFSettings settings) : base(settings)
+        public FoodCheck(FoodcourtCheck ticket, IPDFSettings settings) : base(settings)
         {
             this.ticket = ticket;
             this.settings = settings;
@@ -27,22 +27,14 @@ namespace Cinema.Services.PDF.Documents
             paragraph.Format.SpaceAfter = "3cm";
             paragraph.Format.SpaceBefore = "8cm";
             paragraph.Format.Alignment = ParagraphAlignment.Right;
-
             
-
-            for(int i = 0; i<ticket.TicketChecks.Count; ++i)
+            for(int i = 0; i<ticket.FoodcourtCheckProducts.Count; ++i)
             {
-                if(i == 0)
-                {
-                    paragraph = section.AddParagraph($"For the showing on the day: {ticket.TicketChecks[i].Ticket.Showing.DateAndTime}");
-                    paragraph.Format.Font.Size = 12;
-                    paragraph.Format.SpaceAfter = "1cm";
-                }
-                paragraph = section.AddParagraph($"Ticket with seat number {ticket.TicketChecks[i].Ticket.SeatNumber} and row number {ticket.TicketChecks[i].Ticket.RowNumber}");
+                paragraph = section.AddParagraph($"Food product: {ticket.FoodcourtCheckProducts[i].FoodAmount.FoodProducts.ProductName} with price per one {ticket.FoodcourtCheckProducts[i].FoodAmount.FoodProducts.ProductPrice}");
                 paragraph.Format.Font.Size = 12;
                 paragraph.Format.SpaceAfter = "1cm";
 
-                paragraph = section.AddParagraph($"The price of the ticket: {ticket.TicketChecks[i].Ticket.Price}");
+                paragraph = section.AddParagraph($"Amount of food item: {ticket.FoodcourtCheckProducts[i].AmountOfProduct}");
                 paragraph.Format.Font.Size = 12;
                 paragraph.Format.SpaceAfter = "1cm";
             }

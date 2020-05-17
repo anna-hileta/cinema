@@ -3,5 +3,7 @@ using System.Collections.Generic;
 
 namespace Cinema.Core.Abstractions.Services
 {
-    public interface IFoodcourtCheckService : IBasicService<FoodcourtCheck, int> { }
+    public interface IFoodcourtCheckService : IBasicService<FoodcourtCheck, int> {
+        public FoodcourtCheck GetWithAllInfo(int id);
+    }
 }

@@ -59,10 +59,15 @@ namespace Cinema.DAL.Repositories
         {
             context.RemoveRange(entities);
         }
+        public IQueryable<TEntity> GetByIdQuaryable(TId id)
+        {
+            return context.Set<TEntity>().Where(e => e.Id.Equals(id));
+        }
 
         public void Update(TEntity entity)
         {
-            context.Entry(entity).State = EntityState.Modified;
+            var existing = GetById(entity.Id); ;
+            context.Entry(existing).CurrentValues.SetValues(entity);
         }
 
         public int Count()

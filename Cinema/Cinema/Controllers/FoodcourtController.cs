@@ -18,15 +18,17 @@ namespace Cinema.Controllers
         private readonly IFoodcourtCheckService foodcourtCheckService;
         private readonly IFoodcourtCheckProductService foodcourtCheckProductService;
         private readonly IFoodAmountService foodAmountService;
+        private readonly IPDFService pdfService;
         private readonly UserManager<Worker> userManager;
         private readonly SignInManager<Worker> signInManager;
 
-        public FoodCourtController(ICinemaLocationService cinemaLocationService, IFoodAmountService foodAmountService,
+        public FoodCourtController(ICinemaLocationService cinemaLocationService, IPDFService pdfService, IFoodAmountService foodAmountService,
             IFoodcourtCheckService foodcourtCheckService, IFoodcourtCheckProductService foodcourtCheckProductService, 
             UserManager<Worker> userManager, SignInManager<Worker> signInManager)
         {
             this.cinemaLocationService = cinemaLocationService;
             this.foodcourtCheckService = foodcourtCheckService;
+            this.pdfService = pdfService;
             this.foodAmountService = foodAmountService;
             this.foodcourtCheckProductService = foodcourtCheckProductService;
             this.userManager = userManager;
@@ -69,12 +71,24 @@ namespace Cinema.Controllers
                     foodAmountService.Update(oldFoodAmount);
                 }
 
-                return 1;
+                return checkId.Id;
             }
             catch
             {
                 return 0;
             }
+        }
+        [HttpGet]
+        [Route("/Foodcourt/CreatePDFCheck/{objId}")]
+        public async Task<IActionResult> CreatePDFAsync(int objId)
+        {
+            if (objId <= 0)
+            {
+                throw new ArgumentException("Cannot crated pdf id is not valid");
+            }
+            var check = foodcourtCheckService.GetWithAllInfo(objId);
+            byte[] arr = await pdfService.DecesionCreatePDFAsyncForFood(check);
+            return File(arr, "application/pdf");
         }
 
     }

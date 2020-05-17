@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -59,23 +60,25 @@ namespace Cinema.Controllers
             try
             {
                 var currentUserId = userManager.GetUserId(User);
-                var checkId = checkService.Add(new Check()
+                var checkId =new Check()
                 {
+                    TicketChecks = new List<TicketCheck>(),
                     PaidPrice = (decimal)ticket.money,
                     TransactionDateAndTime = DateTime.Now,
                     WorkerId = Guid.Parse(currentUserId)
-                }); 
+                }; 
                 for(int i=0; i < ticket.TicketIds.Count; ++i)
                 {
-                    ticketcheckService.Add(new TicketCheck()
-                    {
-                        CheckId = checkId.Id,
-                        TicketId = ticket.TicketIds[i]
-                    });
                     var tick = ticketService.GetById(ticket.TicketIds[i]);
+                    checkId.TicketChecks.Add(
+                        new TicketCheck()
+                    {
+                        TicketId = tick.Id
+                    });
                     tick.Status = true;
                     ticketService.Update(tick);
                 }
+                checkService.Add(checkId);
 
                 return checkId.Id;
             }

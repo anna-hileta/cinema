@@ -28,7 +28,9 @@ namespace Cinema.DAL
         public DbSet<Ticket> Tickets { get; set; }
         public DbSet<TicketCheck> TicketChecks { get; set; }
 
-        public CinemaContext(DbContextOptions<CinemaContext> options) : base(options) { }
+        public CinemaContext(DbContextOptions<CinemaContext> options) : base(options) {
+            Database.SetCommandTimeout(9000);
+        }
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);

@@ -1,0 +1,84 @@
+﻿@using Cinema.ViewModels
+@model FoodAmountsViewModel
+@{
+    ViewData["Title"] = "Movies";
+}
+<div class="container-fluid bg-dark" style="color:white;" style="opacity: 0.9;">
+    <div class="data-table-wrapper-club club-wrappers-radius data-table-wrapper">
+        <h1 class="grid-header">Showings in the system</h1>
+        <table id="FoodAmountsTable"  class="dtClubAdmins table table-striped table-bordered table-lg table-responsive-lg" cellspacing="0" width="100%" style="background-color:white;">
+            <thead>
+                <tr>
+                    <th class="th-sm">
+                       Food products
+                    </th>
+                    <th class="th-sm">
+                        Price per product
+                    </th>
+                    <th>
+                       Cinema
+                    </th>
+                    <th>
+                        Amount of product in a cinema
+                    </th>
+                    <th>
+                        Edit
+                    </th>
+                    <th>
+                        Delete
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.FoodAmounts)
+                {
+                <tr class="raport-click-row">
+                    <td>@item.FoodProducts.ProductName</td>
+                    <td>
+                        @if (item.FoodProducts.ProductPrice != null)
+                        {
+                            @item.FoodProducts.ProductPrice
+                        }
+                        else
+                        {
+                            <text>-</text>
+                        }
+                    </td>
+                    <td>
+                        @if (item.CinemaLocation.CinemaName != null)
+                        {
+                            @item.CinemaLocation.CinemaName
+                        }
+                        else
+                        {
+                            <text>-</text>
+                        }
+                    </td>
+                    <td>
+                        @if (item.ProductAmount != null)
+                        {
+                            @item.ProductAmount
+                        }
+                        else
+                        {
+                            <text>-</text>
+                        }
+                    </td>
+                    <td>
+                        <a asp-controller="AdminTables" asp-action="WorkerEdit" asp-route-index="@item.Id" style="justify-content: center; display: flex; color: black;" role="button">
+                            <i class="material-icons">settings</i>
+                        </a>
+                    </td>
+
+                    <td>
+                        <a asp-controller="AdminTables" asp-action="DeleteFoodAmount" asp-route-index="@item.Id" style="justify-content: center;  color: black; display: flex;">
+                            <i class="material-icons">delete</i>
+                        </a>
+                    </td>
+                </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+

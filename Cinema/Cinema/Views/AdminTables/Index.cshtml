@@ -9,11 +9,11 @@
                 <span class="club-block club-wrappers-radius" style="justify-content: space-between; opacity: 90%;">
                     <div class="club-block-submit rounded">
                         <h1 style="color:white;">Administrate the workers</h1>
-                        <a class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" style="width: 100%;">
+                        <a class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" style="width: 100%;" asp-controller="Account" asp-action="Register">
                             Add a worker
                         </a>
                         <br>
-                        <a class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" style="width: 100%;">
+                        <a class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" style="width: 100%;"  asp-controller="AdminTables" asp-action="WorkerTable">
                             Edit/delete current workers
                         </a>
                     </div>
@@ -28,7 +28,7 @@
                             Add a cinema
                         </a>
                         <br>
-                        <a class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" style="width: 100%;">
+                        <a class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" style="width: 100%;"   asp-controller="AdminTables" asp-action="CinemaLocationTable">
                             Edit/delete current cinemas
                         </a>
                         <br>
@@ -36,7 +36,7 @@
                             Add a cinema hall
                         </a>
                         <br>
-                        <a class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" style="width: 100%;">
+                        <a class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" style="width: 100%;"  asp-controller="AdminTables" asp-action="CinemaHallTable">
                             Edit/delete current cinema halls
                         </a>
                     </div>
@@ -68,11 +68,11 @@
                             Edit/delete a movie
                         </a>
                         <br>
-                        <a class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" style="width: 100%;">
+                        <a asp-controller="AdminTables" asp-action="ShowingTable" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" style="width: 100%;">
                             Edit/delete a showing
                         </a>
                         <br>
-                        <a class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" style="width: 100%;">
+                        <a asp-controller="AdminTables" asp-action="FoodAmountsTable" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" style="width: 100%;">
                             Edit/delete a food amounts
                         </a>
                     </div>
