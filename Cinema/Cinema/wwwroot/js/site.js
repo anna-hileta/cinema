@@ -3,12 +3,21 @@
     $('#Movies').DataTable();
     $('#CinemaLocation').DataTable();
     $('#FoodAmountsTable').DataTable();
-    $('#CinemaHalll').DataTable();
+    $('#CinemaHallTable').DataTable();
     $('#ShowingsTable').DataTable();
     if ($('#allfoods').length > 0) {
         FoodcourtDefault();
     }
 });
+
+function DisplayShowings() {
+    var sel = document.getElementById('MovieSelection');
+    var allfoodsclasses = $('.showingsbyCinema');
+    for (var i = 0; i < allfoodsclasses.length; ++i) {
+        allfoodsclasses[i].style.display = 'none';
+    }
+    allfoodsclasses[sel.value].style.display = 'block';
+}
 
 let cartOpen = false;
 let ids = [];

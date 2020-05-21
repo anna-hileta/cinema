@@ -1,0 +1,82 @@
+﻿@using Cinema.ViewModels
+@model EditMovieViewModel
+@{
+    ViewData["Title"] = "MovieEdit";
+}
+    <form class="container bg-dark m-5 pt-2 pb-5 pr-5 pl-5 club-wrappers-radius" style="opacity: 0.9; color: white;" asp-action="MovieCreate" asp-controller="AdminTables" enctype="multipart/form-data">
+        <div class="row">
+            <div class="col-7">
+                <h1>Create a movie</h1>
+                @Html.HiddenFor(model => model.id)
+                <div asp-validation-summary="All" class="text-danger"></div>
+                <div class="form-group">
+                    <label class="control-label">Movie title</label>
+                    <input name="MovieTitle" class="form-control">
+                    <span id="clubName-clubAdmins-mistake" class="text-danger" style="display: none;">Please insert some text in the input</span>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label">Country of origin name</label>
+                    <input name="CountryOfOrigin" class="form-control">
+                    <span id="clubName-clubAdmins-mistake" class="text-danger" style="display: none;">Please insert some text in the input</span>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label">Director name</label>
+                    <input name="DirectorName"  class="form-control">
+                    <span id="clubName-clubAdmins-mistake" class="text-danger" style="display: none;">Please insert some text in the input</span>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label">Premiere date</label>
+                    @Html.TextBoxFor(x => x.PremiereDate,
+                        new { @autocomplete = "off", @type = "date", @name= "PremiereDate",  @placeholder = "Choose a date...", @id = "datepickerBirthday", @class = "form-control" })
+                    <span id="clubName-clubAdmins-mistake" class="text-danger" style="display: none;">Please insert some text in the input</span>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label">End date</label>
+                    @Html.TextBoxFor(x => x.EndDate,
+                        new { @autocomplete = "off", @type = "date", @name = "EndDate", @placeholder = "Choose a date...", @id = "datepickerBirthday", @class = "form-control" })
+                    <span id="clubName-clubAdmins-mistake" class="text-danger" style="display: none;">Please insert some text in the input</span>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label">Movie length</label>
+                    @Html.TextBoxFor(x => x.Length,
+                        new { @autocomplete = "off", @type = "time", @name = "Length", @placeholder = "Choose a date...", @id = "datepickerBirthday", @class = "form-control" })
+                    <span  id="clubName-clubAdmins-mistake" class="text-danger" style="display: none;">Please insert some text in the input</span>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label">Poster link</label>
+                    <input name="Poster" id="clubName-clubAdmins" class="form-control">
+                    <span id="clubName-clubAdmins-mistake" class="text-danger" style="display: none;">Please insert some text in the input</span>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label">Movie description</label>
+                    <textarea name="Description" id="clubDescription-clubAdmins" class="form-control" style="min-height: 200px;"> </textarea>
+                    <span id="clubDescription-clubAdmins-mistake" class="text-danger" style="display: none;">Опис куреню не має перевищувати 1024 символи.</span>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label" style="justify-content: flex-start; display: flex;">Genres</label>
+                    <div class="form-control" style="    height: fit-content; display: flex; flex-direction: column;">
+                        @foreach (var a in Model.genre)
+                        {
+                        <div style="display:flex; flex-direction: row;">
+
+                            <input type="checkbox" name="genre"
+                                   value="@a.GenreId" checked="@a.IsSelected" /><span>@a.GenreName</span>
+                            </div>
+                            }
+                    </div>
+                    <span asp-validation-for="@Model.genre" id="clubName-clubAdmins-mistake" class="text-danger" style="display: none;">Please insert some text in the input</span>
+                </div>
+                <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" style="width: 100%;" type="submit">
+                    Save
+                </button>
+            </div>
+    </form>
+

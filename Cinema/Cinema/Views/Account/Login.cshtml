@@ -5,16 +5,16 @@
 
     <form class="container bg-dark m-5 pt-2 pb-5 pr-5 pl-5 club-wrappers-radius" style="opacity: 90%; color: white;" asp-controller="Account" asp-action="Login" method="post" asp-route-returnurl="@returnUrl">
         <div class="row">
-            <div class="col-7" style="display: flex; flex-direction: column;">
+            <div class="col-7" style="display: flex; flex-direction: column; align-self: stretch; width: 50%;     margin: 0 auto;">
                 <h1>Login</h1>
                 <div style="display: flex; flex-direction:row; justify-content: space-between;">
                     <label class="control-label">Login</label>
-                    <input type="text" name="username" value="" />
+                    <input type="text" name="username" value="" style="flex-basis: 50%;"/>
                 </div>
                 <br/>
-                <div style="display: flex; flex-direction:row; justify-content: space-between;">
+                <div style="display: flex; flex-direction: row; justify-content: space-between;">
                     <label class="control-label">Password</label>
-                    <input type="password" name="password" value="" />
+                    <input type="password" name="password" value="" style="flex-basis: 50%;"/>
                 </div>
                 <br />
                 <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" style="width: 100%;" type="submit">

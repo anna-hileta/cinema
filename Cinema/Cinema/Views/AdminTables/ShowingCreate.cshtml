@@ -1,0 +1,38 @@
+﻿@model ShowingCreateAndEditViewModel
+@{
+    ViewData["Title"] = "MovieEdit";
+}
+<form class="container bg-dark m-5 pt-2 pb-5 pr-5 pl-5 club-wrappers-radius" style="opacity: 0.9; color: white;" asp-action="ShowingCreate" asp-controller="AdminTables" enctype="multipart/form-data">
+    <div class="row">
+        <div class="col-7">
+            <h1>Create a showing</h1>
+            <div asp-validation-summary="All" class="text-danger"></div>
+
+            <label class="control-label">Cinema hall</label>
+            <select id="typeSelect" name="Cinema" class="form-control">
+                @foreach (var type in Model.cinemaLocations)
+                {
+                    <option value="@type.Item1">@type.Item2</option>
+                }
+            </select>
+            <br />
+            <label class="control-label">Movie</label>
+            <select id="typeSelect" name="Movie" class="form-control">
+                @foreach (var type in Model.movies)
+                {
+                    <option value="@type.Id">@type.Title</option>
+                }
+            </select>
+            <br />
+            <div class="form-group">
+                <label class="control-label" style="display:flex; justify-content: flex-start;">Date and time of the showing</label>
+                <input type="datetime-local" name="DateAndTime" class="form-control"/>
+                <span id="clubName-clubAdmins-mistake" class="text-danger" style="display: none;">Please insert some text in the input</span>
+            </div>
+            <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" style="width: 100%;" type="submit">
+                Save
+            </button>
+        </div>
+    </div>
+</form>
+

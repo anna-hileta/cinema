@@ -432,7 +432,7 @@ btn:active {
 .btn-primary {
     background-color: #3c5438 !important;
     margin-top: 15px;
-    color: #fff;
+    color: black;
 }
 
     .upload-btn-wrapper
@@ -477,7 +477,44 @@ input[type=file] {
     visibility: hidden;
 }
 
-@media (max-width: 767px) {
+
+table.dataTable tbody tr .context-menu-one td a
+
+{
+    color: black;
+}
+
+
+
+.page-item.active .page-link {
+    color: #000;
+    background-color: black;
+    border-color: none;
+    box-shadow: 0 0 0 0.2rem black;
+}
+
+.page-link {
+    background: black !important;
+    color: #ffffff !important;
+}
+
+    .page-link &:hover, &:active, &:focus {
+        background: black !important;
+        color: #fff !important;
+        border-color: #fff;
+    }
+
+
+
+.page-item.disabled .page-link {
+    background: black !important;
+}
+
+.page-item.active .page-link {
+    border-color: black;
+}
+
+@media (max-width: 900px) {
     .Create-decesion-form {
         padding: 20px 0;
 }

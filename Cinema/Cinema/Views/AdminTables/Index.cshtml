@@ -24,7 +24,7 @@
                 <span class="club-block club-wrappers-radius" style="justify-content: space-between; opacity: 90%;">
                     <div class="club-block-submit rounded">
                         <h1 style="color:white;">Administrate the cinemas</h1>
-                        <a class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" style="width: 100%;">
+                        <a class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" style="width: 100%;" asp-controller="AdminTables" asp-action="CinemaCreate">
                             Add a cinema
                         </a>
                         <br>
@@ -32,7 +32,7 @@
                             Edit/delete current cinemas
                         </a>
                         <br>
-                        <a class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" style="width: 100%;">
+                        <a class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" style="width: 100%;" asp-controller="AdminTables" asp-action="CinemaHallCreate">
                             Add a cinema hall
                         </a>
                         <br>
@@ -47,13 +47,13 @@
                 <span class="club-block club-wrappers-radius" style="justify-content: space-between; opacity: 90%;">
                     <div class="club-block-submit rounded">
                         <h1 style="color:white;">Add new things</h1>
-                        <a class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" style="width: 100%;">
+                        <a asp-controller="AdminTables" asp-action="MovieCreate" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" style="width: 100%;">
                             Add a movie
                         </a>
-                        <a class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" style="width: 100%;">
+                        <a asp-controller="AdminTables" asp-action="ShowingCreate" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" style="width: 100%;">
                             Add a showing
                         </a>
-                        <a class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" style="width: 100%;">
+                        <a asp-controller="AdminTables" asp-action="FoodAmountCreate" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" style="width: 100%;">
                             Add a food amount
                         </a>
                     </div>

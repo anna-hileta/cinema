@@ -18,6 +18,6 @@ namespace Cinema.ViewModels
         public DateTime Length { get; set; }
         public string Poster { get; set; }
         public string Description { get; set; }
-        public List<Genre> genre { get; set; }
+        public List<GenreSelectionViewModel> genre { get; set; }
     }
 }

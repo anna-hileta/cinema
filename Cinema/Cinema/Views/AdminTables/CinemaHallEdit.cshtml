@@ -1,0 +1,51 @@
+﻿@model CinemaLocationsAndTechnologyViewModel
+@{
+    ViewData["Title"] = "CinemaHallCreate";
+}
+
+<form class="container bg-dark m-5 pt-2 pb-5 pr-5 pl-5 club-wrappers-radius" style="opacity: 0.9; color: white;" asp-action="CinemaHallCreate" asp-controller="AdminTables" enctype="multipart/form-data">
+    <div class="row">
+        <div class="col-7">
+            <h1>Edit a cinema hall</h1>
+            <input type="hidden" value="@Model.cinemaHall.Id" name="index" />
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <div class="form-group">
+                <label class="control-label">Cinema hall name</label>
+                <input name="Name" asp-for="@Model.cinemaHall.Name" value="@Model.cinemaHall.Name" class="form-control">
+                <span id="clubName-clubAdmins-mistake" class="text-danger" style="display: none;">Please insert some text in the input</span>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label">Rows count</label>
+                <input name="Rows" asp-for="@Model.cinemaHall.RowsCount" value="@Model.cinemaHall.RowsCount" class="form-control">
+                <span id="clubName-clubAdmins-mistake" class="text-danger" style="display: none;">Please insert some text in the input</span>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label" style="justify-content: flex-start; display: flex;">Seats count</label>
+                <input name="Seats" asp-for="@Model.cinemaHall.SeatsCount" value="@Model.cinemaHall.SeatsCount" class="form-control">
+                <span id="clubName-clubAdmins-mistake" class="text-danger" style="display: none;">Please insert some text in the input</span>
+            </div>
+
+            <label class="control-label">Technology</label>
+            <select id="typeSelect" name="Technology" class="form-control">
+                @foreach (var type in Model.technologies)
+                {
+                    <option value="@type.Id">@type.TechnologyName</option>
+                }
+            </select>
+            <br />
+            <label class="control-label">Cinema</label>
+            <select id="typeSelect" name="Cinema" class="form-control">
+                @foreach (var type in Model.cinemaLocations)
+                {
+                    <option value="@type.Id">@type.CinemaName</option>
+                }
+            </select>
+            <br />
+            <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" style="width: 100%;" type="submit">
+                Save
+            </button>
+        </div>
+</form>
+

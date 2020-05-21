@@ -17,6 +17,7 @@ namespace Cinema.Controllers
         private readonly IMovieService movieService;
         private readonly IWorkerService workerService;
         private readonly ITicketCheckService ticketcheckService;
+        private readonly ICinemaLocationService cinemaLocationService;
         private readonly ICheckService checkService;
         private readonly IPDFService pdfService;
         private readonly ITicketService ticketService;
@@ -24,9 +25,10 @@ namespace Cinema.Controllers
         private readonly UserManager<Worker> userManager;
         private readonly SignInManager<Worker> signInManager;
 
-        public MovieController( IMovieService movieService, IPDFService pdfService, ITicketService ticketService, IWorkerService workerService, ITicketCheckService ticketcheckService, ICheckService checkService, IShowingService showingService, UserManager<Worker> userManager, SignInManager<Worker> signInManager)
+        public MovieController( IMovieService movieService, ICinemaLocationService cinemaLocationService, IPDFService pdfService, ITicketService ticketService, IWorkerService workerService, ITicketCheckService ticketcheckService, ICheckService checkService, IShowingService showingService, UserManager<Worker> userManager, SignInManager<Worker> signInManager)
         {
             this.workerService = workerService;
+            this.cinemaLocationService = cinemaLocationService;
             this.movieService = movieService;
             this.pdfService = pdfService;
             this.ticketcheckService = ticketcheckService;
@@ -39,15 +41,31 @@ namespace Cinema.Controllers
 
         public IActionResult Index()
         {
-            var movie = movieService.Get();
+            var movie = movieService.GetWithAllInfo()
+                .FindAll(a => a.Showings.Count > 0).FindAll(v => v.EndDate >= DateTime.Today);
             return View(new MovieViewModel() { movies = movie});
         }
         public IActionResult Movie(int index)
         {
-            var movies = movieService.GetWithAllInfo();
-            var movie = movies.Where(m => m.Id == index)
-                 .First();
-            return View(new MovieViewModel() { movie = movie });
+            var movies = movieService.GetWithAllInfoForOne(index);
+            List < CinemaLocation> cinemas = 
+                new List<CinemaLocation>();
+            Dictionary<CinemaLocation, List<int>> cinemasAndShowing = new Dictionary<CinemaLocation, List<int>>();
+            foreach(var item in movies.Showings)
+            {
+                bool IsCurrent = (item.DateAndTime >= DateTime.Today);
+                if (!cinemas.Contains(item.CinemaHall.CinemaLocation) && IsCurrent)
+                {
+                    cinemas.Add(item.CinemaHall.CinemaLocation);
+                    cinemasAndShowing.Add(item.CinemaHall.CinemaLocation, new List<int>());
+                }
+                if (IsCurrent)
+                {
+                    cinemasAndShowing[item.CinemaHall.CinemaLocation].Add(item.Id);
+                }
+            }
+
+            return View(new MovieViewModel() { movie = movies, cinemaLocations = cinemas, cinemasAndShowing = cinemasAndShowing });
         }
         public IActionResult MovieShowing(int showingId)
         {

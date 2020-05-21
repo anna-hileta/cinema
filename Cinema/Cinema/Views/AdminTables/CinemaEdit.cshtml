@@ -1,0 +1,34 @@
+﻿@model CinemasViewModel
+@{
+    ViewData["Title"] = "MovieEdit";
+}
+<form class="container bg-dark m-5 pt-2 pb-5 pr-5 pl-5 club-wrappers-radius" style="opacity: 0.9; color: white;" asp-action="CinemaEdit" asp-controller="AdminTables" enctype="multipart/form-data">
+    <div class="row">
+        <div class="col-7">
+            <h1>Edit a cinema</h1>
+            <input type="hidden" value="@Model.cinemaLocation.Id" name="index" />
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <div class="form-group">
+                <label class="control-label">Cinema name</label>
+                <input name="CinemaName" asp-for="@Model.cinemaLocation.CinemaName" value="@Model.cinemaLocation.CinemaName" class="form-control">
+                <span id="clubName-clubAdmins-mistake" class="text-danger" style="display: none;">Please insert some text in the input</span>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label">City</label>
+                <input name="city" asp-for="@Model.cinemaLocation.City.CityName" value="@Model.cinemaLocation.City.CityName" class="form-control">
+                <span id="clubName-clubAdmins-mistake" class="text-danger" style="display: none;">Please insert some text in the input</span>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label" style="justify-content: flex-start; display: flex;">Address</label>
+                <input name="Address" asp-for="@Model.cinemaLocation.Address" value="@Model.cinemaLocation.Address" class="form-control">
+                <span id="clubName-clubAdmins-mistake" class="text-danger" style="display: none;">Please insert some text in the input</span>
+            </div>
+            <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" style="width: 100%;" type="submit">
+                Save
+            </button>
+        </div>
+        </div>
+</form>
+

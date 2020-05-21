@@ -56,18 +56,34 @@
         </div>
     </div>
 </div>
-<div class="showings">
-    <h1 class="movie-title">Сеанси</h1>
-    <table class="allShowings">
-        @foreach(var m in @Model.movie.Showings){
-            <tr class="showing-table-padding">
-                <td class="li-key">@m.DateAndTime.ToShortDateString()</td>
-                <td class="li-value">
-                    <a asp-controller="Movie" asp-action="MovieShowing" asp-route-showingId="@m.Id">
-                        @m.DateAndTime.Hour : @m.DateAndTime.Minute
-                    </a>
-                </td>
-            </tr>
+<div class="showings" style="display: flex; flex-direction: column;">
+    <h1 class="movie-title">Showings</h1>
+    <label class="control-label" style="color: white; font-size: 16px;">Choose a cinema</label>
+    <select id="MovieSelection" name="typeSelect" class="form-control" onchange="DisplayShowings()">
+        @foreach (var type in Model.cinemaLocations)
+        {
+            <option value="@Model.cinemaLocations.IndexOf(type)">@type.CinemaName</option>
         }
-    </table>
+    </select>
+    <div class="allShowings">
+        @foreach (var type in Model.cinemaLocations)
+        {
+                <div class="showingsbyCinema" style="display: none;">
+            @foreach (var m in @Model.movie.Showings)
+            {
+                    @if (m.DateAndTime >= DateTime.Today && Model.cinemasAndShowing[type].Contains(m.Id))
+                    {
+                        <div style="display: flex; flex-direction:row; margin: 15px;">
+                            <div style="color: white; font-size: 20px; padding-right: 20px;">@m.DateAndTime.ToShortDateString() in cinema hall "@m.CinemaHall.Name"</div>
+                            <div style="color: white; font-size: 20px;">
+                                <a style="color: white; font-size: 20px;" asp-controller="Movie" asp-action="MovieShowing" asp-route-showingId="@m.Id">
+                                    @m.DateAndTime.Hour : @m.DateAndTime.Minute
+                                </a>
+                            </div>
+                        </div>
+                    }
+            }
+                </div>
+        }
+        </div>
 </div>

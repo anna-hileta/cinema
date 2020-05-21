@@ -6,8 +6,10 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using WM.MDBBlazor;
 
 namespace Cinema.Controllers
 {
@@ -15,19 +17,25 @@ namespace Cinema.Controllers
     {
         private readonly IMovieService movieService;
         private readonly IGenreService genreService;
+        private readonly ICityService cityService;
         private readonly IWorkerService workerService;
+        private readonly ITechnologyService technologyService;
         private readonly IDirectorService directorService;
         private readonly ICountryOfOriginService countryOfOriginService;
         private readonly ICinemaLocationService cinemaLocationService;
         private readonly IFoodAmountService foodAmountService;
+        private readonly IFoodProductsService foodProductsService;
         private readonly IShowingService showingService;
         private readonly ICinemaHallService cinemaHallService;
         private readonly UserManager<Worker> userManager;
         private readonly SignInManager<Worker> signInManager;
 
-        public AdminTablesController(ICinemaLocationService cinemaLocationService, IFoodAmountService foodAmountService, ICinemaHallService cinemaHallService, IDirectorService directorService, IWorkerService workerService, ICountryOfOriginService countryOfOriginService, IMovieService movieService, IGenreService genreService, IShowingService showingService, UserManager<Worker> userManager, SignInManager<Worker> signInManager)
+        public AdminTablesController(ICinemaLocationService cinemaLocationService, IFoodProductsService foodProductsService, ITechnologyService technologyService, ICityService cityService, IFoodAmountService foodAmountService, ICinemaHallService cinemaHallService, IDirectorService directorService, IWorkerService workerService, ICountryOfOriginService countryOfOriginService, IMovieService movieService, IGenreService genreService, IShowingService showingService, UserManager<Worker> userManager, SignInManager<Worker> signInManager)
         {
+            this.foodProductsService = foodProductsService;
             this.directorService = directorService;
+            this.technologyService = technologyService;
+            this.cityService = cityService;
             this.foodAmountService = foodAmountService;
             this.cinemaHallService = cinemaHallService;
             this.cinemaLocationService = cinemaLocationService;
@@ -55,8 +63,12 @@ namespace Cinema.Controllers
         }
         public IActionResult MovieEdit(int index)
         {
-            var genres = genreService.Get();
             var movie = movieService.GetWithAllInfoForOne(index);
+            var genres = genreService.Get().Select(a => new GenreSelectionViewModel() { 
+                GenreId = a.Id,
+                GenreName = a.GenreName,
+                IsSelected = movie.MovieGenres.Where(b => b.GenreId == a.Id).Any()
+            }).ToList();
             return View(new EditMovieViewModel() { id = movie.Id, CountryOfOrigin = movie.CountryOfOrigin.Name,
                 Description = movie.Description, DirectorName = movie.Director.DirectorName,
                 EndDate = movie.EndDate, Length = movie.Length, Poster = movie.Poster,
@@ -65,13 +77,27 @@ namespace Cinema.Controllers
         [HttpPost]
         public IActionResult Edit(EditMovieViewModel model)
         {
-            var movie = movieService.GetById(model.id);
+            var movie = movieService.GetByIdQueryable(model.id)
+                .Include(a => a.MovieGenres).First();
             movie.Length = model.Length;
             movie.Title = model.Title;
             movie.EndDate = model.EndDate;
             movie.PremiereDate = model.PremiereDate;
             movie.Poster = model.Poster;
             movie.Description = model.Description;
+            var genres = Request.Form["genre"];
+            foreach(var genre in genres)
+            {
+                var genreId = int.Parse(genre);
+                if (movie.MovieGenres.Find(a => a.GenreId == genreId) == null)
+                {
+                    movie.MovieGenres.Add(new MovieGenre()
+                    {
+                        GenreId = genreId,
+                        MovieId = movie.Id
+                    });
+                }
+            }
 
             var director = directorService.Get().Where(m => m.DirectorName == model.DirectorName).FirstOrDefault();
             if(director != null)
@@ -106,6 +132,74 @@ namespace Cinema.Controllers
             movieService.Update(movie);
             return RedirectToAction("MovieTable");
         }
+        public IActionResult MovieCreate()
+        {
+            var genres = genreService.Get().Select(a => new GenreSelectionViewModel()
+            {
+                GenreId = a.Id,
+                GenreName = a.GenreName,
+                IsSelected = false
+            }).ToList();
+            return View(new EditMovieViewModel()
+            {
+                genre = genres
+            });
+        }
+        [HttpPost]
+        public IActionResult MovieCreate(EditMovieViewModel model, string MovieTitle, string CountryOfOrigin, string DirectorName, DateTime PremiereDate, DateTime EndDate, DateTime Length, string Poster, string Description)
+        {
+            var movie = new Movie() {
+                Description = Description,
+                EndDate = EndDate,
+                Length = Length,
+                Poster = Poster,
+                PremiereDate = PremiereDate,
+                Title = MovieTitle,
+                MovieGenres = new List<MovieGenre>()
+            };
+            var director = directorService.Get().Find(a => a.DirectorName == DirectorName);
+            if (director != null)
+            {
+                movie.DirectorId = director.Id;
+                movie.Director = director;
+            }
+            else
+            {
+                director = directorService.Add(new Director()
+                {
+                    DirectorName = model.DirectorName
+                });
+                movie.DirectorId = director.Id;
+                movie.Director = director;
+            }
+            var genres = Request.Form["genre"];
+            foreach (var genre in genres)
+            {
+                var genreId = int.Parse(genre);
+                movie.MovieGenres.Add(new MovieGenre()
+                {
+                    GenreId = genreId,
+                    MovieId = movie.Id
+                });
+            }
+            var countryOfOrigin = countryOfOriginService.Get().Where(m => m.Name == CountryOfOrigin).FirstOrDefault();
+            if (countryOfOrigin != null)
+            {
+                movie.CountryOfOriginId = countryOfOrigin.Id;
+                movie.CountryOfOrigin = countryOfOrigin;
+            }
+            else
+            {
+                countryOfOrigin = countryOfOriginService.Add(new CountryOfOrigin()
+                {
+                    Name = model.CountryOfOrigin
+                });
+                movie.CountryOfOriginId = countryOfOrigin.Id;
+                movie.CountryOfOrigin = countryOfOrigin;
+            }
+            movieService.Add(movie);
+            return RedirectToAction("MovieTable");
+        }
         public IActionResult WorkerTable()
         {
             var worker = workerService.GetWithAllInfo();
@@ -126,6 +220,70 @@ namespace Cinema.Controllers
             cinemaLocationService.Delete(index);
             return RedirectToAction("CinemaLocationTable");
         }
+        public IActionResult CinemaCreate()
+        {
+            return View();
+        }
+        [HttpPost]
+        public IActionResult CinemaCreate(string Address, string city, string CinemaName)
+        {
+            var CinemaLocation = new CinemaLocation()
+            {
+                Address = Address,
+                CinemaHalls = new List<CinemaHall>(),
+                CinemaName = CinemaName,
+                FoodAmounts = new List<FoodAmount>()
+            };
+            var City = cityService.Get().Find(a => a.CityName == city);
+            if (City != null)
+            {
+                CinemaLocation.CityId = City.Id;
+                CinemaLocation.City = City;
+            }
+            else
+            {
+                City = cityService.Add(new City()
+                {
+                    CityName = city
+                });
+                CinemaLocation.CityId = City.Id;
+                CinemaLocation.City = City;
+            }
+            cinemaLocationService.Add(CinemaLocation);
+            return RedirectToAction("CinemaLocationTable");
+        }
+
+        public IActionResult CinemaEdit(int index)
+        {
+            var cinemas = cinemaLocationService.GetByIdQueryable(index)
+                .Include(a => a.City).First();
+            return View(new CinemasViewModel() { cinemaLocation = cinemas });
+        }
+        [HttpPost]
+        public IActionResult CinemaEdit(int index, string Address, string city, string CinemaName)
+        {
+            var CinemaLocation = cinemaLocationService.GetById(index);
+            CinemaLocation.Address = Address;
+            CinemaLocation.CinemaName = CinemaName;
+
+            var City = cityService.Get().Find(a => a.CityName == city);
+            if (City != null)
+            {
+                CinemaLocation.CityId = City.Id;
+                CinemaLocation.City = City;
+            }
+            else
+            {
+                City = cityService.Add(new City()
+                {
+                    CityName = city
+                });
+                CinemaLocation.CityId = City.Id;
+                CinemaLocation.City = City;
+            }
+            cinemaLocationService.Update(CinemaLocation);
+            return RedirectToAction("CinemaLocationTable");
+        }
         public IActionResult CinemaHallTable()
         {
             var cinemaHalls = cinemaLocationService.GetWithHalls();
@@ -136,20 +294,183 @@ namespace Cinema.Controllers
             cinemaHallService.Delete(index);
             return RedirectToAction("CinemaHallTable");
         }
+        public IActionResult CinemaHallCreate()
+        {
+            var technologies = technologyService.Get();
+            var cinemas = cinemaLocationService.Get();
+            return View(new CinemaLocationsAndTechnologyViewModel() { cinemaLocations = cinemas, technologies = technologies});
+        }
+        [HttpPost]
+        public IActionResult CinemaHallCreate(string Name, string Rows, string Seats, int Technology, int Cinema)
+        {
+            var CinemaHall = new CinemaHall()
+            {
+                Name = Name,
+                RowsCount = int.Parse(Rows),
+                SeatsCount = int.Parse(Seats)
+            };
+            var technology = technologyService.GetById(Technology);
+            CinemaHall.TechnologyId = technology.Id;
+            CinemaHall.Technology = technology;
+            var CinemaLocation = cinemaLocationService.GetById(Cinema);
+            CinemaHall.CinemaLocationId = CinemaLocation.Id;
+            CinemaHall.CinemaLocation = CinemaLocation;
+
+            cinemaHallService.Add(CinemaHall);
+            return RedirectToAction("CinemaHallTable");
+        }
+        public IActionResult CinemaHallEdit(int index)
+        {
+            var cinemaHall = cinemaHallService.GetById(index);
+            var technologies = technologyService.Get();
+            var cinemas = cinemaLocationService.Get();
+            return View(new CinemaLocationsAndTechnologyViewModel() { cinemaHall = cinemaHall, cinemaLocations = cinemas, technologies = technologies });
+        }
+        [HttpPost]
+        public IActionResult CinemaHallEdit(int index, string Name, string Rows, string Seats, int Technology, int Cinema)
+        {
+            var CinemaHall = cinemaHallService.GetById(index);
+            CinemaHall.Name = Name;
+            CinemaHall.RowsCount = int.Parse(Rows);
+            CinemaHall.SeatsCount = int.Parse(Seats);
+            var technology = technologyService.GetById(Technology);
+            CinemaHall.TechnologyId = technology.Id;
+            CinemaHall.Technology = technology;
+            var CinemaLocation = cinemaLocationService.GetById(Cinema);
+            CinemaHall.CinemaLocationId = CinemaLocation.Id;
+            CinemaHall.CinemaLocation = CinemaLocation;
+
+            cinemaHallService.Update(CinemaHall);
+            return RedirectToAction("CinemaHallTable");
+        }
         public IActionResult ShowingTable()
         {
             var showings = showingService.GetShowingsInfo();
             return View(new ShowingsViewModel() { showings = showings });
+        }
+        public IActionResult ShowingCreate()
+        {
+            var movies = movieService.Get().FindAll(a => a.EndDate >= DateTime.Today).ToList();
+            var cinemas = cinemaLocationService.GetWithHalls();
+            List<Tuple<int, string>> cinemaLocations = new List<Tuple<int, string>>();
+            string temp;
+            foreach(var item in cinemas)
+            {
+                foreach(var hall in item.CinemaHalls)
+                {
+                    temp = item.CinemaName + ", Hall " + hall.Name;
+                    cinemaLocations.Add(new Tuple<int, string>(hall.Id, temp));
+                }
+            }
+            return View(new ShowingCreateAndEditViewModel() { cinemaLocations = cinemaLocations, movies = movies });
+        }
+        [HttpPost]
+        public IActionResult ShowingCreate(int Cinema, int Movie, DateTime DateAndTime)
+        {
+            var Showing = new Showing()
+            {
+                DateAndTime = DateAndTime
+            };
+            var CinemaHall = cinemaHallService.GetById(Cinema);
+            Showing.CinemaHallId = Cinema;
+            Showing.CinemaHall = CinemaHall;
+            var movie = movieService.GetById(Movie);
+            Showing.MovieId = Movie;
+            Showing.Movie = movie;
+
+            showingService.Add(Showing);
+            return RedirectToAction("ShowingTable");
+        }
+        public IActionResult ShowingEdit(int index)
+        {
+            var showing = showingService.GetById(index);
+            var movies = movieService.Get().FindAll(a => a.EndDate >= DateTime.Today).ToList();
+            var cinemas = cinemaLocationService.GetWithHalls();
+            List<Tuple<int, string>> cinemaLocations = new List<Tuple<int, string>>();
+            string temp;
+            foreach (var item in cinemas)
+            {
+                foreach (var hall in item.CinemaHalls)
+                {
+                    temp = item.CinemaName + ", Hall " + hall.Name;
+                    cinemaLocations.Add(new Tuple<int, string>(hall.Id, temp));
+                }
+            }
+            return View(new ShowingCreateAndEditViewModel() { showing = showing, cinemaLocations = cinemaLocations, movies = movies });
+        }
+        [HttpPost]
+        public IActionResult ShowingEdit(int index, int Cinema, int Movie, DateTime DateAndTime)
+        {
+            var Showing = showingService.GetById(index);
+            var CinemaHall = cinemaHallService.GetById(Cinema);
+            Showing.CinemaHallId = Cinema;
+            Showing.CinemaHall = CinemaHall;
+            var movie = movieService.GetById(Movie);
+            Showing.MovieId = Movie;
+            Showing.Movie = movie;
+
+            showingService.Update(Showing);
+            return RedirectToAction("ShowingTable");
         }
         public IActionResult DeleteShowing(int index)
         {
             cinemaHallService.Delete(index);
             return RedirectToAction("CinemaHallTable");
         }
+        public IActionResult DeleteFoodAmount(int index)
+        {
+            foodAmountService.Delete(index);
+            return RedirectToAction("FoodAmountsTable");
+        }
         public IActionResult FoodAmountsTable()
         {
             var foodAmount = foodAmountService.GetWithAll();
             return View(new FoodAmountsViewModel() { FoodAmounts = foodAmount });
+        }
+        public IActionResult FoodAmountCreate()
+        {
+            var foodProduct = foodProductsService.Get();
+            var cinemas = cinemaLocationService.Get();
+            return View(new CinemaLocationAndFoodProductViewModel() { cinemaLocations = cinemas, foodProducts = foodProduct });
+        }
+        [HttpPost]
+        public IActionResult FoodAmountCreate(string Amount, int CinemaLocation, int FoodProductId)
+        {
+            var FoodAmount = new FoodAmount()
+            {
+                ProductAmount = int.Parse(Amount),
+            };
+            var CinemaLocationCurrent = cinemaLocationService.GetById(CinemaLocation);
+            FoodAmount.CinemaLocation = CinemaLocationCurrent;
+            FoodAmount.CinemaLocationId = CinemaLocationCurrent.Id;
+            var FoodProduct = foodProductsService.GetById(FoodProductId);
+            FoodAmount.FoodProducts = FoodProduct;
+            FoodAmount.FoodProductsId = FoodProduct.Id;
+
+            foodAmountService.Add(FoodAmount);
+            return RedirectToAction("FoodAmountsTable");
+        }
+        public IActionResult FoodAmountEdit(int index)
+        {
+            var FoodAmount = foodAmountService.GetById(index);
+            var foodProduct = foodProductsService.Get();
+            var cinemas = cinemaLocationService.Get();
+            return View(new CinemaLocationAndFoodProductViewModel() { foodAmount = FoodAmount, cinemaLocations = cinemas, foodProducts = foodProduct });
+        }
+        [HttpPost]
+        public IActionResult FoodAmountEdit(int index, string Amount, int CinemaLocation, int FoodProductId)
+        {
+            var FoodAmount = foodAmountService.GetById(index);
+            FoodAmount.ProductAmount = int.Parse(Amount);
+            var CinemaLocationCurrent = cinemaLocationService.GetById(CinemaLocation);
+            FoodAmount.CinemaLocation = CinemaLocationCurrent;
+            FoodAmount.CinemaLocationId = CinemaLocationCurrent.Id;
+            var FoodProduct = foodProductsService.GetById(FoodProductId);
+            FoodAmount.FoodProducts = FoodProduct;
+            FoodAmount.FoodProductsId = FoodProduct.Id;
+
+            foodAmountService.Update(FoodAmount);
+            return RedirectToAction("FoodAmountsTable");
         }
     }
 

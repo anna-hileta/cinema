@@ -1,18 +1,25 @@
-﻿using Cinema.Core.Entities;
+﻿using Cinema.Core.Abstractions.Services;
+using Cinema.Core.Entities;
+using Cinema.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Threading.Tasks;
 
 namespace Cinema.Controllers
 {
     public class AccountController : Controller
     {
+        private readonly IPositionService positionService;
+        private readonly IWorkerService workerService;
         private readonly UserManager<Worker> userManager;
         private readonly SignInManager<Worker> signInManager;
 
-        public AccountController(UserManager<Worker> userManager, SignInManager<Worker> signInManager)
+        public AccountController(IPositionService positionService, IWorkerService workerService, UserManager<Worker> userManager, SignInManager<Worker> signInManager)
         {
+            this.workerService = workerService;
+            this.positionService = positionService;
             this.userManager = userManager;
             this.signInManager = signInManager;
         }
@@ -53,18 +60,22 @@ namespace Cinema.Controllers
 
         public IActionResult Register()
         {
-            return View();
+            var p = positionService.Get();
+            return View(new PositionsViewModel() {positions =  p});
         }
 
         [HttpPost]
-        public async Task<IActionResult> Register(string username, string password, [FromQuery] string ReturnUrl)
+        public async Task<IActionResult> Register(string username, string password, string Name, string Surname, string Fathername, string PassportData, int typeSelect, [FromQuery] string ReturnUrl)
         {
+            var position = positionService.GetById(typeSelect);
             var worker = new Worker()
             {
                 UserName = username,
-                Name = "TestName",
-                Surname = "TestSurname",
-                FatherName = "Test"
+                Name = Name,
+                Surname = Surname,
+                FatherName = Fathername,
+                PassportData = PassportData,
+                Position = position
             };
 
             var result = await userManager.CreateAsync(worker, password);
@@ -81,9 +92,32 @@ namespace Cinema.Controllers
                 // sign up failure
             }
 
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("WorkerTable", "AdminTables");
         }
 
+        public IActionResult EditProfile(string id)
+        {
+            var worker = workerService.GetById(Guid.Parse(id));
+            var p = positionService.Get();
+            return View(new EditWorkerViewModel() { worker = worker, positions = p });
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> EditProfile(string oldId, string Name, string Surname, string Fathername, string PassportData, int typeSelect, [FromQuery] string ReturnUrl)
+        {
+            var position = positionService.GetById(typeSelect);
+            var workerOld = workerService.GetById(Guid.Parse(oldId));
+            workerOld.Name = Name;
+            workerOld.FatherName = Fathername;
+            workerOld.Surname = Surname;
+            workerOld.PassportData = PassportData;
+            workerOld.Position = position;
+            workerOld.PositionId = position.Id;
+            workerService.Update(workerOld);
+
+
+            return RedirectToAction("WorkerTable", "AdminTables");
+        }
         public async Task<IActionResult> LogOut()
         {
             await signInManager.SignOutAsync();

@@ -25,6 +25,9 @@ namespace Cinema.Services.Services
                 .ThenInclude(ch => ch.CinemaHall)
                 .ThenInclude(ch => ch.Technology)
                 .Include(s => s.Showings)
+                .ThenInclude(ch => ch.CinemaHall)
+                .ThenInclude(m => m.CinemaLocation)
+                .Include(s => s.Showings)
                 .ThenInclude(ch => ch.Tickets)
                 .ToList();
             return u;

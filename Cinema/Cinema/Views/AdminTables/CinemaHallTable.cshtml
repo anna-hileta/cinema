@@ -3,10 +3,10 @@
 @{
     ViewData["Title"] = "Movies";
 }
-<div class="container-fluid bg-dark" style="color:white;" style="opacity: 0.9;">
+<div class="container-fluid bg-dark" style="color:white; opacity: 0.9;">
     <div class="data-table-wrapper-club club-wrappers-radius data-table-wrapper">
         <h1 class="grid-header">Cinemas in the system</h1>
-        <table id="CinemaHall"  class="dtClubAdmins table table-striped table-bordered table-lg table-responsive-lg" cellspacing="0" width="100%" style="background-color:white;">
+        <table id="CinemaHallTable"  class="dtClubAdmins table table-striped table-bordered table-lg table-responsive-lg" cellspacing="0" width="100%" style="background-color:white;">
             <thead>
                 <tr>
                     <th class="th-sm">
@@ -60,7 +60,7 @@
                     </td>
 
                     <td>
-                        <a asp-controller="AdminTables" asp-action="CinemaLocationEdit" asp-route-index="@item.Id" style="justify-content: center; display: flex; color: black;" role="button">
+                        <a asp-controller="AdminTables" asp-action="CinemaHallEdit" asp-route-index="@hall.Id" style="justify-content: center; display: flex; color: black;" role="button">
                             <i class="material-icons">settings</i>
                         </a>
                     </td>
