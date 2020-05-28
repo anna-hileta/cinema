@@ -2,7 +2,7 @@
 @{
     ViewData["Title"] = "MovieEdit";
 }
-<form class="container bg-dark m-5 pt-2 pb-5 pr-5 pl-5 club-wrappers-radius" style="opacity: 0.9; color: white;" asp-action="FoodAmountCreate" asp-controller="AdminTables" enctype="multipart/form-data">
+<form onsubmit="return isValidFoodAmountCreate()" class="container bg-dark m-5 pt-2 pb-5 pr-5 pl-5 club-wrappers-radius" style="opacity: 0.9; color: white;" asp-action="FoodAmountCreate" asp-controller="AdminTables" enctype="multipart/form-data">
     <div class="row">
         <div class="col-7">
             <h1>Create a food amount in a cinema</h1>
@@ -26,9 +26,12 @@
             <br />
             <div class="form-group">
                 <label class="control-label" style="display:flex; justify-content: flex-start;">Amount of product in the location</label>
-                <input type="text" name="Amount" class="form-control"/>
-                <span id="clubName-clubAdmins-mistake" class="text-danger" style="display: none;">Please insert some text in the input</span>
+                <input id="FoodAmountCreateAmount" type="text" name="Amount" class="form-control" />
             </div>
+            <label style="display:none; text-align: right; color: sandybrown;"
+                   id="FoodAmountCreateAmountMistake">This field should not be empty</label>
+            <label style="display:none; text-align: right; color: sandybrown;"
+                   id="FoodAmountCreateAmountMistake2">The input should be a number</label>
             <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" style="width: 100%;" type="submit">
                 Save
             </button>

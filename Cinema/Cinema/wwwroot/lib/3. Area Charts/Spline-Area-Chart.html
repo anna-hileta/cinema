@@ -1,0 +1,40 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<script>
+window.onload = function () {
+
+var options = {
+	exportEnabled: true,
+	animationEnabled: true,
+	title: {
+		text: "jQuery Spline Area Chart"
+	},
+	data: [
+	{
+		type: "splineArea",
+		dataPoints: [
+			{ y: 10 },
+			{ y: 6 },
+			{ y: 14 },
+			{ y: 12 },
+			{ y: 19 },
+			{ y: 14 },
+			{ y: 26 },
+			{ y: 10 },
+			{ y: 22 }
+		]
+	}
+	]
+};
+$("#chartContainer").CanvasJSChart(options);
+
+}
+</script>
+</head>
+<body>
+<div id="chartContainer" style="height: 370px; max-width: 920px; margin: 0px auto;"></div>
+<script src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>
+<script src="https://canvasjs.com/assets/script/jquery.canvasjs.min.js"></script>
+</body>
+</html>

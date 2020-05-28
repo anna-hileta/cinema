@@ -52,15 +52,16 @@ namespace Cinema.Controllers
             try
             {
                 var currentUserId = userManager.GetUserId(User);
-                var checkId = foodcourtCheckService.Add(new FoodcourtCheck()
+                var checkId = new FoodcourtCheck()
                 {
+                    FoodcourtCheckProducts = new List<FoodcourtCheckProduct>(),
                     PaidPrice = (decimal) food.Price,
                     TransactionDateAndTime = DateTime.Now,
                     WorkerId = Guid.Parse(currentUserId)
-                });
+                };
                 for (int i = 0; i < food.TicketIds.Count; ++i)
                 {
-                    foodcourtCheckProductService.Add(new FoodcourtCheckProduct()
+                    checkId.FoodcourtCheckProducts.Add(new FoodcourtCheckProduct()
                     {
                         FoodcourtCheckId = checkId.Id,
                         FoodAmountId = food.TicketIds[i].Id,
@@ -70,7 +71,7 @@ namespace Cinema.Controllers
                     oldFoodAmount.ProductAmount -= food.TicketIds[i].Amount;
                     foodAmountService.Update(oldFoodAmount);
                 }
-
+                foodcourtCheckService.Add(checkId);
                 return checkId.Id;
             }
             catch

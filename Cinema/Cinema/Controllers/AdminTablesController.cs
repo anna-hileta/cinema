@@ -22,6 +22,11 @@ namespace Cinema.Controllers
         private readonly ITechnologyService technologyService;
         private readonly IDirectorService directorService;
         private readonly ICountryOfOriginService countryOfOriginService;
+        private readonly ITicketCheckService ticketCheckService;
+        private readonly IFoodcourtCheckProductService foodcourtCheckProductService;
+        private readonly IFoodcourtCheckService foodcourtCheckService;
+        private readonly ICheckService checkService;
+        private readonly ITicketService ticketService;
         private readonly ICinemaLocationService cinemaLocationService;
         private readonly IFoodAmountService foodAmountService;
         private readonly IFoodProductsService foodProductsService;
@@ -30,7 +35,7 @@ namespace Cinema.Controllers
         private readonly UserManager<Worker> userManager;
         private readonly SignInManager<Worker> signInManager;
 
-        public AdminTablesController(ICinemaLocationService cinemaLocationService, IFoodProductsService foodProductsService, ITechnologyService technologyService, ICityService cityService, IFoodAmountService foodAmountService, ICinemaHallService cinemaHallService, IDirectorService directorService, IWorkerService workerService, ICountryOfOriginService countryOfOriginService, IMovieService movieService, IGenreService genreService, IShowingService showingService, UserManager<Worker> userManager, SignInManager<Worker> signInManager)
+        public AdminTablesController(ITicketCheckService ticketCheckService, IFoodcourtCheckProductService foodcourtCheckProductService  ,IFoodcourtCheckService foodcourtCheckService, ICheckService checkService, ITicketService ticketService, ICinemaLocationService cinemaLocationService, IFoodProductsService foodProductsService, ITechnologyService technologyService, ICityService cityService, IFoodAmountService foodAmountService, ICinemaHallService cinemaHallService, IDirectorService directorService, IWorkerService workerService, ICountryOfOriginService countryOfOriginService, IMovieService movieService, IGenreService genreService, IShowingService showingService, UserManager<Worker> userManager, SignInManager<Worker> signInManager)
         {
             this.foodProductsService = foodProductsService;
             this.directorService = directorService;
@@ -38,6 +43,11 @@ namespace Cinema.Controllers
             this.cityService = cityService;
             this.foodAmountService = foodAmountService;
             this.cinemaHallService = cinemaHallService;
+            this.ticketCheckService = ticketCheckService;
+            this.foodcourtCheckProductService = foodcourtCheckProductService;
+            this.foodcourtCheckService = foodcourtCheckService;
+            this.checkService = checkService;
+            this.ticketService = ticketService;
             this.cinemaLocationService = cinemaLocationService;
             this.countryOfOriginService = countryOfOriginService;
             this.movieService = movieService;
@@ -327,7 +337,7 @@ namespace Cinema.Controllers
             return View(new CinemaLocationsAndTechnologyViewModel() { cinemaHall = cinemaHall, cinemaLocations = cinemas, technologies = technologies });
         }
         [HttpPost]
-        public IActionResult CinemaHallEdit(int index, string Name, string Rows, string Seats, int Technology, int Cinema)
+        public IActionResult CinemaHallEdit(int index, string Name, string Rows, string Seats, int Technology)
         {
             var CinemaHall = cinemaHallService.GetById(index);
             CinemaHall.Name = Name;
@@ -336,9 +346,6 @@ namespace Cinema.Controllers
             var technology = technologyService.GetById(Technology);
             CinemaHall.TechnologyId = technology.Id;
             CinemaHall.Technology = technology;
-            var CinemaLocation = cinemaLocationService.GetById(Cinema);
-            CinemaHall.CinemaLocationId = CinemaLocation.Id;
-            CinemaHall.CinemaLocation = CinemaLocation;
 
             cinemaHallService.Update(CinemaHall);
             return RedirectToAction("CinemaHallTable");
@@ -436,41 +443,99 @@ namespace Cinema.Controllers
         [HttpPost]
         public IActionResult FoodAmountCreate(string Amount, int CinemaLocation, int FoodProductId)
         {
-            var FoodAmount = new FoodAmount()
-            {
-                ProductAmount = int.Parse(Amount),
-            };
             var CinemaLocationCurrent = cinemaLocationService.GetById(CinemaLocation);
-            FoodAmount.CinemaLocation = CinemaLocationCurrent;
-            FoodAmount.CinemaLocationId = CinemaLocationCurrent.Id;
             var FoodProduct = foodProductsService.GetById(FoodProductId);
-            FoodAmount.FoodProducts = FoodProduct;
-            FoodAmount.FoodProductsId = FoodProduct.Id;
+            var possibleItem =  foodAmountService.Get().Find(m => (m.CinemaLocationId == CinemaLocationCurrent.Id && m.FoodProductsId == FoodProduct.Id));
+            if(possibleItem != null)
+            {
+                possibleItem.ProductAmount = possibleItem.ProductAmount + int.Parse(Amount);
+                foodAmountService.Update(possibleItem);
+            }
+            else
+            {
+                var FoodAmount = new FoodAmount()
+                {
+                    ProductAmount = int.Parse(Amount),
+                };
+                FoodAmount.CinemaLocation = CinemaLocationCurrent;
+                FoodAmount.CinemaLocationId = CinemaLocationCurrent.Id;
+                FoodAmount.FoodProducts = FoodProduct;
+                FoodAmount.FoodProductsId = FoodProduct.Id;
 
-            foodAmountService.Add(FoodAmount);
+                foodAmountService.Add(FoodAmount);
+            }
             return RedirectToAction("FoodAmountsTable");
         }
         public IActionResult FoodAmountEdit(int index)
         {
-            var FoodAmount = foodAmountService.GetById(index);
-            var foodProduct = foodProductsService.Get();
-            var cinemas = cinemaLocationService.Get();
-            return View(new CinemaLocationAndFoodProductViewModel() { foodAmount = FoodAmount, cinemaLocations = cinemas, foodProducts = foodProduct });
+            var FoodAmount = foodAmountService.GetByIdQueryable(index).Include(v => v.CinemaLocation).Include(b => b.FoodProducts).First();
+            return View(new CinemaLocationAndFoodProductViewModel() { foodAmount = FoodAmount });
         }
         [HttpPost]
-        public IActionResult FoodAmountEdit(int index, string Amount, int CinemaLocation, int FoodProductId)
+        public IActionResult FoodAmountEdit(int index, string Amount)
         {
             var FoodAmount = foodAmountService.GetById(index);
             FoodAmount.ProductAmount = int.Parse(Amount);
-            var CinemaLocationCurrent = cinemaLocationService.GetById(CinemaLocation);
-            FoodAmount.CinemaLocation = CinemaLocationCurrent;
-            FoodAmount.CinemaLocationId = CinemaLocationCurrent.Id;
-            var FoodProduct = foodProductsService.GetById(FoodProductId);
-            FoodAmount.FoodProducts = FoodProduct;
-            FoodAmount.FoodProductsId = FoodProduct.Id;
-
             foodAmountService.Update(FoodAmount);
             return RedirectToAction("FoodAmountsTable");
+        }
+        public IActionResult StatisticByMonth()
+        {
+            var Tickets = checkService.Get().OrderBy(m => m.TransactionDateAndTime.Date).GroupBy(m => m.TransactionDateAndTime.Date);
+            DateTime MaxDate = DateTime.MinValue, MinDate = DateTime.MaxValue;
+            List<DateTime> Day = new List<DateTime>();
+            List<int> tickPerDay = new List<int>();
+            var tickets = ticketCheckService.Get();
+            foreach ( var tick in Tickets)
+            {
+                var a = tick.Key;
+                if (a > MaxDate)
+                    MaxDate = a;
+                if (a < MinDate)
+                    MinDate = a;
+                var b = 0;
+                foreach(var i in tick)
+                {
+                    b += tickets.FindAll(m => m.CheckId == i.Id).Count();
+                }
+                if(b != 0)
+                {
+                    Day.Add(a);
+                    tickPerDay.Add(b);
+                }
+            }
+            return View(new StatiticViewModel() {  MaxDate = MaxDate , MinDate = MinDate, ticksperDay = tickPerDay, Day = Day});
+        }
+        public IActionResult StatisticByMonthFood()
+        {
+            var Tickets = foodcourtCheckService.Get().OrderBy(m => m.TransactionDateAndTime.Date).GroupBy(m => m.TransactionDateAndTime.Date);
+            DateTime MaxDate = DateTime.MinValue, MinDate = DateTime.MaxValue;
+            List<DateTime> Day = new List<DateTime>();
+            List<int> tickPerDay = new List<int>();
+            var tickets = foodcourtCheckProductService.Get();
+            foreach (var tick in Tickets)
+            {
+                var a = tick.Key;
+                if (a > MaxDate)
+                    MaxDate = a;
+                if (a < MinDate)
+                    MinDate = a;
+                var b = 0;
+                foreach (var i in tick)
+                {
+                    var temp = tickets.FindAll(m => m.FoodcourtCheckId == i.Id);
+                    foreach (var j in temp)
+                    {
+                        b += j.AmountOfProduct;
+                    }
+                }
+                if(b != 0)
+                {
+                    Day.Add(a);
+                    tickPerDay.Add(b);
+                }
+            }
+            return View(new StatiticViewModel() { MaxDate = MaxDate, MinDate = MinDate, ticksperDay = tickPerDay, Day = Day });
         }
     }
 

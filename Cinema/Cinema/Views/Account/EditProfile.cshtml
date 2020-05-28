@@ -5,29 +5,37 @@
 }
 
 
-<form class="container bg-dark m-5 pt-2 pb-5 pr-5 pl-5 club-wrappers-radius" style="flex-direction: column; opacity: 90%; color: white;" asp-controller="Account" asp-action="EditProfile" method="post" asp-route-returnurl="@returnUrl">
+<form onsubmit="return isValidProfileFull()" class="container bg-dark m-5 pt-2 pb-5 pr-5 pl-5 club-wrappers-radius" style="flex-direction: column; opacity: 90%; color: white;" asp-controller="Account" asp-action="EditProfile" method="post" asp-route-returnurl="@returnUrl">
     <div style="display: flex; flex-direction: column; align-self: stretch; width: 50%;     margin: 0 auto;">
         <h1>Edit worker</h1>
-        <input type="hidden" value="@Model.worker.Id" name="oldId"/>
+        <input type="hidden" value="@Model.worker.Id" name="oldId" />
         <div style="display: flex;  flex-direction: row; justify-content: space-between;">
             <label class="control-label">Name</label>
-            <input asp-for="@Model.worker.Name" name="Name" value="@Model.worker.Name" style="flex-basis: 50%;" class="form-control">
+            <input id="nameFull" asp-for="@Model.worker.Name" name="Name" value="@Model.worker.Name" style="flex-basis: 50%;" class="form-control">
         </div>
+        <label style="display:none; text-align: right; color: sandybrown;" id="nameFullMistake">This field should not be empty</label>
         <br />
         <div style="display: flex; flex-direction:row; justify-content: space-between;">
             <label class="control-label">Surname</label>
-            <input asp-for="@Model.worker.Surname" name="Surname" value="@Model.worker.Surname" style="flex-basis: 50%;" class="form-control">
+            <input id="surnameFull" asp-for="@Model.worker.Surname" name="Surname" value="@Model.worker.Surname" style="flex-basis: 50%;" class="form-control">
         </div>
+        <label style="display:none; text-align: right; color: sandybrown;" id="surnameFullMistake">This field should not be empty</label>
+
         <br />
         <div style="display: flex; flex-direction:row; justify-content: space-between;">
             <label class="control-label">Fathername</label>
-            <input asp-for="@Model.worker.FatherName" name="Fathername" value="@Model.worker.FatherName" style="flex-basis: 50%;" class="form-control">
+            <input id="fathernameFull" asp-for="@Model.worker.FatherName" name="Fathername" value="@Model.worker.FatherName" style="flex-basis: 50%;" class="form-control">
         </div>
+        <label style="display:none; text-align: right; color: sandybrown;" id="fathernameFullMistake">This field should not be empty</label>
+
         <br />
         <div style="display: flex; flex-direction:row; justify-content: space-between;">
             <label class="control-label">Passport data</label>
-            <input asp-for="@Model.worker.PassportData" name="PassportData" value="@Model.worker.PassportData" style="flex-basis: 50%;" class="form-control">
+            <input id="passportDataFull" asp-for="@Model.worker.PassportData" name="PassportData" value="@Model.worker.PassportData" style="flex-basis: 50%;" class="form-control">
         </div>
+        <label style="display:none; text-align: right; color: sandybrown;" id="passportDataFullMistake">This field should not be empty</label>
+        <label style="display:none; text-align: right; color: sandybrown;" id="passportDataFullMistake2">Passport data has a wrong format. It should contain 2 letters and 6 numbers</label>
+
         <br />
         <label class="control-label">Choose position</label>
         <select id="typeSelect" name="typeSelect" class="form-control">
@@ -43,4 +51,3 @@
     </div>
 </form>
 
-<a href="/Account/Login">Login</a>

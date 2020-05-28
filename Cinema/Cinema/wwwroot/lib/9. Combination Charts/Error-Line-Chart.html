@@ -1,0 +1,83 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="UTF-8">
+<script>
+window.onload = function () {
+
+var options = {
+	animationEnabled: true,
+	title: {
+		text: "Temperatures Analysis"
+	},
+	axisX: {
+		interval: 1
+	},
+	axisY: {
+		title: "Temperature (in Celsius)",
+		suffix: "°C",
+		includeZero: false
+	},
+	toolTip: {
+		shared: true
+	},
+
+	data: [{
+		type: "line",
+		name: "Average",
+		toolTipContent: "<b>{label}</b><br><span style=\"color:#4F81BC\">{name}</span>: {y}°C",
+		markerColor: "white",
+		markerBorderColor: "black",
+		markerSize: 6,
+		markerBorderThickness: 1,
+		dataPoints: [
+			{ y: 7, label: "New York City" },
+			{ y: 6, label: "Rome" },
+			{ y: 21, label: "Macau" },
+			{ y: 19, label: "Hong Kong" },
+			{ y: 31, label: "Bangkok" },
+			{ y: 31, label: "Singapore" },
+			{ y: 21, label: "Dubai" },
+			{ y: 27, label: "Kuala Lumpur" },
+			{ y: 10, label: "London" },
+			{ y: 10, label: "Tokyo" },
+			{ y: 8, label: "Amsterdam" },
+			{ y: 16, label: "Taipei" },
+			{ y: 9, label: "Osaka" },
+			{ y: 6, label: "Istanbul" }
+		]
+	},
+	{
+		type: "error",
+		name: "Variation",
+                showInLegend: true,     
+		toolTipContent: "<span style=\"color:#C0504E\">Minimum</span>: {y[0]}°C <br><span style=\"color:#C0504E\">Maximum</span>: {y[1]}°C",
+		dataPoints: [
+			{ y: [3, 10], label: "New York City" },
+			{ y: [4, 14], label: "Rome" },
+			{ y: [17, 22], label: "Macau" },
+			{ y: [18, 28], label: "Hong Kong" },
+			{ y: [24, 34], label: "Bangkok" },
+			{ y: [25, 32], label: "Singapore" },
+			{ y: [15, 25], label: "Dubai" },
+			{ y: [24, 32], label: "Kuala Lumpur" },
+			{ y: [9, 11], label: "London" },
+			{ y: [3, 11], label: "Tokyo" },
+			{ y: [3, 10], label: "Amsterdam" },
+			{ y: [15, 17], label: "Taipei" },
+			{ y: [3, 11], label: "Osaka" },
+			{ y: [5, 8], label: "Istanbul" }
+		]
+	}]
+};
+$("#chartContainer").CanvasJSChart(options);
+
+}
+</script>
+</head>
+<body>
+<div id="chartContainer" style="height: 370px; max-width: 920px; margin: 0px auto;"></div>
+<script src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>
+<script src="https://canvasjs.com/assets/script/jquery.canvasjs.min.js"></script>
+</body>
+</html>

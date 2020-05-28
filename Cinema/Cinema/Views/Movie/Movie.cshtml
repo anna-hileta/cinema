@@ -59,7 +59,7 @@
 <div class="showings" style="display: flex; flex-direction: column;">
     <h1 class="movie-title">Showings</h1>
     <label class="control-label" style="color: white; font-size: 16px;">Choose a cinema</label>
-    <select id="MovieSelection" name="typeSelect" class="form-control" onchange="DisplayShowings()">
+    <select id="MovieSelection" name="typeSelect" class="form-control" onblur="DisplayShowings()">
         @foreach (var type in Model.cinemaLocations)
         {
             <option value="@Model.cinemaLocations.IndexOf(type)">@type.CinemaName</option>

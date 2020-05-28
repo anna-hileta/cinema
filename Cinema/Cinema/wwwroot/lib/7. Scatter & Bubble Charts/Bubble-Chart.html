@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<script type="text/javascript">
+window.onload = function() {
+
+var options = {
+	animationEnabled: true,
+	zoomEnabled: true,
+	theme: "light2",
+	title: {
+		text: "Crude Birth Rate vs Crude Death Rate and Population"
+	},
+	subtitles: [{
+		text: "European Union 2016",
+		fontSize: 15
+	}],
+	axisX: {
+		title: "Crude Death Rate"
+	},
+	axisY: {
+		title: "Crude Birth Rate"
+	},
+	data: [{
+		type: "bubble",
+		xValueFormatString: "#,#0.0",
+		yValueFormatString: "#,#0.0",
+		zValueFormatString: "#,#0.0",
+		toolTipContent: "<b>{name}</b><br/>Crude Death Rate: {x} <br/> Crude Birth Rate: {y}<br/> Population: {z}mn",
+		dataPoints: [
+			{ x: 5.3, y: 16.5, z: 78.74, name: "Turkey" },
+			{ x: 6.4, y: 13.5, z: 4.72, name: "Ireland" },
+			{ x: 6.4, y: 11.1, z: 0.84, name: "Cyprus" },
+			{ x: 6.9, y: 12, z: 0.33, name: "Iceland" },
+			{ x: 7.8, y: 11.2, z: 5.2, name: "Norway" },
+			{ x: 7.8, y: 10.5, z: 8.3, name: "Switzerland" },
+			{ x: 8.8, y: 8.7, z: 46.44, name: "Spain" },
+			{ x: 8.7, y: 10.1, z: 16.9, name: "Netherlands" },
+			{ x: 8.8, y: 11.7, z: 66.75, name: "France" },
+			{ x: 9.1, y: 11.8, z: 65.3, name: "United Kingdom" },
+			{ x: 9.2, y: 10, z: 8.69, name: "Austria" },
+			{ x: 9.2, y: 11.8, z: 9.85, name: "Sweden" },
+			{ x: 9.2, y: 10.8, z: 5.70, name: "Denmark" },
+			{ x: 9.5, y: 10.8, z: 11.31, name: "Belgium" },
+			{ x: 9.8, y: 9.6, z: 5.4, name: "Finland" },
+			{ x: 10.2, y: 10.7, z: 10.5, z: "Czech Republic" },
+			{ x: 10.2, y: 10.1, z: 37.96, name: "Poland" },
+			{ x: 10.1, y: 7.8, z: 60.66, name: "Italy" },
+			{ x: 10.7, y: 8.4, z: 10.34, name: "Portugal" },
+			{ x: 11, y: 8.6, z: 10.7, name: "Greece" },
+			{ x: 11.2, y: 9.3, z: 82.17, name: "Germany" },
+			{ x: 12.4, y: 9, z: 4.19, name: "Croatia" },
+			{ x: 13, y: 9.7, z: 9.83, name: "Hungary" },
+			{ x: 13, y: 9.6, z: 19.76, name: "Romania" },
+			{ x: 15.1, y: 9.1, z: 7.15, name: "Bulgaria" }
+		]
+	}]
+};
+$("#chartContainer").CanvasJSChart(options);
+
+}
+</script>
+</head>
+<body>
+<div id="chartContainer" style="height: 370px; max-width: 920px; margin: 0px auto;"></div>
+<script type="text/javascript" src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>  
+<script type="text/javascript" src="https://canvasjs.com/assets/script/jquery.canvasjs.min.js"></script>
+</body>
+</html> 

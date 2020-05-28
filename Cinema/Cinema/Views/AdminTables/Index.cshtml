@@ -6,77 +6,105 @@
     <div class="all-clubs-view">
         <div class="club-list">
             <div class="club-block-wrapper">
-                <span class="club-block club-wrappers-radius" style="justify-content: space-between; opacity: 90%;">
+                <div class="club-block club-wrappers-radius" style="justify-content: end; opacity: 90%;">
                     <div class="club-block-submit rounded">
                         <h1 style="color:white;">Administrate the workers</h1>
-                        <a class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" style="width: 100%;" asp-controller="Account" asp-action="Register">
-                            Add a worker
-                        </a>
-                        <br>
-                        <a class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" style="width: 100%;"  asp-controller="AdminTables" asp-action="WorkerTable">
-                            Edit/delete current workers
-                        </a>
+                        <div style="display: flex;     width: 100%;justify-content: flex-start; flex-direction: column;">
+                            <a class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored"
+                               style="width: 100%;  margin-top: 10px;" asp-controller="Account" asp-action="Register">
+                                Add a worker
+                            </a>
+                            <a class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored"
+                               style="width: 100%;  margin-top: 10px;" asp-controller="AdminTables" asp-action="WorkerTable">
+                                Edit/delete current workers
+                            </a>
+                        </div>
                     </div>
-                </span>
+                </div>
             </div>
 
             <div class="club-block-wrapper">
-                <span class="club-block club-wrappers-radius" style="justify-content: space-between; opacity: 90%;">
+                <div class="club-block club-wrappers-radius" style="justify-content: end; opacity: 90%;">
                     <div class="club-block-submit rounded">
                         <h1 style="color:white;">Administrate the cinemas</h1>
-                        <a class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" style="width: 100%;" asp-controller="AdminTables" asp-action="CinemaCreate">
-                            Add a cinema
-                        </a>
-                        <br>
-                        <a class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" style="width: 100%;"   asp-controller="AdminTables" asp-action="CinemaLocationTable">
-                            Edit/delete current cinemas
-                        </a>
-                        <br>
-                        <a class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" style="width: 100%;" asp-controller="AdminTables" asp-action="CinemaHallCreate">
-                            Add a cinema hall
-                        </a>
-                        <br>
-                        <a class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" style="width: 100%;"  asp-controller="AdminTables" asp-action="CinemaHallTable">
-                            Edit/delete current cinema halls
-                        </a>
+                        <div style="display: flex;     width: 100%; justify-content: flex-start; flex-direction: column;">
+
+                            <a class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" style="width: 100%; margin-top: 10px;" asp-controller="AdminTables" asp-action="CinemaCreate">
+                                Add a cinema
+                            </a>
+                            <a class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" style="width: 100%; margin-top: 10px;" asp-controller="AdminTables" asp-action="CinemaLocationTable">
+                                Edit/delete current cinemas
+                            </a>
+
+                            <a class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" style="width: 100%; margin-top: 10px;" asp-controller="AdminTables" asp-action="CinemaHallCreate">
+                                Add a cinema hall
+                            </a>
+
+                            <a class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" style="width: 100%; margin-top: 10px;" asp-controller="AdminTables" asp-action="CinemaHallTable">
+                                Edit/delete current cinema halls
+                            </a>
+                        </div>
                     </div>
-                </span>
+                </div>
             </div>
 
             <div class="club-block-wrapper">
-                <span class="club-block club-wrappers-radius" style="justify-content: space-between; opacity: 90%;">
+                <div class="club-block club-wrappers-radius" style="justify-content: end; opacity: 90%;">
                     <div class="club-block-submit rounded">
                         <h1 style="color:white;">Add new things</h1>
-                        <a asp-controller="AdminTables" asp-action="MovieCreate" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" style="width: 100%;">
-                            Add a movie
-                        </a>
-                        <a asp-controller="AdminTables" asp-action="ShowingCreate" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" style="width: 100%;">
-                            Add a showing
-                        </a>
-                        <a asp-controller="AdminTables" asp-action="FoodAmountCreate" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" style="width: 100%;">
-                            Add a food amount
-                        </a>
+                        <div style="display: flex;  width: 100%; justify-content: flex-start; flex-direction: column;">
+
+                            <a asp-controller="AdminTables" asp-action="MovieCreate" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" style="width: 100%; margin-top: 10px;">
+                                Add a movie
+                            </a>
+
+                            <a asp-controller="AdminTables" asp-action="ShowingCreate" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" style="width: 100%; margin-top: 10px;">
+                                Add a showing
+                            </a>
+
+                            <a asp-controller="AdminTables" asp-action="FoodAmountCreate" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" style="width: 100%; margin-top: 10px;">
+                                Add a food amount
+                            </a>
+                        </div>
                     </div>
-                </span>
+                </div>
             </div>
 
             <div class="club-block-wrapper">
-                <span class="club-block club-wrappers-radius" style="justify-content: space-between; opacity: 90%;">
+                <div class="club-block club-wrappers-radius" style="justify-content: end; opacity: 90%;">
                     <div class="club-block-submit rounded">
                         <h1 style="color:white;">Edit and delete things</h1>
-                        <a asp-controller="AdminTables" asp-action="MovieTable" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" style="width: 100%;">
-                            Edit/delete a movie
-                        </a>
-                        <br>
-                        <a asp-controller="AdminTables" asp-action="ShowingTable" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" style="width: 100%;">
-                            Edit/delete a showing
-                        </a>
-                        <br>
-                        <a asp-controller="AdminTables" asp-action="FoodAmountsTable" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" style="width: 100%;">
-                            Edit/delete a food amounts
-                        </a>
+                        <div style="display: flex;  width: 100%; justify-content: flex-start; flex-direction: column;">
+
+                            <a asp-controller="AdminTables" asp-action="MovieTable" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" style="width: 100%; margin-top: 10px;">
+                                Edit/delete a movie
+                            </a>
+                            <a asp-controller="AdminTables" asp-action="ShowingTable" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" style="width: 100%;margin-top: 10px;">
+                                Edit/delete a showing
+                            </a>
+
+                            <a asp-controller="AdminTables" asp-action="FoodAmountsTable" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" style="width: 100%; margin-top: 10px;">
+                                Edit/delete a food amounts
+                            </a>
+                        </div>
                     </div>
-                </span>
+                </div>
+            </div>
+            <div class="club-block-wrapper">
+                <div class="club-block club-wrappers-radius" style="justify-content: end; opacity: 90%;">
+                    <div class="club-block-submit rounded">
+                        <h1 style="color:white;">Statistic</h1>
+                        <div style="display: flex;  width: 100%; justify-content: flex-start; flex-direction: column;">
+
+                            <a asp-controller="AdminTables" asp-action="StatisticByMonth" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" style="width: 100%; margin-top: 10px;">
+                                Ticket sales
+                            </a>
+                            <a asp-controller="AdminTables" asp-action="StatisticByMonthFood" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" style="width: 100%; margin-top: 10px;">
+                                Food sales
+                            </a>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

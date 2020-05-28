@@ -3,28 +3,33 @@
     ViewData["Title"] = "CinemaHallCreate";
 }
 
-<form class="container bg-dark m-5 pt-2 pb-5 pr-5 pl-5 club-wrappers-radius" style="opacity: 0.9; color: white;" asp-action="CinemaHallCreate" asp-controller="AdminTables" enctype="multipart/form-data">
+<form onsubmit="return isValidCreateCinemaHall()" class="container bg-dark m-5 pt-2 pb-5 pr-5 pl-5 club-wrappers-radius" style="opacity: 0.9; color: white;" asp-action="CinemaHallCreate" asp-controller="AdminTables" enctype="multipart/form-data">
     <div class="row">
         <div class="col-7">
             <h1>Create a cinema hall</h1>
             <div asp-validation-summary="All" class="text-danger"></div>
             <div class="form-group">
                 <label class="control-label">Cinema hall name</label>
-                <input name="Name" class="form-control">
-                <span id="clubName-clubAdmins-mistake" class="text-danger" style="display: none;">Please insert some text in the input</span>
+                <input id="CreateCinemaHallName" name="Name" class="form-control">
             </div>
+            <label style="display:none; text-align: right; color: sandybrown;" id="CreateCinemaHallNameMistake">This field should not be empty</label>
+
 
             <div class="form-group">
                 <label class="control-label">Rows count</label>
-                <input name="Rows" class="form-control">
-                <span id="clubName-clubAdmins-mistake" class="text-danger" style="display: none;">Please insert some text in the input</span>
+                <input id="CreateCinemaHallRows" name="Rows" class="form-control">
             </div>
+            <label style="display:none; text-align: right; color: sandybrown;" id="CreateCinemaHallRowsMistake">This field should not be empty</label>
+            <label style="display:none; text-align: right; color: sandybrown;" id="CreateCinemaHallRowsMistake2">This field should contain only numbers</label>
+
 
             <div class="form-group">
                 <label class="control-label" style="justify-content: flex-start; display: flex;">Seats count</label>
-                <input name="Seats" class="form-control">
-                <span id="clubName-clubAdmins-mistake" class="text-danger" style="display: none;">Please insert some text in the input</span>
+                <input id="CreateCinemaHallSeats" name="Seats" class="form-control">
             </div>
+            <label style="display:none; text-align: right; color: sandybrown;" id="CreateCinemaHallSeatsMistake">This field should not be empty</label>
+            <label style="display:none; text-align: right; color: sandybrown;" id="CreateCinemaHallSeatsMistake2">This field should contain only numbers</label>
+
 
             <label class="control-label">Technology</label>
             <select id="typeSelect" name="Technology" class="form-control">

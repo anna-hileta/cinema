@@ -118,6 +118,24 @@ namespace Cinema.Controllers
 
             return RedirectToAction("WorkerTable", "AdminTables");
         }
+        public IActionResult EditProfileLimited(string id)
+        {
+            var worker = workerService.GetById(Guid.Parse(id));
+            return View(new EditWorkerViewModel() { worker = worker });
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> EditProfileLimited(string oldId, string Name, string Surname, string Fathername, string PassportData, [FromQuery] string ReturnUrl)
+        {
+            var workerOld = workerService.GetById(Guid.Parse(oldId));
+            workerOld.Name = Name;
+            workerOld.FatherName = Fathername;
+            workerOld.Surname = Surname;
+            workerOld.PassportData = PassportData;
+            workerService.Update(workerOld);
+
+            return RedirectToAction("Index", "Home");
+        }
         public async Task<IActionResult> LogOut()
         {
             await signInManager.SignOutAsync();

@@ -24,7 +24,7 @@ namespace Cinema.Services.PDF.Documents
         {
             var paragraph = section.AddParagraph($"Check created on {ticket.TransactionDateAndTime.ToString("dd/MM/yyyy")}");
             paragraph.Format.Font.Size = 14;
-            paragraph.Format.SpaceAfter = "3cm";
+            paragraph.Format.SpaceAfter = "1.5 cm";
             paragraph.Format.SpaceBefore = "8cm";
             paragraph.Format.Alignment = ParagraphAlignment.Right;
             
@@ -32,20 +32,19 @@ namespace Cinema.Services.PDF.Documents
             {
                 paragraph = section.AddParagraph($"Food product: {ticket.FoodcourtCheckProducts[i].FoodAmount.FoodProducts.ProductName} with price per one {ticket.FoodcourtCheckProducts[i].FoodAmount.FoodProducts.ProductPrice}");
                 paragraph.Format.Font.Size = 12;
-                paragraph.Format.SpaceAfter = "1cm";
+                paragraph.Format.SpaceAfter = "0.5cm";
 
                 paragraph = section.AddParagraph($"Amount of food item: {ticket.FoodcourtCheckProducts[i].AmountOfProduct}");
                 paragraph.Format.Font.Size = 12;
-                paragraph.Format.SpaceAfter = "1cm";
+                paragraph.Format.SpaceAfter = "0.5cm";
             }
 
             paragraph = section.AddParagraph($"Total price: {ticket.PaidPrice}");
             paragraph.Format.Font.Size = 12;
-            paragraph.Format.SpaceAfter = "1cm";
+            paragraph.Format.SpaceAfter = "0.5cm";
 
             paragraph = section.AddParagraph($"Sold by {ticket.Worker.Name} {ticket.Worker.Surname}");
             paragraph.Format.Font.Size = 14;
-            paragraph.Format.SpaceBefore = "5cm";
             paragraph.Format.Alignment = ParagraphAlignment.Right;
     }
     }

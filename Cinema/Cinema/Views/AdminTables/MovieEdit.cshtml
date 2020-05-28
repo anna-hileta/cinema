@@ -3,7 +3,7 @@
 @{
     ViewData["Title"] = "MovieEdit";
 }
-    <form class="container bg-dark m-5 pt-2 pb-5 pr-5 pl-5 club-wrappers-radius" style="opacity: 0.9; color: white;" asp-action="Edit" asp-controller="AdminTables" enctype="multipart/form-data">
+    <form onsubmit="return isValidMovieEdit()" class="container bg-dark m-5 pt-2 pb-5 pr-5 pl-5 club-wrappers-radius" style="opacity: 0.9; color: white;" asp-action="Edit" asp-controller="AdminTables" enctype="multipart/form-data">
         <div class="row">
             <div class="col-7">
                 <h1>Редагування фільму</h1>
@@ -11,21 +11,24 @@
                 <div asp-validation-summary="All" class="text-danger"></div>
                 <div class="form-group">
                     <label class="control-label">Movie title</label>
-                    <input asp-for="@Model.Title" id="clubName-clubAdmins" class="form-control">
-                    <span asp-validation-for="@Model.Title" id="clubName-clubAdmins-mistake" class="text-danger" style="display: none;">Please insert some text in the input</span>
+                    <input id="EditMovieTitle" asp-for="@Model.Title"  class="form-control">
                 </div>
+                <label style="display:none; text-align: right; color: sandybrown;"
+                       id="EditMovieTitleMistake">This field should not be empty</label>
 
                 <div class="form-group">
                     <label class="control-label">Country of origin name</label>
-                    <input asp-for="@Model.CountryOfOrigin" id="clubName-clubAdmins" class="form-control">
-                    <span asp-validation-for="@Model.CountryOfOrigin" id="clubName-clubAdmins-mistake" class="text-danger" style="display: none;">Please insert some text in the input</span>
+                    <input id="EditMovieCountryOfOrigin" asp-for="@Model.CountryOfOrigin" class="form-control">
                 </div>
+                <label style="display:none; text-align: right; color: sandybrown;"
+                       id="EditMovieCountryOfOriginMistake">This field should not be empty</label>
 
                 <div class="form-group">
                     <label class="control-label">Director name</label>
-                    <input asp-for="@Model.DirectorName" id="clubName-clubAdmins" class="form-control">
-                    <span asp-validation-for="@Model.DirectorName" id="clubName-clubAdmins-mistake" class="text-danger" style="display: none;">Please insert some text in the input</span>
+                    <input id="EditMovieDirector" asp-for="@Model.DirectorName"  class="form-control">
                 </div>
+                <label style="display:none; text-align: right; color: sandybrown;"
+                       id="EditMovieDirectorMistake">This field should not be empty</label>
 
                 <div class="form-group">
                     <label class="control-label">Premiere date</label>
@@ -34,9 +37,10 @@
                         <input type="hidden" id="dtOfBrthd" value=@Model.PremiereDate.ToString("dd-MM-yyyy") />
                     }
                     @Html.TextBoxFor(x => x.PremiereDate,
-                        new { @autocomplete = "off", @type = "date", @placeholder = "Choose a date...", @id = "datepickerBirthday", @class = "form-control" })
-                    <span asp-validation-for="@Model.PremiereDate" id="clubName-clubAdmins-mistake" class="text-danger" style="display: none;">Please insert some text in the input</span>
+                        new { @autocomplete = "off", @type = "date", @placeholder = "Choose a date...", @id = "EditMoviePremiere", @class = "form-control" })
                 </div>
+                <label style="display:none; text-align: right; color: sandybrown;"
+                       id="EditMoviePremiereMistake">This field should not be empty</label>
 
                 <div class="form-group">
                     <label class="control-label">End date</label>
@@ -45,9 +49,10 @@
                         <input type="hidden" id="dtOfBrthd" value=@Model.EndDate.ToString("dd-MM-yyyy") />
                     }
                     @Html.TextBoxFor(x => x.EndDate,
-                        new { @autocomplete = "off", @type = "date", @placeholder = "Choose a date...", @id = "datepickerBirthday", @class = "form-control" })
-                    <span asp-validation-for="@Model.EndDate" id="clubName-clubAdmins-mistake" class="text-danger" style="display: none;">Please insert some text in the input</span>
+                        new { @autocomplete = "off", @type = "date", @placeholder = "Choose a date...", @id = "EditMovieEndDate", @class = "form-control" })
                 </div>
+                <label style="display:none; text-align: right; color: sandybrown;"
+                       id="EditMovieEndDateMistake">This field should not be empty</label>
 
                 <div class="form-group">
                     <label class="control-label">Movie length</label>
@@ -56,20 +61,21 @@
                         <input type="hidden" id="dtOfBrthd" value=@Model.Length.ToString("hh:mm") />
                     }
                     @Html.TextBoxFor(x => x.Length,
-                        new { @autocomplete = "off", @type = "time", @placeholder = "Choose a date...", @id = "datepickerBirthday", @class = "form-control" })
-                    <span asp-validation-for="@Model.Length" id="clubName-clubAdmins-mistake" class="text-danger" style="display: none;">Please insert some text in the input</span>
+                        new { @autocomplete = "off", @type = "time", @placeholder = "Choose a date...", @id = "EditMovieLength", @class = "form-control" })
                 </div>
+                <label style="display:none; text-align: right; color: sandybrown;"
+                       id="EditMovieLengthMistake">This field should not be empty</label>
 
                 <div class="form-group">
                     <label class="control-label">Poster link</label>
-                    <input asp-for="@Model.Poster" id="clubName-clubAdmins" class="form-control">
-                    <span asp-validation-for="@Model.Poster" id="clubName-clubAdmins-mistake" class="text-danger" style="display: none;">Please insert some text in the input</span>
+                    <input asp-for="@Model.Poster" id="EditMoviePoster" class="form-control">
                 </div>
+                <label style="display:none; text-align: right; color: sandybrown;"
+                       id="EditMoviePosterMistake">This field should not be empty</label>
 
                 <div class="form-group">
                     <label class="control-label">Movie description</label>
                     <textarea asp-for="@Model.Description" id="clubDescription-clubAdmins" class="form-control" style="min-height: 200px;"> </textarea>
-                    <span asp-validation-for="@Model.Description" id="clubDescription-clubAdmins-mistake" class="text-danger" style="display: none;">Опис куреню не має перевищувати 1024 символи.</span>
                 </div>
 
                 <div class="form-group">
@@ -77,14 +83,13 @@
                     <div class="form-control" style="    height: fit-content; display: flex; flex-direction: column;">
                         @foreach (var a in Model.genre)
                         {
-                        <div style="display:flex; flex-direction: row;">
+                            <div style="display:flex; flex-direction: row;">
 
-                            <input type="checkbox" name="genre"
-                                   value="@a.GenreId" checked="@a.IsSelected" /><span>@a.GenreName</span>
-                            </div>
+                                <input type="checkbox" name="genre"
+                                       value="@a.GenreId" checked="@a.IsSelected" /><span>@a.GenreName</span>
+                                </div>
                             }
                     </div>
-                    <span asp-validation-for="@Model.genre" id="clubName-clubAdmins-mistake" class="text-danger" style="display: none;">Please insert some text in the input</span>
                 </div>
                 <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" style="width: 100%;" type="submit">
                     Save

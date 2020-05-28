@@ -2,7 +2,7 @@
 @{
     ViewData["Title"] = "MovieEdit";
 }
-<form class="container bg-dark m-5 pt-2 pb-5 pr-5 pl-5 club-wrappers-radius" style="opacity: 0.9; color: white;" asp-action="ShowingEdit" asp-controller="AdminTables" enctype="multipart/form-data">
+<form onsubmit="return isValidShowingEdit()" class="container bg-dark m-5 pt-2 pb-5 pr-5 pl-5 club-wrappers-radius" style="opacity: 0.9; color: white;" asp-action="ShowingEdit" asp-controller="AdminTables" enctype="multipart/form-data">
     <div class="row">
         <div class="col-7">
             <h1>Edit a showing</h1>
@@ -27,9 +27,10 @@
             <br />
             <div class="form-group">
                 <label class="control-label" style="display:flex; justify-content: flex-start;">Date and time of the showing</label>
-                <input type="datetime-local" name="DateAndTime" value="@Model.showing.DateAndTime" class="form-control" />
-                <span id="clubName-clubAdmins-mistake" class="text-danger" style="display: none;">Please insert some text in the input</span>
+                <input id="ShowingEditDate" type="datetime-local" name="DateAndTime" value="@Model.showing.DateAndTime" class="form-control" />
             </div>
+            <label style="display:none; text-align: right; color: sandybrown;"
+                   id="ShowingEditDateMistake">This field should not be empty</label>
             <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" style="width: 100%;" type="submit">
                 Save
             </button>

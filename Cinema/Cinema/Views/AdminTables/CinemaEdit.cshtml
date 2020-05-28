@@ -2,7 +2,7 @@
 @{
     ViewData["Title"] = "MovieEdit";
 }
-<form class="container bg-dark m-5 pt-2 pb-5 pr-5 pl-5 club-wrappers-radius" style="opacity: 0.9; color: white;" asp-action="CinemaEdit" asp-controller="AdminTables" enctype="multipart/form-data">
+<form onsubmit="return isValidEditCinema()" class="container bg-dark m-5 pt-2 pb-5 pr-5 pl-5 club-wrappers-radius" style="opacity: 0.9; color: white;" asp-action="CinemaEdit" asp-controller="AdminTables" enctype="multipart/form-data">
     <div class="row">
         <div class="col-7">
             <h1>Edit a cinema</h1>
@@ -10,21 +10,24 @@
             <div asp-validation-summary="All" class="text-danger"></div>
             <div class="form-group">
                 <label class="control-label">Cinema name</label>
-                <input name="CinemaName" asp-for="@Model.cinemaLocation.CinemaName" value="@Model.cinemaLocation.CinemaName" class="form-control">
-                <span id="clubName-clubAdmins-mistake" class="text-danger" style="display: none;">Please insert some text in the input</span>
+                <input id="CinemaEditCinemaName" name="CinemaName" asp-for="@Model.cinemaLocation.CinemaName" value="@Model.cinemaLocation.CinemaName" class="form-control">
             </div>
+            <label style="display:none; text-align: right; color: sandybrown;" id="CinemaEditCinemaNameMistake">This field should not be empty</label>
+
 
             <div class="form-group">
                 <label class="control-label">City</label>
-                <input name="city" asp-for="@Model.cinemaLocation.City.CityName" value="@Model.cinemaLocation.City.CityName" class="form-control">
-                <span id="clubName-clubAdmins-mistake" class="text-danger" style="display: none;">Please insert some text in the input</span>
+                <input id="CinemaEditCity" name="city" asp-for="@Model.cinemaLocation.City.CityName" value="@Model.cinemaLocation.City.CityName" class="form-control">
             </div>
+            <label style="display:none; text-align: right; color: sandybrown;" id="CinemaEditCityMistake">This field should not be empty</label>
+
 
             <div class="form-group">
                 <label class="control-label" style="justify-content: flex-start; display: flex;">Address</label>
-                <input name="Address" asp-for="@Model.cinemaLocation.Address" value="@Model.cinemaLocation.Address" class="form-control">
-                <span id="clubName-clubAdmins-mistake" class="text-danger" style="display: none;">Please insert some text in the input</span>
+                <input id="CinemaEditAddress" name="Address" asp-for="@Model.cinemaLocation.Address" value="@Model.cinemaLocation.Address" class="form-control">
             </div>
+            <label style="display:none; text-align: right; color: sandybrown;" id="CinemaEditAddressMistake">This field should not be empty</label>
+
             <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" style="width: 100%;" type="submit">
                 Save
             </button>

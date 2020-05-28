@@ -5,42 +5,53 @@
 }
 
 
-<form class="container bg-dark m-5 pt-2 pb-5 pr-5 pl-5 club-wrappers-radius" style="flex-direction: column; opacity: 90%; color: white;" asp-controller="Account" asp-action="Register" method="post" asp-route-returnurl="@returnUrl">
+<form onsubmit="return isValidRegister()" class="container bg-dark m-5 pt-2 pb-5 pr-5 pl-5 club-wrappers-radius" style="flex-direction: column; opacity: 90%; color: white;" asp-controller="Account" asp-action="Register" method="post" asp-route-returnurl="@returnUrl">
     <div style="display: flex; flex-direction: column; align-self: stretch; width: 50%;     margin: 0 auto;">
         <h1>Register worker</h1>
 
         <div style="display: flex; flex-direction:row; justify-content: space-between;">
             <label class="control-label">Login</label>
-            <input type="text" name="username" value="" style="flex-basis: 50%;" />
+            <input id="loginReg" type="text" name="username" value="" style="flex-basis: 50%;" />
         </div>
+        <label style="display:none; text-align: right; color: sandybrown;" id="loginRegMistake">This field should not be empty</label>
+
         <br />
         <div style="display: flex; flex-direction:row; justify-content: space-between;">
             <label class="control-label">Password</label>
-            <input type="password" name="password" value="" style="flex-basis: 50%;" />
+            <input id="passportReg" type="password" name="password" value="" style="flex-basis: 50%;" />
         </div>
+        <label style="display:none; text-align: right; color: sandybrown;" id="passportRegMistake">This field should not be empty</label>
+
         <br />
-        <div style="        display: flex;
-        flex-direction: row;
-        justify-content: space-between;">
+        <div style="display: flex; flex-direction: row; justify-content: space-between;">
             <label class="control-label">Name</label>
-            <input type="text" name="Name" value="" style="flex-basis: 50%;" />
+            <input id="nameReg" type="text" name="Name" value="" style="flex-basis: 50%;" />
         </div>
+        <label style="display:none; text-align: right; color: sandybrown;" id="nameRegMistake">This field should not be empty</label>
+
         <br />
         <div style="display: flex; flex-direction:row; justify-content: space-between;">
             <label class="control-label">Surname</label>
-            <input type="text" name="Surname" value="" style="flex-basis: 50%;" />
+            <input id="surnameReg" type="text" name="Surname" value="" style="flex-basis: 50%;" />
         </div>
+        <label style="display:none; text-align: right; color: sandybrown;" id="surnameRegMistake">This field should not be empty</label>
+
         <br />
         <div style="display: flex; flex-direction:row; justify-content: space-between;">
             <label class="control-label">Fathername</label>
-            <input type="text" name="Fathername" value="" style="flex-basis: 50%;" />
+            <input id="fathernameReg" type="text" name="Fathername" value="" style="flex-basis: 50%;" />
         </div>
+        <label style="display:none; text-align: right; color: sandybrown;" id="fathernameRegMistake">This field should not be empty</label>
+
         <br />
         <div style="display: flex; flex-direction:row; justify-content: space-between;">
             <label class="control-label">Passport data</label>
 
-            <input type="text" name="PassportData" value="" style="flex-basis: 50%;" />
+            <input id="passportReg" type="text" name="PassportData" value="" style="flex-basis: 50%;" />
         </div>
+        <label style="display:none; text-align: right; color: sandybrown;" id="passportRegMistake">This field should not be empty</label>
+        <label style="display:none; text-align: right; color: sandybrown;" id="passportRegMistake2">Passport data has a wrong format. It should contain 2 letters and 6 numbers</label>
+
         <br />
         <label class="control-label">Choose position</label>
         <select id="typeSelect" name="typeSelect" class="form-control">
@@ -56,4 +67,3 @@
     </div>
 </form>
 
-<a href="/Account/Login">Login</a>

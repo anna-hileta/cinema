@@ -14,7 +14,8 @@
         <div class="movie-info">
             <div class="flex-showing">
                 <h1 class="movie-title-showing">@Model.showings.Movie.Title</h1>
-                <h1 class="showing-text">Сеанс в кінотеатрі "r5yy6" на @Model.showings.DateAndTime</h1>
+                <h1 class="showing-text" style="text-align: center;">Showing in the cinema "@Model.showings.CinemaHall.CinemaLocation.CinemaName" in 
+                cinema hall "@Model.showings.CinemaHall.Name" on @Model.showings.DateAndTime</h1>
                 <div class="cinemaHall">
                     @foreach (var i in  Model.showings.Tickets)
                     {

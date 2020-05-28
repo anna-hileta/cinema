@@ -22,6 +22,12 @@ namespace Cinema.Services.Services
                 .Include(m => m.TicketChecks)
                 .ThenInclude(c => c.Ticket)
                 .ThenInclude(s => s.Showing)
+                .ThenInclude(m => m.Movie)
+                .Include(m => m.TicketChecks)
+                .ThenInclude(c => c.Ticket)
+                .ThenInclude(s => s.Showing)
+                .ThenInclude(s => s.CinemaHall)
+                .ThenInclude(s => s.CinemaLocation)
                 .First();
 
             return u;

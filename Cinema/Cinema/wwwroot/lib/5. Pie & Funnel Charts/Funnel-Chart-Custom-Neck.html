@@ -1,0 +1,52 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<script>
+window.onload = function () {
+
+var options = {
+	animationEnabled: true,
+	title: {
+		text: "Recruitment Analysis - April 2017"
+	},
+	data: [{
+		type: "funnel",
+		indexLabel: "{label} - {y}",
+		toolTipContent: "<b>{label}</b>: {y} <b>({percentage}%)</b>",
+		neckWidth: 50,
+		neckHeight: 0,
+		valueRepresents: "area",
+		dataPoints: [
+			{ y: 4271, label: "Applications" },
+			{ y: 2596, label: "Screened" },
+			{ y: 1448, label: "Qualified" },
+			{ y: 1243, label: "Interviewed" },
+			{ y: 241, label: "Offers Extended" },
+			{ y: 207, label: "Filled" }
+		]
+	}]
+};
+calculatePercentage();
+$("#chartContainer").CanvasJSChart(options);
+
+function calculatePercentage() {
+	var dataPoint = options.data[0].dataPoints;
+	var total = dataPoint[0].y;
+	for (var i = 0; i < dataPoint.length; i++) {
+		if (i == 0) {
+			options.data[0].dataPoints[i].percentage = 100;
+		} else {
+			options.data[0].dataPoints[i].percentage = ((dataPoint[i].y / total) * 100).toFixed(2);
+		}
+	}
+}
+
+}
+</script>
+</head>
+<body>
+<div id="chartContainer" style="height: 370px; max-width: 920px; margin: 0px auto;"></div>
+<script src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>
+<script src="https://canvasjs.com/assets/script/jquery.canvasjs.min.js"></script>
+</body>
+</html>

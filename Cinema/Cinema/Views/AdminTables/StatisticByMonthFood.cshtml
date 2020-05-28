@@ -1,0 +1,45 @@
+﻿@model StatiticViewModel
+@{
+    ViewData["Title"] = "Movies";
+}
+    <script>
+        const CurrentClub = @Html.Raw(Json.Serialize(@Model.Day));
+        const Counts = @Html.Raw(Json.Serialize(@Model.ticksperDay));
+        const MinDate = @Html.Raw(Json.Serialize(@Model.MaxDate));
+        const MaxDate = @Html.Raw(Json.Serialize(@Model.MinDate));
+        const getDate = string => (([year, month, day]) => ({ day, month, year }))(string.split('-'));
+            window.onload = function () {
+            var data = [];
+                for (var i = 0; i < CurrentClub.length; ++i) {
+                    data.push({ x: new Date(Number.parseInt(getDate(CurrentClub[i]).year), Number.parseInt(getDate(CurrentClub[i]).month), Number.parseInt(getDate(CurrentClub[i]).day.substring(0, 2))), y: Number.parseFloat(Counts[i]), label: getDate(CurrentClub[i]).year + "-" + getDate(CurrentClub[i]).month + "-" + getDate(CurrentClub[i]).day.substring(0, 2) });
+            }
+            var chart = new CanvasJS.Chart("chartContainer", {
+                animationEnabled: true,
+                title: {
+                    text: "Number of products sold by a date"
+                },
+                axisX: {
+                    minimum: new Date(Number.parseInt(getDate(MinDate).year), Number.parseInt(01), Number.parseInt(getDate(MinDate).day.substring(0, 2))),
+                    maximum: new Date(Number.parseInt(getDate(MaxDate).year), (Number.parseInt(getDate(MaxDate).month) +5), Number.parseInt(getDate(MaxDate).day.substring(0, 2))),
+                    valueFormatString: "MMM YY"
+                },
+                axisY: {
+                    title: "Number of Sales",
+                    titleFontColor: "brown",
+                },
+                data: [{
+                    color: "brown",
+                    indexLabelFontColor: "darkSlateGray",
+                    name: "views",
+                    type: "area",
+                    yValueFormatString: "#",
+                    dataPoints: data
+                }]
+            });
+            chart.render();
+
+        }
+    </script>
+
+    <div id="chartContainer" style="height: 300px; width: 100%;"></div>
+    <script type="text/javascript" src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>

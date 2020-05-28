@@ -20,6 +20,8 @@ namespace Cinema.Services.Services
                 .Include(c => c.CinemaHall)
                 .ThenInclude(d => d.Technology)
                 .Include(c => c.Tickets)
+                .Include(c => c.CinemaHall)
+                .ThenInclude(c => c.CinemaLocation)
                 .First();
         }
         public List<Showing> GetShowingsInfo()

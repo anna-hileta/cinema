@@ -1,0 +1,63 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<script>
+window.onload = function () {
+
+var options = {
+	animationEnabled: true,
+	title: {
+		text: "Lifespan of Appliances"
+	},
+	axisX: {
+		interval: 1
+	},
+	axisY: {
+		title: "Lifespan",
+		suffix: " Years"
+	},
+	toolTip: {
+		shared: true
+	},
+	data: [{
+		type: "column",
+		name: "Average",
+		toolTipContent: "<b>{label}</b><br><span style=\"color:#4F81BC\">{name}</span>: {y} Years",
+		dataPoints: [
+			{ y: 10, label: "Air-Conditioners" },
+			{ y: 4, label: "Computers" },
+			{ y: 20, label: "Furnaces" },
+			{ y: 16, label: "Electric Ranges" },
+			{ y: 6, label: "Packaging Machines" },
+			{ y: 11, label: "Refrigerators" },
+			{ y: 10, label: "Washing Machine" },
+			{ y: 11, label: "Water Heaters" }
+		]
+	},
+	{
+		type: "error",
+		name: "Variance",
+		toolTipContent: "<span style=\"color:#C0504E\">{name}</span>: {y[0]} - {y[1]} Years",
+		dataPoints: [
+			{ y: [8, 15], label: "Air-Conditioners" },
+			{ y: [3, 5], label: "Computers" },
+			{ y: [15, 25], label: "Furnaces" },
+			{ y: [13, 20], label: "Electric Ranges" },
+			{ y: [3, 7], label: "Packaging Machines" },
+			{ y: [9, 13], label: "Refrigerators" },
+			{ y: [5, 15], label: "Washing Machine" },
+			{ y: [8, 12], label: "Water Heaters" }
+		]
+	}]
+};
+$("#chartContainer").CanvasJSChart(options);
+
+}
+</script>
+</head>
+<body>
+<div id="chartContainer" style="height: 370px; max-width: 920px; margin: 0px auto;"></div>
+<script src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>
+<script src="https://canvasjs.com/assets/script/jquery.canvasjs.min.js"></script>
+</body>
+</html>

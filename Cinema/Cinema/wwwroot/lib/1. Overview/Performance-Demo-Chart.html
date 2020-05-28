@@ -1,0 +1,58 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<script>
+window.onload = function () {
+
+var dataPoints = [];
+var y = 1000;
+var limit = 50000;
+
+for ( var i = 0; i < limit; i++ ) {
+	y += Math.round( 10 + Math.random() * (-10 -10));	
+	dataPoints.push({ y: y });
+}
+
+var options = {
+	animationEnabled: true,
+	zoomEnabled: true,
+	title:{
+		text: "Performance Chart"
+	}, 
+	subtitles:[{
+		text: "Try Zooming and Panning"
+	}],
+	data: [{
+		type: "line",
+		dataPoints: dataPoints
+	}],
+	axisY:{
+		includeZero: false
+	}
+};
+var startTime = new Date();
+$("#chartContainer").CanvasJSChart(options);
+var endTime = new Date();
+document.getElementById("timeToRender").innerHTML = "Time to Render: " + (endTime - startTime) + "ms";
+
+}
+</script>
+<style>
+	#timeToRender {
+		position:absolute; 
+		top: 10px; 
+		font-size: 20px; 
+		font-weight: bold; 
+		background-color: #d85757;
+		padding: 0px 4px;
+		color: #ffffff;
+	}
+</style>
+</head>
+<body>
+<div id="chartContainer" style="height: 370px; max-width: 920px; margin: 0px auto;"></div>
+<span id="timeToRender"></span>
+<script src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>
+<script src="https://canvasjs.com/assets/script/jquery.canvasjs.min.js"></script>
+</body>
+</html>

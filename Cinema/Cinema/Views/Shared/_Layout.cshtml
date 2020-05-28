@@ -1,4 +1,7 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<Cinema.Core.Entities.Worker> SignInManager
+@inject UserManager<Cinema.Core.Entities.Worker> UserManager
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -50,20 +53,42 @@
                 <span class="mdl-layout-title">Cinema</span>
                 <div class="mdl-layout-spacer"></div>
                 <nav class="mdl-navigation">
-                    <a class="mdl-navigation__link"></a>
-                    <a class="mdl-navigation__link" asp-controller="Account" asp-action="Login">Login</a>
-                    <a class="mdl-navigation__link" asp-controller="Account" asp-action="LogOut">Leave</a>
+                    @if (SignInManager.IsSignedIn(User))
+                    {
+                        <a class="mdl-navigation__link" asp-controller="Account" asp-action="EditProfileLimited" asp-route-id="@UserManager.GetUserId(User)">Welcome, @UserManager.GetUserAsync(User).Result.Name @UserManager.GetUserAsync(User).Result.Surname</a>
+                        <a class="mdl-navigation__link" asp-controller="Account" asp-action="LogOut">Leave</a>
+                    }
+                    else
+                    {
+                        <a class="mdl-navigation__link" asp-controller="Account" asp-action="Login">Login</a>
+                    }
                 </nav>
             </div>
         </header>
-        <div class="mdl-layout__drawer">
-            <span class="mdl-layout-title">Title</span>
-            <nav class="mdl-navigation">
-                <a class="mdl-navigation__link" asp-controller="Movie" asp-action="Index">Movies</a>
-                <a class="mdl-navigation__link" asp-controller="Foodcourt" asp-action="Index">Foodcourt</a>
-                <a class="mdl-navigation__link" asp-controller="AdminTables" asp-action="Index">Admin</a>
-            </nav>
-        </div>
+        @if (SignInManager.IsSignedIn(User))
+        {
+            <div class="mdl-layout__drawer">
+                <span class="mdl-layout-title">Cinema</span>
+                <nav class="mdl-navigation">
+                    <a class="mdl-navigation__link" asp-controller="Movie" asp-action="Index" style="display: 
+                    @if (@UserManager.GetUserAsync(User).Result.PositionId == 2 || @UserManager.GetUserAsync(User).Result.PositionId == 3)
+                    { <text>block</text>}
+                    else
+                    { <text>none</text>} ">Movies</a>
+                    <a class="mdl-navigation__link" asp-controller="Foodcourt" asp-action="Index"
+                       style="display: 
+                    @if (@UserManager.GetUserAsync(User).Result.PositionId == 1 || @UserManager.GetUserAsync(User).Result.PositionId == 3)
+                    { <text>block</text>}
+                    else
+                    { <text>none</text>} ">Foodcourt</a>
+                    <a class="mdl-navigation__link" asp-controller="AdminTables" asp-action="Index" style="display: 
+                    @if (@UserManager.GetUserAsync(User).Result.PositionId == 3)
+                    { <text>block</text>}
+                    else
+                    { <text>none</text>} ">Admin</a>
+                </nav>
+            </div>
+        }
 
         <main>
             @RenderBody()
