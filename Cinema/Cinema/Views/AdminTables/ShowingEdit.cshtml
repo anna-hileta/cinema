@@ -31,6 +31,11 @@
             </div>
             <label style="display:none; text-align: right; color: sandybrown;"
                    id="ShowingEditDateMistake">This field should not be empty</label>
+            @if (!Model.IsSuccessfull)
+            {
+                <label style=" text-align: right; color: sandybrown;"
+                       >Previous edit was unsuccessful, because the time period of this showing was intersecting with existing showing</label>
+            }
             <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" style="width: 100%;" type="submit">
                 Save
             </button>

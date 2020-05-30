@@ -514,7 +514,7 @@ table.dataTable tbody tr .context-menu-one td a
     border-color: black;
 }
 
-@media (max-width: 900px) {
+@media (max-width: 500px) {
     .Create-decesion-form {
         padding: 20px 0;
 }

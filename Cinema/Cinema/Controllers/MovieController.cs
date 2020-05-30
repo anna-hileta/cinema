@@ -64,7 +64,6 @@ namespace Cinema.Controllers
                     cinemasAndShowing[item.CinemaHall.CinemaLocation].Add(item.Id);
                 }
             }
-
             return View(new MovieViewModel() { movie = movies, cinemaLocations = cinemas, cinemasAndShowing = cinemasAndShowing });
         }
         public IActionResult MovieShowing(int showingId)

@@ -47,12 +47,12 @@ namespace Cinema.Controllers
                 }
                 else
                 {
-                    // sign in failure
+                    return RedirectToAction("LoginationMistake", "Account");
                 }
             }
             else
             {
-                // no user found
+                return RedirectToAction("LoginationMistake", "Account");
             }
 
             return RedirectToAction("Index", "Home");

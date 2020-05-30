@@ -1,12 +1,15 @@
 ﻿using Cinema.Core.Abstractions.Services;
 using Cinema.Core.Entities;
+using Cinema.DAL;
 using Cinema.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using WM.MDBBlazor;
@@ -22,6 +25,7 @@ namespace Cinema.Controllers
         private readonly ITechnologyService technologyService;
         private readonly IDirectorService directorService;
         private readonly ICountryOfOriginService countryOfOriginService;
+        private readonly CinemaContext context;
         private readonly ITicketCheckService ticketCheckService;
         private readonly IFoodcourtCheckProductService foodcourtCheckProductService;
         private readonly IFoodcourtCheckService foodcourtCheckService;
@@ -35,7 +39,7 @@ namespace Cinema.Controllers
         private readonly UserManager<Worker> userManager;
         private readonly SignInManager<Worker> signInManager;
 
-        public AdminTablesController(ITicketCheckService ticketCheckService, IFoodcourtCheckProductService foodcourtCheckProductService  ,IFoodcourtCheckService foodcourtCheckService, ICheckService checkService, ITicketService ticketService, ICinemaLocationService cinemaLocationService, IFoodProductsService foodProductsService, ITechnologyService technologyService, ICityService cityService, IFoodAmountService foodAmountService, ICinemaHallService cinemaHallService, IDirectorService directorService, IWorkerService workerService, ICountryOfOriginService countryOfOriginService, IMovieService movieService, IGenreService genreService, IShowingService showingService, UserManager<Worker> userManager, SignInManager<Worker> signInManager)
+        public AdminTablesController(CinemaContext context, ITicketCheckService ticketCheckService, IFoodcourtCheckProductService foodcourtCheckProductService  ,IFoodcourtCheckService foodcourtCheckService, ICheckService checkService, ITicketService ticketService, ICinemaLocationService cinemaLocationService, IFoodProductsService foodProductsService, ITechnologyService technologyService, ICityService cityService, IFoodAmountService foodAmountService, ICinemaHallService cinemaHallService, IDirectorService directorService, IWorkerService workerService, ICountryOfOriginService countryOfOriginService, IMovieService movieService, IGenreService genreService, IShowingService showingService, UserManager<Worker> userManager, SignInManager<Worker> signInManager)
         {
             this.foodProductsService = foodProductsService;
             this.directorService = directorService;
@@ -43,6 +47,7 @@ namespace Cinema.Controllers
             this.cityService = cityService;
             this.foodAmountService = foodAmountService;
             this.cinemaHallService = cinemaHallService;
+            this.context = context;
             this.ticketCheckService = ticketCheckService;
             this.foodcourtCheckProductService = foodcourtCheckProductService;
             this.foodcourtCheckService = foodcourtCheckService;
@@ -369,11 +374,12 @@ namespace Cinema.Controllers
                     cinemaLocations.Add(new Tuple<int, string>(hall.Id, temp));
                 }
             }
-            return View(new ShowingCreateAndEditViewModel() { cinemaLocations = cinemaLocations, movies = movies });
+            return View(new ShowingCreateAndEditViewModel() { cinemaLocations = cinemaLocations, movies = movies , IsSuccessfull = true});
         }
         [HttpPost]
         public IActionResult ShowingCreate(int Cinema, int Movie, DateTime DateAndTime)
         {
+            /*
             var Showing = new Showing()
             {
                 DateAndTime = DateAndTime
@@ -386,7 +392,48 @@ namespace Cinema.Controllers
             Showing.Movie = movie;
 
             showingService.Add(Showing);
-            return RedirectToAction("ShowingTable");
+            */
+
+            /*PROCEDURE AddNewShowing  
+           (  
+           @HallId int,
+           @StartDate datetime,
+           @MovieLength datetime,
+           @MovieId int */
+            var CinemaHall = cinemaHallService.GetById(Cinema);
+            var movie = movieService.GetById(Movie);
+            SqlParameter[] @params =
+            {
+               new SqlParameter("@returnVal", SqlDbType.Int) {Direction = ParameterDirection.Output},
+               new SqlParameter("@HallId", SqlDbType.Int){ Value = CinemaHall.Id},
+               new SqlParameter("@StartDate", SqlDbType.DateTime){ Value = DateAndTime},
+               new SqlParameter("@MovieLength", SqlDbType.DateTime){ Value = movie.Length},
+               new SqlParameter("@MovieId", SqlDbType.Int){ Value = movie.Id}
+             };
+
+            context.Database.ExecuteSqlCommand("exec AddNewShowing @returnVal OUT, @HallId, @StartDate, @MovieLength, @MovieId", @params);
+
+            var result = (int)@params[0].Value;
+            if (result == 0)
+            {
+                return RedirectToAction("ShowingTable");
+            }
+            else
+            {
+                var cinemas = cinemaLocationService.GetWithHalls();
+                List<Tuple<int, string>> cinemaLocations = new List<Tuple<int, string>>();
+                string temp;
+                foreach (var item in cinemas)
+                {
+                    foreach (var hall in item.CinemaHalls)
+                    {
+                        temp = item.CinemaName + ", Hall " + hall.Name;
+                        cinemaLocations.Add(new Tuple<int, string>(hall.Id, temp));
+                    }
+                }
+                var movies = movieService.Get().FindAll(a => a.EndDate >= DateTime.Today).ToList();
+                return View("ShowingCreate", new ShowingCreateAndEditViewModel() { cinemaLocations = cinemaLocations, movies = movies, IsSuccessfull = false });
+            }
         }
         public IActionResult ShowingEdit(int index)
         {
@@ -403,21 +450,49 @@ namespace Cinema.Controllers
                     cinemaLocations.Add(new Tuple<int, string>(hall.Id, temp));
                 }
             }
-            return View(new ShowingCreateAndEditViewModel() { showing = showing, cinemaLocations = cinemaLocations, movies = movies });
+            return View(new ShowingCreateAndEditViewModel() { showing = showing, cinemaLocations = cinemaLocations, movies = movies, IsSuccessfull= true });
         }
         [HttpPost]
+        [Obsolete]
         public IActionResult ShowingEdit(int index, int Cinema, int Movie, DateTime DateAndTime)
         {
-            var Showing = showingService.GetById(index);
             var CinemaHall = cinemaHallService.GetById(Cinema);
-            Showing.CinemaHallId = Cinema;
-            Showing.CinemaHall = CinemaHall;
             var movie = movieService.GetById(Movie);
-            Showing.MovieId = Movie;
-            Showing.Movie = movie;
+            var showing = showingService.GetById(index);
+            SqlParameter[] @params =
+            {
+               new SqlParameter("@returnVal", SqlDbType.Int) {Direction = ParameterDirection.Output},
+               new SqlParameter("@ShowingId", SqlDbType.Int){ Value = index},
+               new SqlParameter("@HallId", SqlDbType.Int){ Value = CinemaHall.Id},
+               new SqlParameter("@StartDate", SqlDbType.DateTime){ Value = DateAndTime},
+               new SqlParameter("@MovieLength", SqlDbType.DateTime){ Value = movie.Length},
+               new SqlParameter("@MovieId", SqlDbType.Int){ Value = movie.Id}
+             };
 
-            showingService.Update(Showing);
-            return RedirectToAction("ShowingTable");
+
+            context.Database.ExecuteSqlCommand("exec UpdateShowing @returnVal OUT, @ShowingId, @HallId, @StartDate, @MovieLength, @MovieId", @params);
+
+            var result = (int) @params[0].Value;
+            if(result == 0)
+            {
+                return RedirectToAction("ShowingTable");
+            }
+            else
+            {
+                var cinemas = cinemaLocationService.GetWithHalls();
+                List<Tuple<int, string>> cinemaLocations = new List<Tuple<int, string>>();
+                string temp;
+                foreach (var item in cinemas)
+                {
+                    foreach (var hall in item.CinemaHalls)
+                    {
+                        temp = item.CinemaName + ", Hall " + hall.Name;
+                        cinemaLocations.Add(new Tuple<int, string>(hall.Id, temp));
+                    }
+                }
+                var movies = movieService.Get().FindAll(a => a.EndDate >= DateTime.Today).ToList();
+                return View("ShowingEdit",new ShowingCreateAndEditViewModel() { showing = showing, cinemaLocations = cinemaLocations, movies = movies, IsSuccessfull = false });
+            }
         }
         public IActionResult DeleteShowing(int index)
         {

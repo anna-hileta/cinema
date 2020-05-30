@@ -12,5 +12,6 @@ namespace Cinema.ViewModels
         public Showing showing { get; set; }
         public List<Tuple<int, string>> cinemaLocations;
         public List<Movie> movies;
+        public bool IsSuccessfull { get; set; }
     }
 }
