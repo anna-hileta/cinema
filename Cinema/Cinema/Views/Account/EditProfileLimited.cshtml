@@ -14,18 +14,21 @@
             <input id="limName" asp-for="@Model.worker.Name" name="Name" value="@Model.worker.Name" style="flex-basis: 50%;" class="form-control">
         </div>
         <label style="display:none; text-align: right; color: sandybrown;" id="limNameMistake">This field should not be empty</label>
+        <label style="display:none; text-align: right; color: sandybrown;" id="limNameMistake2">This field should contain only letters</label>
         <br />
         <div style="display: flex; flex-direction:row; justify-content: space-between;">
             <label class="control-label">Surname</label>
             <input id="limSurname" asp-for="@Model.worker.Surname" name="Surname" value="@Model.worker.Surname" style="flex-basis: 50%;" class="form-control">
         </div>
         <label style="display:none; text-align: right; color: sandybrown;" id="limSurnameMistake">This field should not be empty</label>
+        <label style="display:none; text-align: right; color: sandybrown;" id="limSurnameMistake2">This field should contain only letters</label>
         <br />
         <div style="display: flex; flex-direction:row; justify-content: space-between;">
             <label class="control-label">Fathername</label>
             <input id="limFathername" asp-for="@Model.worker.FatherName" name="Fathername" value="@Model.worker.FatherName" style="flex-basis: 50%;" class="form-control">
         </div>
         <label style="display:none; text-align: right; color: sandybrown;" id="limFathernameMistake">This field should not be empty</label>
+        <label style="display:none; text-align: right; color: sandybrown;" id="limFathernameMistake2">This field should contain only letters</label>
         <br />
         <div style="display: flex; flex-direction:row; justify-content: space-between;">
             <label class="control-label">Passport data</label>
@@ -35,7 +38,7 @@
         <label style="display:none; text-align: right; color: sandybrown;" id="limPassportDataMistake2">Passport data has a wrong format. It should contain 2 letters and 6 numbers</label>
         <br />
         <button type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" style="width: 100%;">
-          Save
+            Save
         </button>
     </div>
 </form>

@@ -97,11 +97,21 @@ function isValidMovieEdit() {
             $('#EditMovieCountryOfOriginMistake').css('display', 'block');
         } else {
             $('#EditMovieCountryOfOriginMistake').css('display', 'none');
+            if (Number.parseInt(countryOfOrigin)) {
+                $('#EditMovieCountryOfOriginMistake2').css('display', 'block');
+            } else {
+                $('#EditMovieCountryOfOriginMistake2').css('display', 'none');
+            }
         }
         if (director.length == 0) {
             $('#EditMovieDirectorMistake').css('display', 'block');
         } else {
             $('#EditMovieDirectorMistake').css('display', 'none');
+            if (Number.parseInt(director)) {
+                $('#EditMovieDirectorMistake2').css('display', 'block');
+            } else {
+                $('#EditMovieDirectorMistake2').css('display', 'none');
+            }
         }
         if (premiere.length == 0) {
             $('#EditMoviePremiereMistake').css('display', 'block');
@@ -125,6 +135,18 @@ function isValidMovieEdit() {
         }
         return false;
     } else {
+        if (Number.parseInt(countryOfOrigin)) {
+            $('#EditMovieCountryOfOriginMistake2').css('display', 'block');
+            return false;
+        } else {
+            $('#EditMovieCountryOfOriginMistake2').css('display', 'none');
+        }
+        if (Number.parseInt(director)) {
+            $('#EditMovieDirectorMistake2').css('display', 'block');
+            return false;
+        } else {
+            $('#EditMovieDirectorMistake2').css('display', 'none');
+        }
         return true;
     }
 }
@@ -148,11 +170,21 @@ function isValidMovieCreate() {
             $('#MovieCreateCountryOfOriginMistake').css('display', 'block');
         } else {
             $('#MovieCreateCountryOfOriginMistake').css('display', 'none');
+            if (Number.parseInt(countryOfOrigin)) {
+                $('#MovieCreateCountryOfOriginMistake2').css('display', 'block');
+            } else {
+                $('#MovieCreateCountryOfOriginMistake2').css('display', 'none');
+            }
         }
         if (director.length == 0) {
             $('#MovieCreateDirectorMistake').css('display', 'block');
         } else {
             $('#MovieCreateDirectorMistake').css('display', 'none');
+            if (Number.parseInt(director)) {
+                $('#MovieCreateDirectorMistake2').css('display', 'block');
+            } else {
+                $('#MovieCreateDirectorMistake2').css('display', 'none');
+            }
         }
         if (premiere.length == 0) {
             $('#MovieCreatePremiereMistake').css('display', 'block');
@@ -176,6 +208,18 @@ function isValidMovieCreate() {
         }
         return false;
     } else {
+        if (Number.parseInt(director)) {
+            $('#MovieCreateDirectorMistake2').css('display', 'block');
+            return false;
+        } else {
+            $('#MovieCreateDirectorMistake2').css('display', 'none');
+        }
+        if (Number.parseInt(countryOfOrigin)) {
+            $('#MovieCreateCountryOfOriginMistake2').css('display', 'block');
+            return false;
+        } else {
+            $('#MovieCreateCountryOfOriginMistake2').css('display', 'none');
+        }
         return true;
     }
 }
@@ -289,6 +333,11 @@ function isValidEditCinema() {
             $('#CinemaEditCityMistake').css('display', 'block');
         } else {
             $('#CinemaEditCityMistake').css('display', 'none');
+            if (Number.parseInt(city)) {
+                $('#CinemaEditCityMistake2').css('display', 'block');
+            } else {
+                $('#CinemaEditCityMistake2').css('display', 'none');
+            }
         }
         if (address.length == 0) {
             $('#CinemaEditAddressMistake').css('display', 'block');
@@ -297,6 +346,12 @@ function isValidEditCinema() {
         }
         return false;
     } else {
+        if (Number.parseInt(city)) {
+            $('#CinemaEditCityMistake2').css('display', 'block');
+            return false;
+        } else {
+            $('#CinemaEditCityMistake2').css('display', 'none');
+        }
         return true;
     }
 }
@@ -314,6 +369,11 @@ function isValidCreateCinema() {
             $('#CinemaCreateCityMistake').css('display', 'block');
         } else {
             $('#CinemaCreateCityMistake').css('display', 'none');
+            if (Number.parseInt(city)) {
+                $('#CinemaCreateCityMistake2').css('display', 'block');
+            } else {
+                $('#CinemaCreateCityMistake2').css('display', 'none');
+            }
         }
         if (address.length == 0) {
             $('#CinemaCreateAddressMistake').css('display', 'block');
@@ -322,6 +382,12 @@ function isValidCreateCinema() {
         }       
         return false;
     } else {
+        if (Number.parseInt(city)) {
+            $('#CinemaCreateCityMistake2').css('display', 'block');
+            return false;
+        } else {
+            $('#CinemaCreateCityMistake2').css('display', 'none');
+        }
         return true;
     }
 }
@@ -347,16 +413,31 @@ function isValidRegister() {
             $('#nameRegMistake').css('display', 'block');
         } else {
             $('#nameRegMistake').css('display', 'none');
+            if (Number.parseInt(name)) {
+                $('#nameRegMistake2').css('display', 'block');
+            } else {
+                $('#nameRegMistake2').css('display', 'none');
+            }
         }
         if (surname.length == 0) {
             $('#surnameRegMistake').css('display', 'block');
         } else {
             $('#surnameRegMistake').css('display', 'none');
+            if (Number.parseInt(surname)) {
+                $('#surnameRegMistake2').css('display', 'block');
+            } else {
+                $('#surnameRegMistake2').css('display', 'none');
+            }
         }
         if (fathername.length == 0) {
             $('#fathernameRegMistake').css('display', 'block');
         } else {
             $('#fathernameRegMistake').css('display', 'none');
+            if (Number.parseInt(fathername)) {
+                $('#fathernameRegMistake2').css('display', 'block');
+            } else {
+                $('#fathernameRegMistake2').css('display', 'none');
+            }
         }
         if (passportData.length == 0) {
             $('#passportRegMistake').css('display', 'block');
@@ -378,6 +459,24 @@ function isValidRegister() {
         
         return false;
     } else {
+        if (Number.parseInt(surname)) {
+            $('#surnameRegMistake2').css('display', 'block');
+            return false;
+        } else {
+            $('#surnameRegMistake2').css('display', 'none');
+        }
+        if (Number.parseInt(fathername)) {
+            $('#fathernameRegMistake2').css('display', 'block');
+            return false;
+        } else {
+            $('#fathernameRegMistake2').css('display', 'none');
+        }
+        if (Number.parseInt(name)) {
+            $('#nameRegMistake2').css('display', 'block');
+            return false;
+        } else {
+            $('#nameRegMistake2').css('display', 'none');
+        }
         var letterString = passportData.substring(0, 2);
         var numberString = passportData.substring(2, 8);
         if (Number.parseInt(letterString) || !Number.parseInt(numberString)) {
@@ -399,16 +498,31 @@ function isValidProfileFull() {
             $('#nameFullMistake').css('display', 'block');
         } else {
             $('#nameFullMistake').css('display', 'none');
+            if (Number.parseInt(name)) {
+                $('#nameFullMistake2').css('display', 'block');
+            } else {
+                $('#nameFullMistake2').css('display', 'none');
+            }
         }
         if (surname.length == 0) {
             $('#surnameFullMistake').css('display', 'block');
         } else {
             $('#surnameFullMistake').css('display', 'none');
+            if (Number.parseInt(surname)) {
+                $('#surnameFullMistake2').css('display', 'block');
+            } else {
+                $('#surnameFullMistake2').css('display', 'none');
+            }
         }
         if (fathername.length == 0) {
             $('#fathernameFullMistake').css('display', 'block');
         } else {
             $('#fathernameFullMistake').css('display', 'none');
+            if (Number.parseInt(fathername)) {
+                $('#fathernameFullMistake2').css('display', 'block');
+            } else {
+                $('#fathernameFullMistake2').css('display', 'none');
+            }
         }
         if (passportData.length == 0) {
             $('#passportDataFullMistake').css('display', 'block');
@@ -430,6 +544,24 @@ function isValidProfileFull() {
         
         return false;
     } else {
+        if (Number.parseInt(name)) {
+            $('#nameFullMistake2').css('display', 'block');
+            return false;
+        } else {
+            $('#nameFullMistake2').css('display', 'none');
+        }
+        if (Number.parseInt(surname)) {
+            $('#surnameFullMistake2').css('display', 'block');
+            return false;
+        } else {
+            $('#surnameFullMistake2').css('display', 'none');
+        }
+        if (Number.parseInt(fathername)) {
+            $('#fathernameFullMistake2').css('display', 'block');
+            return false;
+        } else {
+            $('#fathernameFullMistake2').css('display', 'none');
+        }
         var letterString = passportData.substring(0, 2);
         var numberString = passportData.substring(2, 8);
         if (Number.parseInt(letterString) || !Number.parseInt(numberString)) {
@@ -451,16 +583,31 @@ function isValidProfileLimited() {
             $('#limNameMistake').css('display', 'block');
         } else {
             $('#limNameMistake').css('display', 'none');
+            if (Number.parseInt(name)) {
+                $('#limNameMistake2').css('display', 'block');
+            } else {
+                $('#limNameMistake2').css('display', 'none');
+            }
         }
         if (surname.length == 0) {
             $('#limSurnameMistake').css('display', 'block');
         } else {
             $('#limSurnameMistake').css('display', 'none');
+            if (Number.parseInt(surname)) {
+                $('#limSurnameMistake2').css('display', 'block');
+            } else {
+                $('#limSurnameMistake2').css('display', 'none');
+            }
         }
         if (fathername.length == 0) {
             $('#limFathernameMistake').css('display', 'block');
         } else {
             $('#limFathernameMistake').css('display', 'none');
+            if (Number.parseInt(fathername)) {
+                $('#limFathernameMistake2').css('display', 'block');
+            } else {
+                $('#limFathernameMistake2').css('display', 'none');
+            }
         }
         if (passportData.length == 0) {
             $('#limPassportDataMistake').css('display', 'block');
@@ -482,6 +629,24 @@ function isValidProfileLimited() {
         
         return false;
     } else {
+        if (Number.parseInt(name)) {
+            $('#limNameMistake2').css('display', 'block');
+            return false;
+        } else {
+            $('#limNameMistake2').css('display', 'none');
+        }
+        if (Number.parseInt(surname)) {
+            $('#limSurnameMistake2').css('display', 'block');
+            return false;
+        } else {
+            $('#limSurnameMistake2').css('display', 'none');
+        }
+        if (Number.parseInt(fathername)) {
+            $('#limFathernameMistake2').css('display', 'block');
+            return false;
+        } else {
+            $('#limFathernameMistake2').css('display', 'none');
+        }
         var letterString = passportData.substring(0, 2);
         var numberString = passportData.substring(2, 8);
         if (Number.parseInt(letterString) || !Number.parseInt(numberString) ){

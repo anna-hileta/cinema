@@ -11,5 +11,6 @@ namespace Cinema.ViewModels
     {
         public Worker worker { get; set; }
         public List<Position> positions;
+        public bool isCorrect { get; set; }
     }
 }

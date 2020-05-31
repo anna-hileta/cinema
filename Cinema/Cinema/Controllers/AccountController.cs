@@ -26,7 +26,7 @@ namespace Cinema.Controllers
 
         public IActionResult Login()
         {
-            return View();
+            return View(new EditWorkerViewModel() { isCorrect = false });
         }
 
         [HttpPost]
@@ -47,15 +47,15 @@ namespace Cinema.Controllers
                 }
                 else
                 {
-                    return RedirectToAction("LoginationMistake", "Account");
+                    return View("Login", new EditWorkerViewModel() { isCorrect = true});
                 }
             }
             else
             {
-                return RedirectToAction("LoginationMistake", "Account");
+                return View("Login", new EditWorkerViewModel() { isCorrect = true });
             }
 
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Secret", "Home");
         }
 
         public IActionResult Register()

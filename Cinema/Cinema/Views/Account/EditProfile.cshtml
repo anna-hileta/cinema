@@ -14,12 +14,14 @@
             <input id="nameFull" asp-for="@Model.worker.Name" name="Name" value="@Model.worker.Name" style="flex-basis: 50%;" class="form-control">
         </div>
         <label style="display:none; text-align: right; color: sandybrown;" id="nameFullMistake">This field should not be empty</label>
+        <label style="display:none; text-align: right; color: sandybrown;" id="nameFullMistake2">This field should contain only letters</label>
         <br />
         <div style="display: flex; flex-direction:row; justify-content: space-between;">
             <label class="control-label">Surname</label>
             <input id="surnameFull" asp-for="@Model.worker.Surname" name="Surname" value="@Model.worker.Surname" style="flex-basis: 50%;" class="form-control">
         </div>
         <label style="display:none; text-align: right; color: sandybrown;" id="surnameFullMistake">This field should not be empty</label>
+        <label style="display:none; text-align: right; color: sandybrown;" id="surnameFullMistake2">This field should contain only letters</label>
 
         <br />
         <div style="display: flex; flex-direction:row; justify-content: space-between;">
@@ -27,6 +29,7 @@
             <input id="fathernameFull" asp-for="@Model.worker.FatherName" name="Fathername" value="@Model.worker.FatherName" style="flex-basis: 50%;" class="form-control">
         </div>
         <label style="display:none; text-align: right; color: sandybrown;" id="fathernameFullMistake">This field should not be empty</label>
+        <label style="display:none; text-align: right; color: sandybrown;" id="fathernameFullMistake2">This field should contain only letters</label>
 
         <br />
         <div style="display: flex; flex-direction:row; justify-content: space-between;">
