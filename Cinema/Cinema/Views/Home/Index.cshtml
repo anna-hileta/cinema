@@ -6,10 +6,13 @@
         color: white;
     }
 </style>
-<div class="text-center text-color-white bg-dark" style="opacity: 0.9;">
-    <h1 class="display-4">Welcome</h1>
-    <p>to the workers base of "Cinema corporation". Please, log in for more functionality.</p>
-    <a class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" asp-controller="Account" asp-action="Login">
-        Login
-    </a>
+<div class="text-center text-color-white bg-dark" style="display: flex; flex-direction:column; justify-content: center; opacity: 0.9; height: 300px;">
+    <h1 class="display-4" style="color: sandybrown;">Welcome</h1>
+    <p style=" font-size: 18px; font-weight: inherit; color: white;">to the workers base of "Cinema corporation". Please, log in for more functionality.</p>
+    <div style="width: 100%; display: flex; justify-content: center;">
+        <a style="width: 50%;" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored"  asp-controller="Account" asp-action="Login">
+            Login
+        </a>
+    </div>
+    <br />
 </div>
