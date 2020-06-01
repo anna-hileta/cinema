@@ -1,0 +1,90 @@
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<Cinema.Core.Entities.Worker> SignInManager
+@inject UserManager<Cinema.Core.Entities.Worker> UserManager
+@{
+    ViewData["Title"] = "Home Page";
+}
+    <div class="text-center text-color-white bg-dark" style="        justify-content: center; display: flex;
+        flex-direction: column;
+        opacity: 0.9;
+        padding: 10px;">
+        @if (@UserManager.GetUserAsync(User).Result.PositionId == 2 || @UserManager.GetUserAsync(User).Result.PositionId == 3)
+        {
+            <h1 class="display-4" style="color: sandybrown;">How to use "Movies" functionality</h1>
+            <label class="control-label" style=" font-size: 18px; font-weight: inherit;
+            color: white;">
+                When you click on "Movies" menu button you will be redirected to a page with all movies that are currently avialable in our cinema network. Click on one of them to get information about that movie.
+            </label>
+            <img style="padding: 25px;" src="~/photos/1.jpg">
+            <label class="control-label" style=" font-size: 18px; font-weight: inherit;
+            color: white;">
+                If you choose an option in a dropdown list, the system will show you showings in that cinema.
+            </label>
+            <img style="padding: 25px;" src="~/photos/2.jpg">
+            <label class="control-label" style=" font-size: 18px; font-weight: inherit;
+            color: white;">
+                When you click on any showing, you will see showings page. Red seats are booked and cannot be clicked. Click on any white seat to add it to the checkout and it will also turn yellow. Click it one more time if you want to cancel your pick. Click "Buy selected items" button in the checkout field to sell the tickets.
+            </label>
+            <img style="padding: 25px;" src="~/photos/3.jpg">
+            <label class="control-label" style=" font-size: 18px; font-weight: inherit;
+            color: white;">
+                If you sold the tickets, a new window with check in pdf-format will appear. Now you can print it and hand it to the customer.
+            </label>
+            <img style="padding: 25px;" src="~/photos/4.jpg">
+        }
+
+        @if (@UserManager.GetUserAsync(User).Result.PositionId == 1 || @UserManager.GetUserAsync(User).Result.PositionId == 3)
+        {
+            <h1 class="display-4" style="color: sandybrown;">How to use "Foodcourt" functionality</h1>
+            <label class="control-label" style=" font-size: 18px; font-weight: inherit;
+            color: white;">
+                When you click on "Foodcourt" menu button you will be redirected to a page with all foods and their amounts in the location, that is choosen in a dropdown list. Change a location to get a different cinema.
+            </label>
+            <img style="padding: 25px;" src="~/photos/5.jpg">
+            <label class="control-label" style=" font-size: 18px; font-weight: inherit;
+            color: white;">
+                If you click on a product, it will appear in a new block with its price. Click "-" and "+" buttons to regulate amount to sell and than click "Add to checkout" button.
+            </label>
+            <img style="padding: 25px;" src="~/photos/6.jpg">
+            <label class="control-label" style=" font-size: 18px; font-weight: inherit;
+            color: white;">
+                Click "Buy selected items" button in the checkout field to sell the products.
+            </label>
+            <img style="padding: 25px;" src="~/photos/7.jpg">
+            <label class="control-label" style=" font-size: 18px; font-weight: inherit;
+            color: white;">
+                If you sold the products, a new window with check in pdf-format will appear. Now you can print it and hand it to the customer.
+            </label>
+            <img style="padding: 25px;" src="~/photos/8.jpg">
+        }
+
+        @if (@UserManager.GetUserAsync(User).Result.PositionId == 3)
+        {
+            <h1 class="display-4" style="color: sandybrown;">How to use "Admin" functionality</h1>
+            <label class="control-label" style=" font-size: 18px; font-weight: inherit;
+            color: white;">
+                When you click on "Admin" menu button you will be redirected to a main administration page. The information there is divided by blocks: "Administrate the workers", "Administrate cinemas", "Add new things", "Edit and delete things" and "Statistic".
+            </label>
+            <img style="padding: 25px;" src="~/photos/9.jpg">
+            <label class="control-label" style=" font-size: 18px; font-weight: inherit;
+            color: white;">
+                If you click on "Add" button, you will be redirected on create page. Click "Save" to save your changes.
+            </label>
+            <img style="padding: 25px;" src="~/photos/10.jpg">
+            <label class="control-label" style=" font-size: 18px; font-weight: inherit;
+            color: white;">
+                If you click on "Edit/delete" button, you will be redirected on page with a tabl with all data. Click "Delete" button to delete an item. Search field will help you to find needed items. Click on table header to sort that row.
+            </label>
+            <img style="padding: 25px;" src="~/photos/11.jpg">
+            <label class="control-label" style=" font-size: 18px; font-weight: inherit;
+            color: white;">
+                If you click on "Edit" button, you will be redirected on edit page. Click "Save" to save your changes.
+            </label>
+            <img style="padding: 25px;" src="~/photos/12.jpg">
+            <label class="control-label" style=" font-size: 18px; font-weight: inherit;
+            color: white;">
+                If you choose any statistic opition on main administration page, you will see a web-page with the graph, y-axis of which is contidered as a number of products sold (tickets or food products) and x-axis is a date. If you hower over a dot on a graph, you will get a label with detailed information about statistic on this day.
+            </label>
+            <img style="padding: 25px;" src="~/photos/13.jpg">
+        }
+    </div>

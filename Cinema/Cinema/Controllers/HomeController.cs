@@ -32,5 +32,10 @@ namespace Cinema.Controllers
             var worker =  workerService.GetByIdQueryable(Guid.Parse(currentUserId)).Include(m => m.Position).First();
             return View(new EditWorkerViewModel() {worker = worker });
         }
+        [Authorize]
+        public IActionResult Instruction()
+        {
+            return View();
+        }
     }
 }
